@@ -1,0 +1,196 @@
+% ! TeX root = ..\main.tex
+\lecture{9}{Lecture 2}{Wed 24 Nov 2021 10:00}{}
+
+\subsection{Independent Random Variables}
+\begin{definition}
+Two random variables $X$ and $Y$ are independent $(X\ind Y)$ iff $\{X\leq x\}$ and $\{Y\leq y\}$ are independent events for all $x,y \in \mathbb R$,
+i.e.:
+$$F_{X,Y}(x,y)=P(X\leq x, Y\leq y)=P(X\leq x)P(Y\leq y)=F_X(x)F_Y(y).$$
+\end{definition}
+
+If $X,Y$ are independent and jointly continuous, then 
+$$
+f_{X,Y}(x,y)=f_X(x)f_Y(y).
+$$
+
+If $(X,Y)$ are independent and discrete, then
+
+\begin{align*}
+    f_{X,Y}(x,y)&=P(X=x,Y=y)\\
+    &=P(X=x)P(Y=y)\\
+    &=f_X(x)f_Y(y).
+\end{align*}
+
+Let $X,Y$ be jointly continuous. If $X\ind Y$ then
+\begin{align*}
+\mathbb E(X,Y)&=\int^\infty_{-\infty}\int^\infty_{-\infty}xyf_{X,Y}(x,y) \ dx \ dy
+\\
+&=\int^\infty_{-\infty}xf_X(x) \ dx \int^\infty_{-\infty}yf_Y(y) \ dy\\
+&=\mathbb E(XY)\\
+&=\mathbb E(X)\mathbb E(Y).
+\end{align*}
+Hence, $X\ind Y \implies X,Y$ are uncorrelated, i.e., Cov$(X,Y)=0$.
+
+\vskip.1in
+\begin{prop}
+If $X\ind Y$ and $g,h:\mathbb R\to \mathbb R$ are well-behaved functions, then $g(X)\ind h(Y)$ and $\EE(g(X)h(Y))=\EE(g(X))\EE(h(Y)).$
+\end{prop}
+\begin{proof}
+		Omitted. Left as an exercise.
+\end{proof}
+
+\begin{eg}
+For random variables $X,Y$ with $X\ind Y$,
+\begin{align*}
+  M_{X,Y}(t,u)&=\mathbb E(e^{tx}e^{uY}) \\
+  &=\mathbb E(e^{tx})\mathbb E(e^{uY}) \\
+  &=M_X(t)M_Y(u),
+\end{align*}
+
+and thus, $K_{X,Y}=K_X(t)+K_Y(t)$.
+
+\end{eg}
+
+\begin{eg}
+Let $X,Y$ be continuous random variables with joint density
+$$
+f_{X,Y}(x,y)=\begin{cases}x+y, \quad &0<x, \, y<1 \\ 0, &\text{otherwise}.\end{cases}
+$$
+Note that
+\begin{align*}
+    f_X(x)&=\ldots=x+1/2, \quad 0<x<1 \\
+    f_Y(y)&=\ldots=y+1/2,\quad 0<y<1,
+\end{align*}
+and thus,
+$$
+f_{X,Y}(x,y)\neq f_X(x)f_Y(y),
+$$
+so $X\not \ind Y$.
+\end{eg}
+
+\begin{eg}
+Let
+$$f_{X,Y}(x,y)=
+\begin{cases}kxy, \quad &0<x< y<1 \\ 0, \quad &\text{otherwise}.\end{cases}$$
+Two functions that don't have the same support cannot be the same function. Hence, $X\not\ind Y$ because of the support.
+\end{eg}
+
+\begin{notation}
+		We write that $X_1,X_2,\ldots,X_n$ are independent iff $\{X_1\leq x_1\},\dots,\{X_n\leq x_n\}$ are \textit{mutually independent}. Hence,
+
+$$F_{X_1,\ldots,X_n}(x_1,\dots,x_n)=\prod^u_{i=1} F_{X_i}(x_i).$$
+
+Also
+$$
+\EE(X_1X_2\cdots X_n)=\EE(X_1)\cdots \EE(X_n).
+$$
+\end{notation}
+
+\subsection{Random Vectors \& Random Matrices}
+\begin{definition}
+We say that $\XX$ is a \textbf{random vector} if
+
+\begin{align*}
+    \mathbf X
+	&=\begin{pmatrix}
+    X_1 \\ X_2 \\ \vdots\\ X_n
+    \end{pmatrix}
+\end{align*}
+for random variables $(X_i)$. We say that $\mathbf W$ is a \textbf{random matrix} if
+\begin{align*}
+	\mathbf W
+    &=
+    \begin{pmatrix}
+			W_{1,1} & \cdots & W_{1,n} \\
+    \vdots & \ddots & \cdots \\
+    W_{m,1} & \cdots & W_{m,n}
+    \end{pmatrix}
+\end{align*}
+for random variables $(W_{i,j})$.
+\end{definition}
+\vskip.2cm
+Let $\mathbf X=(X_1,\ldots,X_n)^T, \quad \mathbf x=(x_1,\dots,x_n)^T.$ So
+$$
+F_{\mathbf X}(\mathbf x)=F_{X_1,\ldots X_n}(x_1,\dots,x_n).
+$$
+And similarly for $f_{\mathbf X}(\mathbf x)$ and $M_{\mathbf x}(\mathbf t).$ The expectation of a random vector $X$ is given by
+$$
+\EE(\mathbf X)=
+\begin{pmatrix}
+\EE(X_1) \\ \vdots \\ \EE(X_n)
+\end{pmatrix},
+$$
+and the expectation of a random matrix $\mathbf W$ is given by
+$$
+\EE(\mathbf W)=
+\begin{pmatrix}
+		\EE(W_{1,1}) &\hdots & \EE(W_{1,n})\\ \vdots & \ddots & \vdots  \\ \EE(W_{m,1}) &\hdots &\EE(W_{m,n}) 
+\end{pmatrix}
+$$
+What is the variance of a random vector?
+\vskip.2cm
+\begin{recall}
+For a random variable $X$,
+$$
+\mathbb E(g(X))=\int_{\mathbb R_n}\mathbf g(\mathbf x)f_{\mathbf X}(\mathbf x) \ d\mathbf x.
+$$
+\end{recall}
+
+Then
+\begin{align*}
+    \text{Var}(\mathbf X)&=\mathbb E[(\mathbf X-\mathbb E (\mathbf X)(\mathbf X-\mathbb E(\mathbf X))^T] \\
+    &=
+    \begin{pmatrix}
+    \text{Var}(X_1) & \text{Cov}(X_1,X_2) & \text{Cov}(X_1,X_3)\ldots\\
+    \text{Cov}(X_2,X_1)&\ddots &\vdots
+    \\
+    \vdots &\hdots & \Var(X_n)
+    \end{pmatrix}.
+\end{align*}
+
+Note that this is a symmetric $n\times n$ matrix. If $X_1,\ldots X_n$ are independent \& identically distributes (IID), or
+$
+F_{\mathbf X}(\mathbf x)=\prod^n_{i=1}f_{X_1}(x_i),
+$
+then Var$(\mathbf X)=\sigma^2\mathbf I_n$ where $\sigma^2=$Var$(\mathbf X_1)$.
+
+\begin{definition}
+An $n\times n$ matrix $\mathbf A$ is \textbf{positive semidefinite} (or \textbf{nonnegative definite}) if, for any $\mathbf b\in \mathbb R^n$ if it holds that
+$$
+\mathbf b^T\mathbf A\mathbf b \geq 0.
+$$
+\end{definition}
+Let $\mathbf X$ be an $n\times 1$ random vector and let $\mathbf b\in \mathbb R^n$ (vector of constants). Then
+\begin{align*}
+	0\leq \Var({\!\!\!\!\!\!\!\underbrace{\mathbf b^T\mathbf X}_{n\text{ scalar } (1\times 1)}}\!\!\!\!\!\!\!)&=\mathbb E[(\mathbf b^T\mathbf X-\mathbb E(\mathbf b^T\mathbf X))(\ldots)^T] \\
+    &=\EE[\mathbf b^T(\mathbf X-\EE(\mathbf X))(\mathbf X-\EE(\mathbf X)^T\mathbf b] \\
+    &= \mathbf b^T\EE[(\mathbf X-\EE(\mathbf X))(\mathbf X-\EE(\mathbf X))^T]\mathbf b\\
+    &=\text{Var}(\mathbf X).
+\end{align*}
+We often write $\Var(\mathbf X)\geq 0$ in place of writing that the variance matrix is positive semidefinite. 
+
+\subsection{Transformations of Random Variables}
+
+\begin{recall}
+Univariate case: Let $X$ be a random variable, and $Y=g(x)$ where $g:\mathbb R\to \mathbb R$ is monotonic. Then
+$$
+f_Y(y)=f_X(x)\left|\frac{dx}{dy}\right|,
+$$
+
+where $x=g^{-1}(y)$. 
+\end{recall}
+\vskip.2cm
+\begin{remark}
+We now want to transform $(U,V)$ into $(X,Y)$. We have 
+\begin{align*}
+    X&=g_1(U,V)\\
+    Y&=g_2(U,V),
+\end{align*}
+where $(X,Y)=\mathbf g(U,V).$ Assume that the transformation is a bijective function. The inverse is $(U,V)=\mathbf h(X,Y)=\mathbf g^{-1}(X,Y).$ Then
+
+$$
+f_{X,Y}(x,y)=f_{U,V}(u,v)|J_{\mathbf h}(x,y)|,
+$$
+where $J_{\mathbf h}(x,y)$ is the Jacobian of $\mathbf h$.
+\end{remark}
+

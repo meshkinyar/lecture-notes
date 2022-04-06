@@ -1,0 +1,126 @@
+% ! TeX root = ..\main.tex
+
+\chapter{Conditional Distributions}
+
+\lecture{10}{Lecture 2}{Wed 1 Dec 2021 10:00}{}
+
+\subsection{Another Deck of Cards}
+\begin{eg}
+		Draw 2 cards from full deck. Define $Y:$ \# of aces, $X:$ \# of kings (see \autoref{fig:card_table}).
+\begin{align*}
+		P(\text{one Ace } \mid \text{one King})&=P(Y=1\mid X=1)\\
+									&=\frac{P(Y=1, X=1)}{P(X=1)}\\
+									&=\frac{f_{X,Y}(1,1)}{f_X(1)}.
+\end{align*}
+\end{eg}
+
+\subsection{Conditional Mass and Density}
+In general,
+$$
+P(Y=y\mid X=x)=\frac{f_{X,Y}(x,y)}{f_X(x)}.
+$$
+\begin{definition}
+The \textbf{conditional probability mass function} of $Y$ given $X=x$ is
+$$
+f_{Y|X}(y\mid x)=\frac{f_{X,Y}(x,y)}{f_X(x).}
+$$
+\end{definition}
+Question: Does it sum to 1?
+\begin{align*}
+    \sum_yf_{Y\mid X}(y\mid X)&=\sum_y\frac{f_{X,Y}(x,y)}{f_X(x)}\\
+    &=\frac{1}{f_X(x)}\sum_yf_{X,Y}(x,y)\\
+    &=\frac{f_X(x)}{f_X(x)} \\
+    &=1. \quad \checkmark
+    \end{align*}
+\begin{definition}
+		The \textbf{conditional cumulative distribution function} of $Y$ given $X=x$ is
+$$
+F_{Y\mid X}(y\mid x)=\sum_{u\leq y}f_{Y\mid X}(u\mid x)
+$$
+\end{definition}
+\begin{definition}
+If $X,Y$ are jointly continuous, we define the \textbf{conditional probability density function} of $Y$ given $X=x$ as
+\begin{align*}
+f_{Y\mid X}(y\mid x)&=\frac{f_{X,Y}(x,y)}{f_X(x)}.
+\end{align*}
+\end{definition}
+
+\begin{eg}
+Let $X,Y$ be jointly continuous random variables with
+$$
+f_{X,Y}(x,y)=\begin{cases}8xy, \, &0<x<y<1 \\ 0, \, &\text{otherwise}. \end{cases}
+$$
+Recall that
+$$f_X(x)=4x(1-x^2),\quad  0<x<1.$$
+Then
+$$
+f_{Y\mid X}(y\mid x)=\frac{8xy}{4x(1-x^2)}=\frac{2y}{1-x^2}, \quad x<y<1.
+$$
+Furthermore,
+\begin{align*}
+    F_{Y\mid X}(y\mid x)&=\int^y_{-\infty}f_{Y\mid X}(u\mid x) \ du\\
+						&=\int^y_x\frac{2u}{1-x^2} \, du\\
+    &=\frac{y^2-x^2}{1-x^2}, \quad x<y<1.
+\end{align*}
+Plug in $y=x$ to check if this is plausible.
+
+\begin{recall}
+		$P(A\cap B\cap C)=P(A\mid B\cap C)P(B\mid C)P(C)$. Similarly,
+\end{recall}
+$$
+f_{X,Y}(x,y)=f_{Y\mid X}(y\mid x)f_X(x),
+$$
+and
+$$
+f_{X,Y,Z}(x,y,z)=f_{Z\mid X,Y}(z\mid x,y)f_{Y\mid X}(y\mid x)f_X(x).
+$$
+\end{eg}
+\subsubsection{A Simple Model}
+\begin{eg}
+\begin{center}
+$X:$ \# of hurricanes formed, \quad $Y:$ \# of hurricanes making landfall
+\end{center}
+
+Suppose that $X\sim$ Poisson($\lambda$) and $(Y\mid X=x)\sim \Bin(x,p).$ Then
+
+$$
+f_{X,Y}(x,y)=f_{Y\mid X}(y\mid x)f_X(x)=\binom{x}{y}p^y(1-p)^{x-y}\frac{e^{-\lambda} \lambda^x}{x!}.
+$$
+supported by $x,y=0,1,2,\ldots,$ $y\leq x.$ Then
+\begin{align*}
+    f_Y(y)&=\sum_{x}f_{X,Y}{(x,y)}\\
+		  &=\sum_{x=y}^\infty\frac{x!}{y!(x-y)!}p^y(1-p)^{x-y}\frac{e^{-\lambda}\lambda x}{x!}\\
+		  &=\frac{e^{-\lambda}p^y}{y!}\sum^\infty_{x=y}\frac{(1-p)^{x-y}\lambda^x}{(x-y)!}.
+\end{align*}
+Let $z=x-y$. Then
+\begin{align*}
+	f_Y(y)
+	&=\frac{e^{-\lambda}p^y}{y!}\lambda^y\sum^\infty_{z=0}\frac{(1-p)^z\lambda^z}{z!}\\
+    &=\frac{e^{-\lambda}(\lambda p^y)}{y!} e^{\lambda(1-p)}\\
+	&=\frac{e^{-\lambda p}(\lambda p)^y}{y!}\\
+    &= \frac{e^{-\lambda p}(\lambda p)^y}{y!},\quad y=0,1,2,\ldots
+\end{align*}
+This implies that $Y\sim \Poisson(\lambda p)$.
+\end{eg}
+\vskip.1in
+In general, if $X$ is discrete and $Y$ is continuous,
+$$
+\underbrace{f_{X,Y}(x,y)}_{\text{joint mass / density}}=\underbrace{f_{Y\mid X}(y\mid x)}_{\text{conditional density}}\times\underbrace{f_X(x)}_{\text{marginal mass}}
+$$
+Moreover,
+\[
+		\intR \sum_{x}f_{X,Y}(x,y) \, dy=1
+.\] 
+\subsubsection{Insurance Example}
+\begin{eg}
+Define
+    $Z:$ total value of claims, $Y:$ \# of claims submitted, and $X:$ average \# of claims. Suppose that
+
+    
+    $$X\sim \Gamma(\alpha, \lambda), \quad (Y\mid X=x)\sim \Poisson(x).
+    $$
+    Then
+    $$
+    (Z\mid Y=y)\sim \text{ some continuous model}.
+    $$
+\end{eg}

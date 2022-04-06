@@ -1,0 +1,139 @@
+% ! TeX root = ..\main.tex
+\lecture{7}{Lecture 2}{Wed 10 Nov 2021 10:00}{}
+
+\subsection{Location-scale transformation}
+Let $Y$ be a continuous random variable, and $Y=\mu+\sigma X,$ with $\sigma>0$. Then
+$$f_Y(y)=f_X(x)\left|\frac{dx}{dy}\right|.$$
+Note that
+$$y=\mu+\sigma x\iff x=\frac{y-\mu}{\sigma},$$
+so
+$$
+f_Y(y)=f_X\left(\frac{y-\mu}{\sigma}\right)\frac{1}{\sigma}.
+$$
+What about the MGF/CGF?
+
+\begin{align*}
+    M_Y(t)&=\mathbb E(e^{tY})=\mathbb E(e^{t(\mu+\sigma x)}) \\
+    &=\mathbb E(e^{t\mu}e^{t\mu x})=e^{t\mu}M_X(t\sigma) \\
+    &\implies K_Y(y)=\ln M_Y(t)=t\mu+K_X(t\sigma) \\
+    &=t\mu+t\sigma K_{X,1}+\frac{(t\sigma)^2}{2}K_{X,2}+\frac{(t\sigma)^3}{3!}K_{X,3}\cdots \\
+	\\
+    K_{Y,1}(t)&= \mu+\sigma K_{X,1}(t)\\
+    K_{Y,r}(t)&=\sigma^rK_{X,r}(t) , \quad  \text{for } r=2,3,4,\ldots
+\end{align*}
+
+\subsection{\texorpdfstring{Sequences of Random Variables \& Convergence}{Sequences of Random Variables and Convergence}}
+
+\begin{definition}
+A sequence \textbf{converges} $(x_n)\to x$ if, for all $\epsilon>0$ there exists some $N\in \mathbb N$ such that  $|x_n-x|<\epsilon$ for all $n\geq N$.
+
+\end{definition}
+
+Say we have a sequence of random variables $(X_n).$ What does it mean to say that $(X_n)$ ``converges"?
+
+\subsubsection{Convergence in...}
+\begin{definition}
+We say that a sequence of random variable $(X_n)$ converges in
+\begin{itemize}
+		\item \textbf{probability}, if $\lim_{n\to \infty}P(|X_n-X|<\epsilon)=1$, then $X_n\to^P X.$
+		\item \textbf{distribution}, if $\lim_{n\to \infty}F_{X_n}(x)=F_X(x)$ for all $x\in \mathbb R$, then $X_n\to^d X$. Convergence in distribution is a  \textit{milder} form of convergence than Probability.
+		\item \textbf{mean square}, if $\mathbb E[(X_n-X)^2]=0$ then $X_n\to^{m.s} X$. Convergence in mean square is \textit{stronger} than convergence in probability.
+\end{itemize}
+\end{definition}
+\begin{remark}
+Note that
+$$\lim_{n\to \infty}P(|X_n-X|<\epsilon)\leq \frac{\mathbb E[(X_n-X)^2]}{\epsilon^2}\to 0.$$
+So
+$$\lim_{n\to \infty}P(|X_n-X|<\epsilon)\to 0, \quad X_n\to^P X.$$
+And thus,
+\[
+		\boxed{\text{convergence in m.s.} \implies \text{c. in probability} \implies \text{c. in distribution}}
+.\] 
+\end{remark}
+\subsubsection{Convergence almost surely}
+\begin{definition}
+		We say that $X_n$ converges to $X$ \textbf{almost surely} if
+	$$P\left(\lim_{n\to \infty}|X_n-X|<\epsilon\right)=1.$$
+		More compactly, we say $X_n\to^{\text{a.s.}}X$.
+\end{definition}
+\vskip.1in 
+
+
+\vskip.1in
+\begin{remark}
+ Alternatively, if $$A=\{\omega\in\Omega: X_n(\omega)\to X(\omega)\text{ as } n\to \infty \},$$ then we want $P(A)=1.$ Now consider $A^c.$ There exists $\epsilon>0$ where for every $n$ we can find $m\geq n$ with $|X_m(\omega)-X(\omega)|>\epsilon.$ Equivalently: There are infinitely many $m$ with $|X_m(\omega)-X(\omega)|>\epsilon.$
+\vskip.1in
+
+If
+$$
+A_n=|X_n-0|>\epsilon
+$$
+
+for some $\epsilon\in \mathbb R,$ then $P($finitely many $A_n$ occur)$=1$, i.e. $X_n\to^{\text{a.s.}}0.$
+Or,
+\begin{center}
+		\textit{``There's going to be a last one" - Milt Mavrakakis.}
+\end{center}
+\end{remark}
+\begin{remark}
+Note that convergence...
+$$\boxed{\text{Almost Surely}\implies\text{in Probability}\implies \text{in Distribution}}$$
+and, again, that convergence in
+$$\boxed{\text{Mean Square}\implies\text{in Probability}\implies \text{in Distribution}.}$$
+\end{remark}
+
+\subsection{The Borel-Cantelli Lemmas}
+\begin{definition}
+The \textbf{limit superior} is defined as
+$$
+A^c=\limsup_{n\to \infty} E_n=\bigcap_{n\in \NN}\left(\bigcup^\infty_{m=n}E_m\right).
+$$
+\end{definition}
+Note that $\bigcup^\infty_{m=n}E_m$ occurs when at least one $E_m$ $(m\geq n)$ occurs.
+
+\begin{theorem}[First Borel-Cantelli Lemma]
+Let $(\Omega, \mathcal F, P)$ be a probability space and $E_1,E_2,E_3,\ldots\in \mathcal F$ with $\sum_{n\in \NN}P(E_n)<\infty$ then $P(\limsup_{n\to \infty} E_n)=0.$
+\end{theorem}
+\begin{proof}
+Observe that
+\begin{align*}
+    P(\limsup_{n\to \infty} E_n)&=P\left(\bigcap^\infty_{n=1}\left(\bigcup^\infty_{m=n}E_m\right)\right) \\
+    &=P\left(\bigcap^\infty_{n=1}\right) \\
+    &=\lim_{n\to \infty}P(B_n) \\
+    &= \lim_{n\to \infty}P\left(\bigcup^\infty_{m=n}\right) \\
+    &\leq \lim_{n\to \infty}\sum^\infty_{m=n}P(E_m).
+\end{align*}
+
+\begin{eg}
+
+Define 
+$$S_{n-1}=\sum_{m=1}^{n-1}P(E_m)=\lim_{n\to \infty}(S_\infty-S_{n-1})=S_\infty-S_\infty=0$$
+\textit{as long as $S_\infty<\infty$}.
+
+For a coin, the probability of tails is $P(E_m)=1/2^m$. Then
+$$
+\sum^\infty_{m=1}P(E_m)=\sum^\infty_{m=1}1/2^m=1<\infty
+$$
+so $P(\text{"infinitely many tails"})=0$.
+\end{eg}
+
+\end{proof}
+We can show that $X_n\to^{\text{a.s.}}X$ by showing that 
+$$
+\sum_{n\in \NN}P(|X_n-X|>\epsilon) 
+$$
+converges.
+
+% do not remove the phantom text, unless ye desire an overfull hbox :)
+
+\begin{theorem}[Second-Borel-Cantelli Lemma]
+		Suppose that \phantom{hello! :)} $E_1,E_2,E_3,\ldots$ are mutually independent and
+$$
+\sum_{n\in \NN} P(E_n)=\infty.
+$$
+Then $P(\limsup_{n\to \infty} E_n)=1.$
+\end{theorem}
+
+\begin{proof}
+Omitted. See \href{https://proofwiki.org/wiki/Second_Borel-Cantelli_Lemma}{here} if you are still curious.
+\end{proof}

@@ -1,0 +1,173 @@
+%! TeX root = ..\main.tex
+\lecture{9}{Lecture 1}{Tue 23 Nov 2021 14:00}{}
+
+\begin{prop}
+Let $X,Y$ be random variables. Then 
+$$
+-1\leq \Corr(X,Y)\leq 1,
+$$
+Moreover, $|\Corr(X,Y)|=1$ iff $Y=rX+k$, for constants $r\neq 0$ and $k.$
+\end{prop}
+\vskip.2cm
+\begin{proof}
+Define $Z=Y-rX,$ where $r\in \RR.$ Observe that
+\begin{align*}
+    0 &\leq \Var(Z) \\
+    &=\Var(Y-rX) \\
+    &=\Var(Y)+\Var(-rX)+2\Cov(Y,-rX) \\
+    &=\Var(Y)+r^2\Var(X)-2r\Cov(X,Y).
+\end{align*}
+Let $h(r)=\Var(Y)+r^2\Var(X)-2r\Cov(X,Y)$. Note that $h(r)$ is a quadratic equation. Let $\Delta$ be the discriminant of $h(r).$ Then
+\begin{align*}
+  \Delta&=b^2-4ac \\
+  &=(-2\Cov(X,Y))^2-4\Var(X)\Var(Y) \\
+  &=4(\Cov(X,Y)^2-\Var(X)\Var(Y)).
+\end{align*}
+Since $0\leq h(r)$, $h(r)$ has at most one root. Then $\Delta\leq 0,$ and hence
+$$
+\Cov(X,Y)^2\leq \Var(X)\Var(Y).
+$$
+Thus,
+$$
+\left(\frac{\Cov(X,Y)}{\sqrt{\Var(X)\Var(Y)}}\right)^2\leq 1,
+$$
+which implies that $-1\leq \Corr(X,Y)\leq 1.$ If $\Delta=0,$ or $\Corr(X,Y)^2=1$, then $h(r)$ has a double root, i.e., $h(r^*)=0$ for some $r^*\in \RR.$
+Moreover,
+$$
+h(r^*)=0\iff \Var(Y-r^*X)=0,
+$$
+so
+$$
+Y-r^*X=k\iff Y=r^*X+k.
+$$
+We can show that $r^*=-\frac{b}{2a}=\frac{\Cov(X,Y)}{\Var(X)}.$
+\vskip.1in
+Now suppose that $Y=rX+k$. Then 
+\begin{align*}
+    \Cov(X,Y)&=\Cov(X,rX+k) \\
+    &=r\Cov(X,X)\\
+    &=r\Var(X) \\
+    &=\Var(Y) \\
+    &=\Var(rX+k) \\
+    &=r^2\Var(X).
+\end{align*}
+So
+\begin{align*}
+    \Corr(X,Y) &= \frac{r\Var(X)}{\sqrt{\Var(X)r^2\Var(X)}}\\
+    &=\frac{r}{\sqrt{r^2}} \\
+    &=\frac{r}{|r|} \\
+    &=\begin{cases}
+    1, \quad & \text{if } r>0 \\
+    -1, &\text{if } r<0.
+    \end{cases}
+\end{align*}
+\end{proof}
+
+\subsection{Joint Moments}
+\begin{definition}
+		If $X,Y$ are random variables, the $(r,s)$\textsuperscript{th} \textbf{joint moment} of $X$ and $Y$ is
+$$
+\mu'_{r,s}=\EE(X^rY^s).
+$$
+\end{definition}
+\begin{definition}
+The $(r,s)$\textsuperscript{th} \textbf{joint central moment} is
+
+$$
+\mu_{r,s}=\EE[(X-\EE(X))^r(Y-\EE(Y))^s].
+$$
+\end{definition}
+
+\begin{eg}
+Note that
+\begin{align*}
+    \mu'_{1,0}&=\EE(X) \\
+    \mu'_{r,0}&=\EE(X^r) \\
+    \mu'_{0,3}&=\EE(Y^3). 
+\end{align*}
+\end{eg}
+
+\begin{eg}
+Note that
+$$\Corr(X,Y)=\frac{\Cov(X,Y)}{\sqrt{\Var(X)\Var(Y)}}=\frac{\mu_{1,1}}{\sqrt{\mu_{2,0}\mu_{0,2}}}.
+$$
+\end{eg}
+
+\begin{eg}
+Let
+$$
+\fXY=\begin{cases}
+x+y, \quad &0\leq x, \, y\leq 1\\
+0, \quad &\text{otherwise.}
+\end{cases}
+$$
+Then
+\begin{align*}
+    \mu'_{r,s}&=\EE(X^rY^s) \\
+    &=\intRR x^r y^s \fXY \ dx \, dy \\
+    &= \int^1_0 \int^1_0 x^r y^s (x+y) \ dx \, dy \\
+    &= \int^1_0 \int^1_0 (x^{r+1}y^s+x^ry^{s+1}) \ dx \, dy \\
+    &=\dots
+\end{align*}
+\end{eg}
+\subsection{Joint MGFs}
+\begin{definition}
+The \textbf{joint MGF} of $X$ and $Y$ is 
+\begin{align*}
+    M_{X,Y}(t,u)&=\EE(e^{tX+uY})\\
+    &=\EE(e^{tX}e^{uY}) \\
+    &=\EE\left[\left(\sum_{i\in\NN_0}\frac{(tX)^i}{i!}\right)\left(\sum_{j\in\NN_0}\frac{(uY)^j}{j!}\right)\right] \\
+    &=\EE\left[\sum_{i\in\NN_0}\sum_{j\in \NN_0}X^iY^j\frac{t^iu^j}{i!j!}\right] \\
+    &=\sum_{i\in \NN_0}\sum_{j\in \NN_0}\EE(X^iY^j)\frac{t^iu^j}{i!j!}.
+\end{align*}
+\end{definition}
+Note that $\EE(X^iY^j)=\mu_{i,j}.$
+
+\vskip.1in
+
+The $(r,s)$\textsuperscript{th} joint moment of $X,Y$ is the coefficient of $\frac{t^ru^s}{r!s!}$ in the power series expansion of $M_{X,Y}(t,u).$ Moreover,
+\begin{align*}
+    M_{X,Y}^{(r,s)}(0,0)&=\left.\frac{\partial^{r+s}}{\partial t^r \partial u^s}M_{X,Y}(t,u)\right\vert_{t=0, \, u=0} \\
+    &=\mu_{r,s}'\\
+    &=\EE(X^rY^s).
+\end{align*}
+
+\subsection{Joint CGFs}
+
+\begin{definition}
+Define
+$$K_{X,Y}(t,u)=\log \MXY.$$
+Then $\KXY$ is the \textbf{joint cumulant generating function} of $X$ and $Y.$ Let 
+$$
+\KXY=\sum_{i\in \NN_0}\sum_{j\in \NN_0}\kappa_{i,j}\frac{t^iu^j}{i!j!}.
+$$
+Then $\kappa_{i,j}$ is the $(i,j)$\textsuperscript{th} \textbf{joint cumulant}.
+\end{definition}
+
+\begin{eg}
+Let $X,Y$ be random variables. Then $\kappa_{1,1}=\Cov(X,Y).$
+\end{eg}
+
+\begin{proof}
+Observe that
+\begin{align*}
+    &M_{X,Y}(t,u)=1+\mu'_{1,0}t+\mu_{0,1}'u+\mu_{1,1}'tu+\cdots \\
+    &\implies \KXY=\log\MXY.
+\end{align*}
+This implies that
+\begin{align*}
+	&\pder{t}\KXY=\frac{\pder{t}\MXY}{\MXY}=\frac{\mu'_{1,0}+\mu'_{1,1}u+\cdots}{\MXY}  \\
+    &\implies \frac{\partial^2}{\partial u \, \partial t}\KXY=\frac{\pder{t}\MXY}{\MXY}\\
+	&\quad \quad=\frac{\mu'_{1,0}+\mu'_{1,1}u+\cdots}{\MXY}-\frac{(\mu'_{1,0}+\mu'_{1,1}u+\cdots)(\mu_{0,1}'+\cdots)}{(\MXY)^2} \\
+\end{align*}
+Thus,
+\begin{align*}
+    &\kappa_{1,1}=K_{X,Y}^{(1,1)}(0,0)=\mu'_{1,1}-\mu'_{1,0}\mu'_{0,1} \\
+    &\quad \quad \ \quad \quad =\EE(XY)-\EE(X)\EE(Y) \\
+    &\quad \quad \ \quad \quad =\Cov(X,Y).
+\end{align*}
+\end{proof}
+By Example \theprop, we can write
+$$
+\Corr(X,Y)=\frac{\kappa_{1,1}}{\sqrt{\kappa_{2,0}\kappa_{0,2}}}.
+$$

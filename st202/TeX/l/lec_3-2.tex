@@ -1,0 +1,109 @@
+% ! TeX root = ..\main.tex
+\lecture{3}{Lecture 2}{Wed 13 Oct 2021 10:00}{}
+
+\subsection{Types of Random Variables}
+Some examples of random variable types:
+\begin{itemize}
+		\item \underline{Discrete}: hurricanes (0,1,2,3,\ldots)
+		\item \underline{Continuous}: javelin throw distance
+		\item \underline{Continuous model for discrete situation}: average salary
+		\item \underline{Neither discrete nor continuous}: queuing time
+		\item \underline{Neither discrete nor continuous for discrete situation}: yearly income
+\end{itemize}
+These types are not as clear cut as we may believe. 
+
+\begin{definition}
+The \textbf{support} of a non-negative function $g:\mathbb R\to [0,\infty)$ is the subset of $\mathbb R$ where $g$ is \textit{strictly} positive.
+\end{definition}
+
+\begin{notation}
+\phantom x
+\begin{enumerate}[(i)]
+    \item $X\sim \text{Poisson}(\lambda),$ $X\sim N(\lambda,\sigma^2)$
+    \item $X\sim F_x$ (a CDF)
+\end{enumerate}
+\end{notation}
+
+\begin{eg}
+	Recall the prior two child example. Our discrete random variable was in the form of a step function.
+\end{eg}
+
+\begin{definition}
+$X$ is a discrete random variable if and only if it takes values in $\{x_1,x_2,x_3,\dots\}\subset \mathbb R$.
+\end{definition}
+
+\begin{definition}
+The probability mass function (PMF) of a discrete random variable $X$ is the function $f_x:\mathbb R\to [0,1]$ where $f_X(x)=P(X=x)$.
+\end{definition}
+
+ In our example: $f_X(0)=1/4, \ f_X(1)=1/2, \ f_X(2)=1/4 \ f_X(x)=0$ for all other $x.$ Hence, $\{0,1,2\}$ is the support.
+
+
+\begin{enumerate}[(i)]
+    \item $f_X(x)=F_X(x)-F_X(x-)$
+    \item $F_X(x)=\sum_{u\in \mathbb R, u\leq x}f_X(u)$ 
+    i.e. $P(X\leq x)=\sum_{u:u\leq x}P(X=u)$
+\end{enumerate}
+
+\begin{prop}
+For valid PMF $f_X(x)$ and valid CDF $F_X(x)$,
+
+\begin{enumerate}[(i.)]
+    \item $f_X(x)=F_X(x)=F_X(x-)$, or $$P(X=x)=P(X\leq x)-P(X<x).$$
+    \item $F_X(x)=\sum_{u\in \mathbb R, \ u\leq x}f_x(u)$, or
+    $$P(X\leq x)=\sum_{u:u\leq x}P(X=u).$$
+\end{enumerate}
+\end{prop}
+\subsection{Some Distributions}
+\subsubsection{Binomial Distribution}
+We obtain a binomial distribution with the following:
+\begin{itemize}
+    \item Repeat experiment $n$ times.
+    \item Each time, declare one of two outcomes: success or failure.
+    \item Every trial is independent.
+    \item $P($``success"$)=p$ every repetition.
+\end{itemize}
+
+    Define $X$ as the number of successes. Let $X\sim \Bin(n,p)$, where $n$ is the number of trials and $p$ is the probability of success. The PMF of $X$ is
+    
+    $$f_X(x)=\binom{n}{x}p^x(1-p)^{n-x}\quad \text{ for } x=0,1,\dots n.$$
+    
+    and $f_X(x)=0$ otherwise. Check if $f_X$ is a valid PMF:
+    
+    $$
+    \sum^n_{x=0}f_X(x)=(p+(1-p))^n=1^n=1. \checkmark
+    $$
+\begin{eg}
+		For our previous example, where $X$ is the number of girls, $X\sim \Bin\left(2,\frac{1}{2}\right)$.
+\end{eg}
+\subsubsection{Bernoulli Distribution}
+
+$X\sim\Bernoulli(p)$ is the same as $\Bin(1,p).$
+
+\subsubsection{Geometric Distribution}
+
+Same (Bernoulli) setup as Binomial, but:
+\begin{itemize}
+    \item the number of trials is not fixed
+    \item we repeat the experiment until first success 
+\end{itemize}
+Let $Y:$ number of trials required. Then $Y\sim \Geo(p)$.
+
+$$ f_Y(y)=P(Y=y)=(1-p)^{y-1}p, \quad \text{for $y=1,2,\dots$}$$
+Check the validity of $f_X$: 
+$$\sum^\infty_{y=1} f_Y(y)=\frac{p}{1-(1-p)}=\frac{p}{p}=1.$$
+
+Sometimes: $Y^*:$ the number of failures before first success. Note that $Y^*=Y-1.$
+
+\subsubsection{Negative Binomial Distribution}
+Same setup as Geometric, but we stop when we obtain the $r$th success for some given $r\in \mathbb Z^+.$
+
+Let $X:$ number of trials required to obtain $r$ successes. Then $X\sim \text{NegBin}(r,p),$ and
+$$f_X(x)=p^r(1-p)^{x-r} \quad \text{for } x=r, r+1,r+2,\dots$$
+
+A more common iteration of the Negative Binomial Distribution:
+\begin{itemize}
+    \item $X^*:$ number of failures before $r$ successes. (support is $\{0,1,2,\dots\}).$
+    \item $X^*=X-r$
+\end{itemize}
+Note that $\text{NegBin}(1,p)$ is the same as $\Geo(p)$.

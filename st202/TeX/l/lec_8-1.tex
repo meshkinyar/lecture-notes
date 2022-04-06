@@ -1,0 +1,122 @@
+% ! TeX root = ..\main.tex
+
+\chapter{Multivariate Distributions}
+
+\lecture{8}{Lecture 1}{Tue 16 Nov 2021 14:00}{}
+\subsection{Joint CDFs and PDFs}
+
+\begin{recall}
+Note that
+$$
+F_X: \RR\to [0,1] \quad F_{X_1,\dots,X_n}: \RR^n\to [0,1].
+$$
+\end{recall}
+
+\begin{definition}
+		The \textbf{joint cumulative distribution function} of $X_1,\dots,X_n$ is the function $$F_{X_1,\dots,X_n}(x_1,\dots,x_n)=P(X_1\leq x_1,X_2\leq x_2, \ \dots, \ X_n\leq x_n).$$
+\end{definition}
+
+Note that the commas in the last expression indicate $\cap.$
+
+\subsubsection{Bivariate CDFs}
+
+\begin{notation}
+We write a bivariate CDF as
+$$F_{X,Y}(x,y)=P(X\leq x, Y\leq y).$$
+\end{notation}
+
+Note that
+\begin{align*}
+		P(x_1<X\leq x_2,\ y_1<Y\leq y_2)&=&F_{X,Y}(x_2,y_2)-F_{X,Y}(x_1,y_2) \\
+		& &-F_{X,Y}(x_2,y_1)+F_{X,Y}(x_1,y_1).
+\end{align*}
+Moreover,
+$$
+F_{X,Y}(-\infty,y)=0=F_{X,Y}(x,-\infty)
+$$
+Similarly,
+$$
+F_{X,Y}(\infty,\infty)=1.
+$$
+
+Lastly,
+\begin{align*}
+  F_{X,Y}(x,\infty)&=\lim_{y\to \infty}F_{X,Y}(x,y)\\
+  &=P(X\leq x, Y\leq \infty)\\
+  &=P(X\leq x)\\
+  &=F_X(x),
+\end{align*}
+which is defined as the marginal CDF of $X.$ Naturally,
+$$
+\lim_{x\to \infty} \FXY=F_Y(y).
+$$
+\vskip.1in
+If $X,Y$ are both discrete, the joint PMF is $\fXY=P(X=x,Y=y).$ So
+$$
+\FXY=\sum_{u\leq x}\sum_{v\leq y}f_{X,Y}(u,v).
+$$
+
+\begin{eg}
+Draw 2 cards from a deck of 52 cards. Let $X:$ number of kings drawn, and $Y:$ the number of aces drawn. Note that
+$$
+f_{X,Y}(0,0)=\frac{44}{52}\frac{43}{51}\approx 0.713.
+$$
+We can represent the probabilities of each event using an array:
+\begin{figure}[H]
+$$
+\begin{array}{c|c|c|c|c}
+		x\downarrow y \rightarrow & 0 & 1 & 2 & f_X(x) \\
+		\hline
+		0 & 0.713 & 0.133 & 0.004 & 0.850 \\
+		1 & 0.133 & 0.012 & 0 & 0.145 \\
+		2 & 0.004 & 0 & 0 & 0.004 \\
+		\hline
+		f_Y(y) & 0.85 & 0.145 & 0.004 & 1
+\end{array}
+$$
+\caption{An array representing the probabilities for values of $x$ and $y$.}
+\label{fig:card_table}
+\end{figure}
+
+It follows that
+$$
+\sum_x\sum_y \fXY=1.
+$$
+and that
+$$
+f_X(x)=\sum_y \fXY.
+$$
+\end{eg}
+\vskip.1in
+
+\begin{definition}
+Random variables $X,Y$ are jointly continuous if
+$$
+\FXY=\int^y_{-\infty}\int^x_{-\infty} \fXY(u,v) \ du \ dv
+$$
+for all $x,y\in \RR.$
+\end{definition}
+So
+$$
+\fXY=\frac{\partial^2}{\partial x \partial y}\FXY.
+$$
+
+Now, we have
+
+$$
+\int_{\RR^2} \fXY \ dx \ dy=1,
+$$
+and
+$$
+f_X(x)=\intR \fXY \ dy, \quad \quad  f_Y(y)=\intR \fXY \ dx,
+$$
+and
+$$
+P((X,Y)\in B)=\int\int_B \fXY \ dx \ dy.
+$$
+\begin{remark}
+Aside: Note that
+$$f_X(x)=\sum_y\fXY,$$
+so
+$$f_X(0)=f_{X,Y}(0,0)+f_{X,Y}(0,1)+f_{X,Y}(0,2)+\cdots.$$
+\end{remark}

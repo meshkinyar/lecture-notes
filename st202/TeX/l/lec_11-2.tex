@@ -1,0 +1,141 @@
+% ! TeX root = ..\main.tex
+\lecture{11}{Lecture 2}{Wed 8 Dec 2021 10:00}{}
+
+\subsection{Conditional Moment Generating Function}
+\begin{definition}
+If
+$$M_{Y\mid X}(u\mid v) = \EE[e^{uY}|X=x]=\phi(u,x),$$
+then the \textbf{conditional moment generating function} is $\phi(u,X).$ Hence,
+$$
+M_{Y\mid X}(u\mid X)=\EE[e^{uY}\mid X].
+$$
+\end{definition}
+
+Observe that by the \nameref{ssec:LoIE},
+$$
+M_Y(u)=\EE[M_{Y\mid X}(u\mid x)] =\EE(e^{uY}).
+$$
+
+\begin{eg}
+Let
+$$X\sim \Poisson(\lambda), \quad (Y\mid X=x)\sim \Bin(x,p).$$
+Then
+$$M_{Y\mid X}(y\mid x)=(1-p+pe^u)\implies \MYX=(1-p+pe^u)^X.$$
+So
+\begin{align*}
+    M_Y(u)&=\EE[\MYX]\\
+    &=\EE[(1-p+pe^u)^X]\\
+    &=\EE[e^{X\ln(1-p+pe^u)]}\\
+    &=M_X(\ln(1-p+pe^u)) \\
+    &=\exp(\lambda(e^{\ln(1-p+pe^u)}-1) \\
+    &=e^{\lambda p(e^u-1)},
+\end{align*}
+so $Y\sim \Poisson(\lambda p).$
+\begin{remark}
+		Aside: $M_X(t)=e^{\lambda(e^t-1)}.$
+\end{remark}
+Thus, 
+\begin{align*}
+    M_{X,Y}(t,u)&=\EE[e^{tX}e^{uY}]\\
+    &=\EE[\EE[e^{tX}e^{uY}\mid X]]\\
+    &=\EE[e^{tX}\EE[e^{uY}\mid X]] \\
+    &=\EE[e^{tX}\MYX].
+\end{align*}
+\end{eg}
+
+\subsection{Some Practical Applications}
+\begin{eg}[Height]
+Suppose that you know the mean height and variance of the male and female population. Let 
+\begin{align*}
+    &X: \text{ height of a student}, \\
+    &W: \text{ male or female } \quad (\text{male}=0, \text{ female}=1). \\
+\end{align*}
+Then
+\begin{align*}
+    (X\mid W=1) &\sim \Normal(\mu_W,\sigma^2_W) \\
+    (X\mid W=0) &\sim \Normal(\mu_M, \sigma^2_M) \\
+    W&\sim \Bernoulli(p).
+\end{align*}
+Moreover,
+\begin{align*}
+    f_X(x)&=\sum_w \underbrace{f_{X\mid W}(x\mid w) f_W(w)}_{f_{X,W}(x,w)}\\
+    &= p(f_{X\mid W}(x\mid 1)+(1-p)f_{X\mid W}(x\mid 0).
+\end{align*}
+Note that 
+$$f_{X\mid W}(x\mid 1)=\frac{1}{\sqrt{2\pi\sigma^2 w}}e^{-\frac{(x-\mu_w)^2}{2\sigma^2w}}.$$
+\incfig[1]{w11_l2_fig1}{The distribution of $X$ from Example \theeg{} is somewhere in between the distributions of $X\mid w=1$ and $X\mid w=0$.}
+\end{eg}
+
+\begin{eg}[Household Insurance]
+\begin{align*}
+    &\Exp(\lambda): &\text{amount claimed each year} \\
+    &\Normal \sim \Geo(p): &\text{years policy is held}\\
+    &Y: &\text{total amount claimed}
+\end{align*}
+Then
+$$
+Y=\sum_{i=1}^N X_i, \quad \text{a random sum.}
+$$
+
+We assume that $N$ is independent of $X_i$. This is a basic assumption that may or may not be reasonable, depending on the situation. We further assume that $N\geq 0,$ with $Y=0$ if $N=0.$ Then
+
+\begin{align*}
+    \EE(Y\mid N=n)&=\EE\left(\sum_{i=1}^nX_i)\right)\\
+    &=n\EE(X_1).
+\end{align*}
+So
+\begin{align*}
+    \EE(Y)&=\EE[\EE(Y\mid N)] \\
+    &=\EE[N\EE(X_1)] \\
+    &=\EE(X_1)\EE(N).
+\end{align*}
+Moreover,
+\begin{align*}
+    \Var(Y\mid N=n)&=\Var\left(\sum^n_{i=1} X_i\right) \\
+    &=n\Var(X_1).
+\end{align*}
+Now, how do we iterate variances? We use the \nameref{ssec:LoIV}:
+
+\begin{align*}
+    \Var(Y)&=\EE[\Var(Y\mid N)] + \Var(\EE(Y\mid N)]\\
+    &= \EE[N\Var(X_1)]+\Var(N\EE(X_1))\\
+    &=\Var(X_1)\EE(N)+\EE(X_1)^2\Var(N).
+\end{align*}
+Moreover,
+\begin{align*}
+    M_{Y\mid N}(u\mid n)&=\EE(e^{uY}\mid N=n) \\
+    &=\EE\left(e^{u\sum^n_{i=1}X_i}\right) \\
+    &=(M_{X_1}(u))^n.
+\end{align*}
+
+Finally,
+\begin{align*}
+    M_Y(u)&= \EE[N_{Y\mid N}(u\mid N)]\\
+    &=\EE[(M_{X_1}(u))^N]\\
+    &=\EE[\exp(N\ln M_{X_1}(u)] \\
+    &=M_n(\log M_{X_1}(u)).
+\end{align*}
+
+This implies
+\begin{align*}
+    K_Y(u)=K_N(K_{X_1}(u)).
+\end{align*}
+
+Back to the insurance example. Note that $X_1,X_2,\ldots\sim \Exp(\lambda),$ and $N\sim \Geo(p).$ We have
+
+$$
+\EE(Y)=\EE(N)\EE(X_1)=\frac{1}{p}\frac{1}{\lambda}=\frac{1}{\lambda p}.
+$$
+
+Then 
+\begin{align*}
+    M_Y(u)&=M_N(\ln(M_{X_1}(u)) \\
+    &=M_N(\ln(1-\frac{u}{\lambda}^{-1}) \\
+    &=\left(1-\frac1p+\frac{1}{p}\left(1-\frac{u}{\lambda}\right)\right)^{-1} \\
+    &=\left(1-\frac{1}{p}+\frac{1}{p}-\frac{u}{\lambda p}\right)^{-1} \\
+    &=\left(1-\frac{u}{\lambda p}\right),
+\end{align*}
+ 
+so $Y\sim \Exp(\lambda p).$
+\end{eg}
+

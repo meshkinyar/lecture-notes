@@ -1,0 +1,151 @@
+%! TeX root = ..\main.tex
+\lecture{5}{Lecture 1}{Tue 26 Oct 2021 14:00}{}
+
+\subsection{Markov Inequality}
+
+\begin{theorem}[Markov Inequality]
+If $Y$ is a positive random variable, and $\mathbb E(Y)<\infty$, then 
+$$P(Y\geq a)\leq \frac{\mathbb E(Y)}{a},$$
+for any $a>0$.
+\end{theorem}
+\incfig[0.6]{w5_l1_fig1}{The Markov Inequality shows that the shaded area (the survival function of $X$ evaluated at $a$) is always less than or equal to $\frac{\EE(Y)}{a}$.}
+\begin{proof}
+Observe that
+\begin{align*}
+    P(Y\geq a) &= \int^\infty_a f_Y(y)\ dy\\
+    &\leq \int^\infty_af_Y(y) \ dy \\
+    &=\frac{1}{a}\int^\infty_a y f_Y(y) \ dy\\
+	&\leq \frac{1}{a}\int^\infty_0yf_Y(y) \ dy \\
+    &=\frac{1}{a}\mathbb E(Y).
+\end{align*}
+\end{proof}
+
+\begin{eg}
+Let $Y$ be the random variable representing a person's lifespan. Say that $\mathbb E(Y)=80.$ 
+Note that 
+$$
+P(Y\geq 160)\leq \frac{80}{160}=\frac{1}{2}.
+$$
+\end{eg}
+
+\begin{theorem}[Chebyshev Inequality]
+If $X$ is a random variable with Var($X$) $\leq \infty,$ then 
+$$
+P(|X-\mathbb E(x)|\geq a)\leq \frac{\text{Var}(x)}{a^2},
+$$
+for any $a>0$.
+\end{theorem}
+\begin{proof}
+Let $Y=\Var(X).$ Observe that
+\begin{align*}
+    P(|X-\EE(X)|\geq a)&=P((X-\EE(X))^2\geq a^2) \\
+    &\leq \frac{\EE(Y)}{a^2}\\
+    &=\frac{\EE[(X-\EE(X))^2]}{a^2}\\
+    &=\frac{\Var(X)}{a^2}.
+\end{align*}
+Alternatively,
+\begin{align*}
+    P(X\geq \mu +\lambda \sigma \ \text{ or } \ X \leq \mu -\lambda \sigma)
+    &= P\left(\left|\frac{x-\mu}{\sigma}\geq \lambda \right|\right) \\
+    &=P\left(|x-\mu \geq \lambda \sigma\right) \\
+	&\leq \frac{\sigma^2}{\lambda^2\sigma^2} \\
+    &=\frac{1}{\lambda^2}.
+\end{align*}
+\end{proof}
+
+\begin{eg}
+Let $X\sim \Normal(\mu,\sigma^2).$ Then 
+$$
+P\left(\left|\frac{x-\mu}{\sigma}\right| \geq 2\right) \leq \frac14.
+$$
+Note that the exact probability is $\approx 0.05$.
+\end{eg}
+
+\begin{definition}
+A function $g:\RR \to \RR$ is \textbf{convex} if for any $a\in \mathbb R,$ we can find $\lambda$ such that
+$$
+g(x)\geq g(a)+\lambda(x-a) \quad \text{for all } x\in \RR.
+$$
+\end{definition}
+A \textbf{concave} function is the same principle, but with 
+$$g(x)\leq g(a)+\lambda(x-a) \quad \text{for all } x\in \RR.$$
+
+%figures omitted, as I believe they are mostly beyond the scope of this course
+
+\subsection{Jensen Inequality}
+\begin{theorem}[Jensen Inequality]
+If $X$ is a random variable (with $\mathbb E(x)$ defined) and $g:\mathbb R \to \mathbb R$ is convex (with $\mathbb E(g(x))<\infty)$, then 
+$$
+\mathbb E(g(x))\geq g(\mathbb E(x)).
+$$
+\end{theorem}
+
+\begin{proof}
+Using the definition of a convex function with $a=\EE(X)$, we have
+\begin{align*}
+    \EE(g(X))&=\intR g(x) f_X(x)\ dx \\
+    &\geq \intR \left[g(\EE(X))+\lambda (x-\EE(X))\right] f_X(x) \ dx \\
+    &= g(\EE(X))\intR f_X(x) \ dx + \lambda \intR (x-\EE(X)) f_X(x) \ dx \\
+    &= g(\EE(X)) +\lambda \EE(X-\EE(X)) \\
+    &= g(\EE(X)).
+\end{align*}
+\end{proof}
+	
+If $h:\RR \to \RR$ is concave, then $\EE(h(X))\leq h(\EE(X)).$
+\begin{eg}
+A special case:
+$$\EE(aX+b)=a\EE(X)+b.$$
+\end{eg}
+\begin{eg}
+Note that
+$$
+\EE(X^2)\geq (\EE(X))^2.
+$$
+\end{eg}
+\begin{eg}
+If $Y>0,$ $$\EE\left(\frac{1}{Y}\right)\geq \frac{1}{\EE(Y)}.$$
+\end{eg}
+
+\subsection{Moments}
+\begin{definition}
+		The $r$th moment of a random variable $X$ is $$\mu'_r=\EE(X^r), \quad \text{for } r=1,2,3,\ldots$$
+\end{definition}
+
+\begin{definition}
+		The $r$th central moment of $X$ is $$\mu_r=\EE[(X-\EE(X))^r],\quad \text{for } r=1,2,3,\ldots$$ 
+\end{definition}
+
+\begin{eg}
+Some moments:
+\begin{align*}
+    &\mu_1'=\EE(X), \\
+    &\mu_1=0, \\
+    &\mu_2=\Var(X)= \EE(X^2)-\EE(X)^2 \\
+    & \implies \mu_2= \mu_2'-(\mu_1')^2.
+\end{align*}
+\end{eg}
+
+\begin{eg}
+Let $X\sim \Exp(\lambda).$ Then
+\begin{align*}
+    \mu'_r&=\EE(X^r) \\
+    &=\intR x^r f_X(x) \ dx \\
+    &=\int^\infty_0 x^r\lambda e^{-\lambda x} \ dx \\
+    &= \int^\infty_0 x^r \der{x}(-e^{-\lambda x}) \ dx \\
+    &= \left[x^r(-e^{-\lambda x})\right]^\infty_0 -\int^\infty_0 r x^{r-1}(-e^{-\lambda x}) \ dx \\
+    &=\frac{r}{\lambda} \int^\infty_0 x^{r-1} \lambda e^{-\lambda x} \ dx \\
+    &= \frac{r}{\lambda} \mu'_{r-1}.
+\end{align*}
+Observe that
+\begin{align*}
+    \mu_r'&=\frac{r}{\lambda} \mu'_{r-1} \\
+    &=\frac{r}{\lambda}\frac{r-1}{\lambda} \mu'_{r-2} \\
+    &=\ldots \\
+    &=\frac{r}{\lambda} \frac{r-1}{\lambda} \cdots \frac{1}{\lambda} \mu_0'\\
+    &=\frac{r!}{\lambda^r}.
+\end{align*}
+So $\EE(X)=\frac{1}{\lambda},$ $\EE(X^2)=\frac{2}{\lambda^2}$, and so on. Further note that
+$$
+\Var(X)=\frac{2}{\lambda^2}-\left(\frac{1}{\lambda}\right)^2=\frac{1}{\lambda^2}.
+$$
+\end{eg}

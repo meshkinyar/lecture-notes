@@ -1,0 +1,165 @@
+% ! TeX root = ..\main.tex
+
+\lecture{4}{Lecture 2}{Wed 20 Sep 2021 10:00}{}
+
+\subsection{Some Continuous Distributions}
+
+%Figure omitted, watch the corresponding lecture
+
+\subsubsection{Exponential Distribution}
+
+An Exponential Distribution can be described with either a rate parameter or a scale parameter.
+
+\begin{definition}
+		We say $X\sim\Exp(\lambda)$ for \textbf{rate parameter} $\lambda$ if $f_x(x)=\lambda e^{-\lambda x}$ for $x>0, \ \lambda>0$. We say $X\sim$ $\Exp(\theta)$ for \textbf{scale parameter} $\theta$ if $f_x(x)=1/\theta e^{-x/\theta},$ for $x>0$. 
+\end{definition}
+Note that $\theta=\frac{1}{\lambda}$.
+
+\subsubsection{Normal Distributions}
+
+\begin{definition}
+		We say that $X$ is \textbf{normally distributed}, or $X\sim N(\mu,\sigma^2)$ for mean $\mu$ and variance $\sigma^2$ if
+$$f_X(x)=\frac{1}{\sqrt{2\pi\sigma^2}}e^{-\left(\frac{x-\mu}{\sigma}\right)^2} \quad \text{for } x\in \RR. $$ 
+\end{definition}
+
+
+\begin{eg}
+		The \textit{standard normal distribution} is $\Normal(0,1)$.	
+\end{eg}
+\vskip.2cm
+Some properties of the normal distribution:
+
+\begin{itemize}
+		\item If $X\sim N(\mu,\sigma^2)$, then $\frac{x-\mu}{\sigma}\sim N (0,1).$
+		\item If $Z\sim N(0,1),$ then $\mu +\sigma Z\sigma N(\mu,\sigma^2)$.
+\end{itemize}
+
+\begin{remark}
+The normal CDF has no closed form. It can be written as an infinite sum, but it cannot be written in a finite number of operations.
+\end{remark}
+
+\begin{remark}
+If $Z\sim N(0,1)$ we write $\Phi(z)$ for $F_Z(z).$ The $\Phi$ function is the CDF for the standard normal.
+\end{remark}
+
+\subsubsection{Gamma Distribution}
+
+\begin{definition}
+The PDF of the \textbf{Gamma Distribution} is
+$$
+f_X(x)=\frac{\lambda^\alpha}{\Gamma(\alpha)}x^{\alpha-1}e^{-\lambda x}, \quad x>0, \quad  0  \text{ otherwise}
+$$
+We denote the gamma distribution as Gamma($\alpha,\lambda)$, where $\alpha$ is the shape parameter, and $\lambda$ is the rate parameter. 
+\end{definition}
+
+\begin{definition}
+		The \textbf{gamma function} is as follows
+		\[
+				\Gamma(k)=\int^\infty_0x^{k-1}e^{-x} \, dx
+		.\] 
+\end{definition}
+
+If $k\in \mathbb Z^+$, then $\Gamma(k)=(k-1)!$, so $\text{Gamma}(1,\lambda)$ is $\Exp(\lambda)$.
+
+\begin{remark}
+Beware! The scale parameter $\theta$ is commonly in use too, with $\theta=\frac{1}{\lambda}.$
+\end{remark}
+
+\incfig{w4_l2_fig1}{PDF of the Gamma Distribution for $\alpha=1$ and $\alpha=3$}
+
+\subsection{Expectation, Variance, and Moments}
+We can now characterize some properties of random variables:
+\begin{itemize}
+    \item mode($(X) = \argmax(f_X(x))$
+    
+    \item median($X)=m,$ where $F_X(m)=1/2.$
+	\item mean$(X)$? See below:
+\end{itemize}
+
+\begin{definition}
+		The mean, or \textbf{expected value} of $X$ is
+$$
+\mu=\mathbb E(x)=
+\begin{cases}
+\sum_x xf_x(x), \quad X\text{ is discrete} \\
+\int^{\infty}_{-\infty}xf_X(x) \ dx, \quad X \text{ is continuous.}
+\end{cases}
+$$
+\end{definition}
+
+\begin{note}
+We generally ask that
+$$
+\sum_x |x| f_X(x) < \infty.
+$$
+or for continuous random variables,
+$$
+\intR |x| f_X(x) \ dx < \infty.
+$$
+\end{note}
+\begin{eg}
+Let $X\sim \text{Uniform}[a,b]$. Then
+\begin{align*}
+\EE(X)&=\intR x f_X(x) \ dx \\
+&= \int^b_a x \frac{1}{b-a} \ dx \\
+&=\frac{1}{b-a}\left[\frac{x^2}{2}\right]^b_a \\
+&=\frac{b^2-a^2}{2(b-a)} \\
+&=\frac{(b-a)(b+a)}{2(b-a)} \\
+&=\frac{a+b}{2}
+\end{align*}
+\end{eg}
+
+\begin{remark}
+Note that
+$$
+\EE(g(x))=
+\begin{cases}
+\sum_xg(x)f_X(x) \quad & \text{(discrete)} \\
+\intR g(x)f_X(x)\ dx &\text{(continuous),}
+\end{cases}
+$$
+as long as 
+$$
+\sum_x |g(x)| f_X(x) < \infty,
+$$
+and similarly when $X$ is continuous.
+\end{remark}
+
+\begin{eg}
+For a random variable and $a_0,a_1,a_2,\dots \in \mathbb R,$
+$$
+\EE(a_0+a_1X+a_2X^2 + \cdots)=a_0+a_1\EE(X)+a_2\EE(X^2) +\cdots
+$$
+\end{eg}
+
+\begin{remark}
+A quick aside:
+$$
+\int(e^x+2\sin(x)) \ dx = \int e^x \ dx + 2\int \sin x \ dx
+$$
+\end{remark}
+
+\begin{definition}
+The \textbf{variance} $(\sigma^2)$ of a function is 
+$$
+\text{Var}(x)=\mathbb E[(x-\mathbb E(x))^2].
+$$
+\end{definition}
+Observe that
+$$
+\sigma^2=\begin{cases}
+\sum_x(x-\mu)^2 f_X(x) \quad &\text{(discrete)} \\
+\intR (x-\mu)^2 f_X(x) \ dx &\text{(continuous)}.
+\end{cases}
+$$
+\vskip.2cm
+Some properties of variance:
+\begin{enumerate}[i.]
+    \item $\Var(X)\geq 0$,
+    \item $\Var(a_0+a_1X)=a_1^2 \Var(X)$ (prove this!),
+    \item $\Var(X)=\EE(X^2)-\EE(X)^2$ (this too!).
+\end{enumerate}
+
+\begin{definition}
+The standard deviation $\sigma$ of a random variable $X$ is $\sqrt{\Var(X)}.$
+\end{definition}

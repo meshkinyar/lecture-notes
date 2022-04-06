@@ -1,0 +1,101 @@
+%! TeX root = ..\main.tex
+\lecture{4}{Lecture 1}{Tue 19 Oct 2021 14:00}{}
+
+\subsection{A Distribution of Emails}
+\begin{eg}
+		
+Suppose that we want to create a probability distribution of how many emails are sent in each point of time on the LSE server between 10AM and 11AM. There aren't exactly any Bernoulli trials here by default, so we need to create them. Split the 1 hour period into 60 one minute intervals. If an email is sent during a given interval, we count that as a success. Call this random variable $X_{60}.$ Note that $X_{60}\sim \Bin(60,p).$ Here's the problem: this model will systematically undercount the number of emails, since there are a maximum of 60 trials, and each trial counts for only 1. Now increase the number of Bernoulli trials, and assume that the probability remains constant over any given time interval. Hence, if we have 120 30-second intervals, then $X_{120}\sim \Bin(120,\frac{p}{2})$.
+
+\end{eg}
+\vskip.05in
+What if we continue increasing the number of trials? Or, what is $X_\infty,$ i.e. $\lim \Bin(n,p)$ as $n\to \infty,$ $p\to 0$ with $np$ remaining constant?
+
+\begin{align*}
+    f_X(x)&=\lim_{n\to \infty, \ p\to 0, \ np=\lambda \ } \frac{n!}{x!(n-x)!}p^x(1-p)^{n-x}\\
+    &=\lim_{n\to \infty} \frac{n!}{x!(n-x)!}\frac{\lambda^x}{n^x}\left(1-\frac{\lambda}{n}\right)^{n-x}\\
+    &=\lim_{n\to \infty} \frac{n(n-1)\cdots(n-x+1)}{n\times n \cdots \times n}\left(1-\frac{\lambda}{n}\right)^n\left(1-\frac{\lambda}{n}\right)^{-x}\frac{\lambda^x}{x!}\\
+    &=1\times e^{-\lambda}\times 1\times \frac{\lambda^x}{x!} \\
+    &=\frac{e^{-\lambda}\lambda^x}{x!}, \quad x=0,1,2,\ldots
+\end{align*}
+which is the PMF of the Poisson distribution. Hence, $X\sim \Poisson(\lambda).$
+
+\subsection{Discrete Uniform Distribution}
+\begin{definition}
+A discrete random variable $X$ is \textbf{uniformly distributed} if it has PMF
+$$
+f_X(x)=\begin{cases}
+\frac{1}{n} \quad &\text{for } x\in \{x_1,x_2,\ldots,x_n\} \\
+0 &\text{otherwise}.
+\end{cases}
+$$
+\end{definition}
+
+\subsection{Continuous Random Variables}
+Note that a discrete CDF is a step function. A continuous CDF, however, is continuous everywhere. 
+\incfig[1]{w4_l1_fig1}{Discrete vs. Continuous CDF}
+\begin{definition}
+A random variable $X$ is \textbf{continuous} if its CDF can be written as
+$$
+F_X(x)=\int^x_{-\infty}f_X(u) \ du 
+$$
+for some integrable real-valued function $f_X.$
+\end{definition}
+
+\begin{definition}
+We write $f_X(x)$ to denote the \textbf{probability density function} (PDF) of $X.$
+\end{definition}
+
+\begin{prop}
+For all $x\in \mathbb R,$ 
+\begin{enumerate}[i.]
+\item $f_X(x)=\der{x} F_X(x)=F_X'(x)$
+\item $f_X(x)\geq 0$ for all $x\in \RR$
+\item $\intR f_X(x) \ dx=1.$
+\item Let $a,b\in \RR,$ with $a<X\leq b.$ Then \begin{align*}
+    F_X(b)-F_X(a)&=P(a<X\leq b) \\
+    &= \int^b_af_X(u) \ du.
+\end{align*}
+\item For any $B\subseteq \RR,$
+$$
+P(X\in B)=\int_B f_X(x) \ dx.
+$$
+\end{enumerate}
+\end{prop}
+
+\begin{eg}
+A continuous random variable $X$ is uniformly distributed for parameters $a, b$ if
+$$
+f_X(x)=
+\begin{cases}
+\frac{1}{b-a}, \quad &a\leq x\leq b \\
+0, &\text{otherwise}.
+\end{cases}
+$$
+More compactly, $X\sim \Unif[a,b]$. We can say
+\[
+P(c\leq X\leq c+h)=\frac{h}{b-a}
+.\] 
+
+\incfig[0.6]{w4_l1_fig3}{The continuous Uniform Distribution with parameters $a,b$.}
+\end{eg}
+\begin{eg}
+Let $X$ be the number of email arrivals in an hour, and suppose $X\sim \Poisson(\lambda)$. Note that we can scale this, with $X(t)=\Poisson(t\lambda.)$ Let $Y$ be the time of the first arrival. Note that
+
+\begin{align*}
+    F_Y(y)&=P(Y\leq y) \\
+    &=1-P(Y>y) \\
+    &=1-P(X(y)=0) \\
+    &=1-\frac{e^{-\lambda y}(\lambda y)^0}{0!} \\
+    &=1-e^{\lambda y}, \ y\geq 0.
+\end{align*}
+
+Differentiate $F_Y(y)$ to find the density function:
+\begin{align*}
+		f_Y(y)&=\der{y} F_Y(y) \\
+	&= \der{y}(1-e^{-\lambda y}) \\
+    &= \lambda^{-\lambda y}, \quad y\geq 0;
+\end{align*}
+which is the PDF of the exponential distribution with rate $\lambda$. Hence, $Y\sim \Exp(\lambda)$.
+\end{eg}
+
+\incfig[0.6]{w4_l1_fig2}{A simple graphical representation of the PDF of the Exponential Distribution.}

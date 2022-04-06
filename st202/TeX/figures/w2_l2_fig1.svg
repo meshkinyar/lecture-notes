@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="200mm"
+   height="200mm"
+   viewBox="0 0 200 200"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   sodipodi:docname="w2_l2_fig1.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.8116734"
+     inkscape:cx="319.87001"
+     inkscape:cy="190.15568"
+     inkscape:window-width="1920"
+     inkscape:window-height="1111"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     width="200mm" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.25;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 53.51651,52.031559 35.397869,63.61821 52.481161,74.542767"
+       id="path34282" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.25;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 80.453192,38.83463 62.367116,49.512487 79.419704,59.58018"
+       id="path34472" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.29;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 106.47684,52.584593 -18.08608,9.288027 17.05259,8.757282"
+       id="path34474" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.189754px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 106.68338,28.419781 88.597297,37.707808 105.64989,46.46509"
+       id="path34476" />
+    <text
+       xml:space="preserve"
+       style="font-size:3.88056px;line-height:1.25;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';stroke-width:0.264583;stroke:#000000;stroke-opacity:1"
+       x="53.389774"
+       y="51.840748"
+       id="text35756"><tspan
+         sodipodi:role="line"
+         id="tspan35754"
+         style="font-size:3.88056px;stroke-width:0.264583;stroke:#000000;stroke-opacity:1"
+         x="53.389774"
+         y="51.840748">$T$</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.88056px;line-height:1.25;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';stroke-width:0.264583;stroke:#000000;stroke-opacity:1"
+       x="54.018871"
+       y="76.544441"
+       id="text37676"><tspan
+         sodipodi:role="line"
+         id="tspan37674"
+         style="font-size:3.88056px;stroke-width:0.264583;stroke:#000000;stroke-opacity:1"
+         x="54.018871"
+         y="76.544441">$T^c$</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.88056px;line-height:1.25;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';stroke-width:0.264583;stroke:#000000;stroke-opacity:1"
+       x="104.61003"
+       y="72.102135"
+       id="text38694"
+       inkscape:transform-center-x="33.665508"
+       inkscape:transform-center-y="-9.2941586"><tspan
+         sodipodi:role="line"
+         id="tspan38692"
+         style="font-size:3.88056px;stroke-width:0.264583;stroke:#000000;stroke-opacity:1"
+         x="104.61003"
+         y="72.102135">$M^c$</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.88056px;line-height:1.25;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';stroke-width:0.264583;stroke:#000000;stroke-opacity:1"
+       x="104.46397"
+       y="47.274712"
+       id="text41520"
+       inkscape:transform-center-x="33.665508"
+       inkscape:transform-center-y="-9.2941586"><tspan
+         sodipodi:role="line"
+         id="tspan41518"
+         style="font-size:3.88056px;stroke-width:0.264583;stroke:#000000;stroke-opacity:1"
+         x="104.46397"
+         y="47.274712">$M^c$</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.88056px;line-height:1.25;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';stroke-width:0.264583;stroke:#000000;stroke-opacity:1"
+       x="105.48629"
+       y="54.35783"
+       id="text41524"
+       inkscape:transform-center-x="33.665508"
+       inkscape:transform-center-y="-9.2941586"><tspan
+         sodipodi:role="line"
+         id="tspan41522"
+         style="font-size:3.88056px;stroke-width:0.264583;stroke:#000000;stroke-opacity:1"
+         x="105.48629"
+         y="54.35783">$M$</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.88056px;line-height:1.25;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';stroke-width:0.264583;stroke:#000000;stroke-opacity:1"
+       x="105.34025"
+       y="29.67646"
+       id="text43178"
+       inkscape:transform-center-x="33.665508"
+       inkscape:transform-center-y="-9.2941586"><tspan
+         sodipodi:role="line"
+         id="tspan43176"
+         style="font-size:3.88056px;stroke-width:0.264583;stroke:#000000;stroke-opacity:1"
+         x="105.34025"
+         y="29.67646">$M$</tspan></text>
+  </g>
+</svg>

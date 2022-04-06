@@ -1,0 +1,169 @@
+% ! TeX root = ..\main.tex
+\lecture{7}{Lecture 1}{Tue 9 Nov 2021 14:00}{}
+
+\subsection{Functions of Random Variables}
+
+Let $X$ be a random variable, and $g:\RR\to \RR$ be a well-behaved function. We're interested in
+
+$$Y= g(X), \quad \quad \EE(g(X))$$
+
+When we first encountered functions of random variables, we started with the CDF, and we worked from there. But observe that
+\begin{align*}
+		F_Y(y)&=P(Y\leq y)\\
+			  &=P(g(X)\leq y)\neq P(X\leq g^{-1}(y))
+.\end{align*}
+Hence, this doesn't work, e.g., for $g(x)=x^2.$
+
+\vskip.1in
+
+\begin{definition}
+If $B\subseteq 
+\RR$ and $g:\RR\to \RR$, the \textbf{inverse image} of $B$ is defined as 
+$$
+g^{-1}(B)=\{x\in \RR: \ g(x)\in B\}.
+$$
+\end{definition}
+
+\begin{eg}
+If $g(x)=x^2,$
+\begin{align*}
+    g^{-1}(\{4\})&=\{-2,2\} \\
+    g^{-1}([0,1])&=[-1,1]
+\end{align*}
+\end{eg}
+
+\vskip.1in 
+\begin{eg}
+	For a random variable $Y$ and some set $B$,
+\begin{align*}
+    P(Y\in B) &= P(g(X)\in B) \\
+    &= P(\{\omega\in \Omega: \ g(X(\omega)) \in B\}) \\
+    &=P(\{\omega \in \Omega: \ X(\omega)\in g^{-1}(B) \}) \\
+    &=P(X\in g^{-1}(B))
+\end{align*}
+\end{eg}
+
+\begin{remark}
+Note that
+\begin{align*}
+    F_Y(y)&=P(Y\leq y)\\
+    &=P(Y\in(-\infty,y])\\
+    &=P(X\in g^{-1}((-\infty,y]) \\
+    &=\begin{dcases}
+    \sum_{x:g(x)\leq y} \quad &\text{(discrete)} \\
+    \int_{x:g(x)\leq y}f_X(x) \ dx \quad &\text{(continuous).}
+    \end{dcases}
+\end{align*}
+Further,
+\begin{align*}
+    f_Y(y)=\ldots=\sum_{x:g(x)=y}f_X(x).
+\end{align*}
+\end{remark}
+
+\begin{eg}
+Let $X$ be a continuous random variable and $Y=g(X)=X^2.$ For $y\geq 0$:
+\begin{align*}
+    F_Y(y)&=P(Y\leq y) \\
+    &=P(X^2\leq y) \\
+    &=P(-\sqrt y \leq X \leq \sqrt y \\
+    &= F_X(\sqrt y)-F_X(-\sqrt y) \\
+    &\implies f_Y(y)&=\der{y}F_Y(y) \\
+    &=\begin{cases}
+    \frac{1}{2\sqrt y}(f_X(\sqrt y) +f_X(-\sqrt y), \quad &y\geq 0 \\
+    0, \quad &y<0. 
+    \end{cases}
+\end{align*}
+
+If $X\sim \Normal(0,1),$ then
+\begin{align*}
+    f_y(y)&=\frac{1}{2\sqrt y}\left(\frac{1}{\sqrt{2\pi}}e^{\frac{-(\sqrt y)^2}{2}}+\ldots\right) \\
+    &=\frac{1}{\sqrt{2\pi}} y^{-\frac{1}{2}}e^{-\frac{y}{2}}, \quad y\geq 0.\\
+    &= \frac{(1/2)^2}{\sqrt \pi}y^{\frac{1}{2}-1}e^{-\frac{1}{2}y}.
+\end{align*}
+Note that $\sqrt{\pi}=\Gamma(\frac12)$. Hence, $Y\sim \Gamma\left(\frac{1}{2},\frac{1}{2}\right).$
+\end{eg}
+
+\vskip.1in
+
+\subsubsection{Monotonicity}
+
+\begin{definition}
+		A function is \textbf{monotone} if it is strictly increasing or strictly decreasing.
+\end{definition}
+
+\begin{remark}
+If a function is monotone increasing, then
+\[
+y\in(c,d)\iff x\in (a,b),
+.\] 
+and hence, $g^{-1}((c,d))=(a,b).$
+
+
+\incfig{w7_l1_fig1}{A monotone increasing function}
+
+Similarly, if a function is monotone decreasing, then
+\[
+y\in (c,d) \iff x\in (a,b),
+.\] 
+and hence, $g^{-1}((c,d))= (a,b)$
+
+\incfig{w7_l1_fig2}{A monotone decreasing function}
+
+In general, if $g$ is monotone (increasing or decreasing),
+
+\begin{align*}
+    g^{-1}((-\infty,y])
+    &=\{x\in \RR: \ g(x)\in(-\infty,y]\} \\
+    &=\begin{cases}
+    (-\infty,g^{-1}(y)], \quad &g \text{ is increasing}\\
+    [g^{-1}(y),\infty), \quad &g \text{ is increasing}.
+    \end{cases}
+\end{align*}
+\begin{align*}
+    F_Y(y)&=P(X\in g^{-1}((-\infty,y])) \\
+    &=\begin{cases}
+    P(X\in (-\infty,g^{-1}(y)]), \quad & g \uparrow \\
+    P(X\in (g^{-1}(y),\infty]), \quad & g \downarrow 
+    \end{cases} \\
+    &=\begin{cases}
+    F_X(g^{-1}(y)) \quad  & g \uparrow \\
+    1-F_X(g^{-1}(y)-), \quad & g \downarrow 
+    \end{cases}
+\end{align*}
+\end{remark}
+\begin{note}
+$F_X(x-)=\lim_{h\downarrow 0}F_X(x-h)=P(X<x).$
+\end{note}
+
+\begin{remark}
+If $X$ is continuous, then
+\begin{align*}
+    f_Y(y)&=
+    \begin{dcases}
+    \der{y}F_X(g^{-1}(y)), \quad & g \ \uparrow \\
+    \der{y}(1-F_X(g^{-1}(y))), \quad & g \ \downarrow
+    \end{dcases} \\
+    &=\begin{dcases}
+    \left(\der{y}g^{-1}(y)\right)f_X(g^{-1}(y)), \quad & g \ \uparrow \\
+    \left(-\der{y}g^{-1}(y)\right)f_X(g^{-1}(y)), \quad & g \ \downarrow 
+    \end{dcases}\\
+    &=f_X(g^{-1}(y))\left|\der{y}g^{-1}(y)\right|, \quad g \ \uparrow \text{ or } \downarrow.
+\end{align*}
+
+\end{remark}
+\begin{eg}
+Let $Y=e^X.$ Note that
+$$
+g(x)=e^x\iff g^{-1}(y)=\log y,
+$$
+so
+\begin{align*}
+    f_Y(y)&=f_X(g^{-1}(y))\left|\der{y}g^{-1}(y)\right| \\
+    &= f_X(\log y) \left|\frac{1}{y}\right| \\
+	&=f_X(\log y)\frac{1}{y}, \quad y\geq 0.
+\end{align*}
+If we define $y=g(x),$ $x=g^{-1}(y),$ we can write
+$$
+\boxed{f_Y(y)=f_X(x)\left|\der[x]{y}\right|}
+$$
+\end{eg}

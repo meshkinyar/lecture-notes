@@ -1,0 +1,132 @@
+% ! TeX root = ..\main.tex
+\lecture{1}{Lecture 2}{Wed 29 Sep 2021 10:00}{}
+
+Let $(\psi, \mathcal G)$ be a measurable space, with $\omega\in \psi$ and $A\in \mathcal G$. Consider 
+\begin{align*}
+   m(A)=\mathbf 1_A(\omega)
+   = \begin{cases}
+   1, \text{ if $w\in A$} \\
+   0, \text{ if $w\not \in A$}.
+   \end{cases}
+\end{align*}
+
+\begin{ex}Check that this is a measure! (on the problem set).
+\end{ex}
+
+\subsection{The Probability Measure}
+
+\begin{definition}
+Consider the measurable space 
+$(\Omega,\mathcal F).$
+Define $(\Omega,\mathcal F,P)$ as a \textbf{probability space.} The function $P$ is a \textbf{probability measure} that satisfies $P(A)\in[0,1]$ for all $A\in \mathcal F$ and $P(\Omega)=1.$
+\end{definition}
+\vskip.1in
+Since $P$ is a measure,
+\begin{itemize}
+    \item $P(A)\geq 0$ for all $A\in \mathcal F,$
+    \item $P(\varnothing)=0,$
+    \item $P(A\cup B)=P(A)+P(B)$ \textit{if $A\cap B=\varnothing$ (mutually exclusive).}
+\end{itemize}
+
+\vskip.1cm
+
+In general, if $A,B\in \mathcal F$ do we have $A\cap B\in \mathcal F?$ Observe that
+
+$$(A\cap B)^c=A^c\cup B^c.$$ So yes! We do.
+\vskip.1in
+In general, if $A_1,A_2,A_3,\dots\subseteq \Omega$ are mutually exclusive, then
+
+$$
+P\left(\bigcup^\infty_{i=1} A_i\right)=\sum^\infty_{i=1}P(A_i).
+$$
+
+\subsubsection{Basic Properties of Probability Measures}
+
+\begin{enumerate}[i.]
+    \item $P(A^c)=1-P(A)$
+    \item If $A\subseteq B$, then $P(B\setminus A)=P(B)-P(A)$
+    \item $P(A\cup B)=P(A)+P(B)-P(A\cap B)$
+\end{enumerate}
+Example proof (the remaining proofs are left as an exercise):
+\begin{proof}
+\vskip.1in
+
+\begin{enumerate}[i.]
+    \item $A,A^c$ are disjoint, and thus $A\cup A^c=\Omega$, but $P(A\cup A^c)=P(A)+P(A^c).$
+\end{enumerate}
+\end{proof}
+
+\begin{corollary}{\relax}
+If $A\subseteq B$, then $P(A)\leq P(B).$
+\end{corollary}
+
+\subsubsection{General Addition Rule:}
+
+\begin{align*}
+    P\left(\bigcup_{i=1}^n A_i\right)&=\sum_{i=1}^n P(A_i)-\sum^n_{i,j=1,\ i<j} P(A_i\cap A_j) \\
+    &+\sum_{i<j<k}P(A_i\cap A_j\cap A_k) \\
+    &- \dots \\
+    &+(-1)^{n+1}P(A_1\cap A_2\cap \cdots \cap A_n).
+\end{align*}
+
+\subsection{More Properties of Probability Measures}
+
+\begin{theorem}[Boole's Inequality]
+If $(\Omega,\mathcal F,P)$ is a probability space and $A_1,A_2,A_3,\dots\in \mathcal F$, then: $$P\left(\bigcup^\infty_{i=1}A_i\right)\leq\sum_{i=1}^\infty P(A_i).$$
+\end{theorem}
+
+\begin{proof}
+Define 
+
+\begin{align*}
+    &B_1=A_1\\
+    &B_2= A_2\setminus B_1 \\
+    &B_3= A_3 \setminus (B_1\cup B_2) \\
+    &\vdots \\
+    &B_i=A_i\setminus(B_1\cup \dots \cup B_{i-1}).
+\end{align*}
+
+    Then $B_1,B_2,B_3,\dots\in \mathcal F$ (confirm this!) They are \textit{disjoint,} and $\bigcup_{i=1}^\infty B_i=\bigcup^\infty_{i=1}A_i.$ So,
+    $$P\left(\bigcup_{i=1}^\infty A_i\right)=P\left(\bigcup_{i=1}^\infty B_i\right)=\sum^\infty_{i=1}P(B_i)\leq \sum^\infty_{i=1}P(A_i).
+    $$
+\end{proof}
+\begin{prop}
+		
+If $A_1,A_2,A_3,\dots$ is an increasing sequence of sets $A_1\subseteq A_2\subseteq A_3\subseteq \dots$, then $\lim_{n\to \infty} P(A_n)=P\left(\bigcup_{i=1}^\infty A_i\right).$ 
+\end{prop}
+The following figure may come in handy:
+\incfig[0.5]{w1_l2_fig1}{Visual representation of $A_1,A_2,\ldots$}
+\begin{proof}
+Define
+\begin{align*}
+    &B_1=A_1 \\
+    &B_2=A_2\setminus A_1 \\
+    &\vdots \\
+    &B_i=A_i\setminus A_{i-1}\\
+    &\vdots 
+\end{align*}
+
+
+Note that these events are mutually exclusive, and so $A_n=\bigcup^n_{i=1} B_i$. Moreover, $\bigcup_{i=1}^\infty B_i=\bigcup^\infty_{i=1}A_i$. Hence,
+
+\begin{align*}
+    \lim_{n\to \infty}P(A_n)&=
+    \lim_{n\to \infty}P\left(\bigcup^n_{i=1} B_i\right) \\
+    &=\lim \sum^n_{i=1}P(B_i) \\
+    &= P\left(\bigcup^\infty_{i=1}B_i\right) \\
+    &  = P\left(\bigcup^\infty_{i=1}A_i\right).
+\end{align*}
+\end{proof}
+We will use $P(A)=\frac{|A|}{|\Omega|},$ for $A\in \mathcal F$, with assumptions that the each event is equally likely, and that the sample space is finite.
+
+\subsection{Sample Problems}
+
+\begin{enumerate}[1)]
+    \item \textbf{Lottery}: choose 6 numbers from $\{1,2,\dots,59\}$. What is the probability of matching 6 numbers?
+    
+    \item \textbf{Birthdays}: 100 people in this lecture. What is the probability that at least two share a birthday?
+\end{enumerate}
+
+\begin{note}
+		{Read how the multiplication rule applies to permutations and combinations.}
+\end{note}

@@ -1,0 +1,79 @@
+% ! TeX root = ..\main.tex
+
+\chapter{Probability}
+\lecture{1}{Lecture 1}{Tue 28 Sep 2021 14:00}{}
+\subsection{A Pair of Dice}
+
+\begin{eg}
+Roll two dice. The probability sum is $>10.$ There are three favourable outcomes:
+$$
+(5,6), (6,5), (6,6).
+$$
+There are 36 total outcomes. Then the probability is $\frac{3}{36}=\frac{1}{12}.$
+\end{eg}
+
+\begin{definition}
+The \textbf{sample space} $\Omega$ is the collection of every possible outcome. An \textbf{outcome} $\omega$ is an element of the sample space $(\omega \in \Omega).$
+\end{definition}
+
+\begin{definition}
+An \textbf{event} $A$ is a set of possible outcomes in $\Omega$ $(A\subseteq \Omega).$
+\end{definition}
+
+\subsection{[a bit of] Measure Theory}
+
+Let $\psi$ be a set and $\mathcal G$ be a collection of subsets of $\psi.$ Note that if $A\in \mathcal G$, then $A\subseteq \psi.$
+
+\begin{definition}
+A \textbf{measure} is a function $m:\mathcal G \to R^+$ such that
+\begin{enumerate}[i.]
+    \item $m(A)\geq 0$ for all $A\in \mathcal G,$
+    \item $m(\varnothing)=0,$
+    \item if $A_1,A_2,\ldots\in \mathcal G$ are disjoint, then $m\left(\bigcup^\infty_{i=1} A_i\right)=\sum^\infty_{i=1}m(A_i).$
+\end{enumerate}
+\end{definition}
+
+\begin{definition}
+A set $\mathcal G$ is a $\sigma$-algebra on $\psi$ if 
+\begin{enumerate}[i.]
+    \item $\varnothing\in\mathcal G,$
+    \item if $A\in \mathcal G$ then $A^c\in \mathcal G,$
+    \item if $A_1, A_2, A_3,\ldots\in \mathcal G$ then 
+    $$
+    \bigcup^\infty_{i=1}A_i=A_1\cup A_2\cup A_3\cup \ldots \in \mathcal G.
+    $$
+\end{enumerate}
+\end{definition}
+
+\begin{definition}
+Let $\psi$ be a set, $\mathcal G$ a $\sigma$-algebra of $\psi$, and $m$ a measure of $\mathcal G$. The space $(\psi,\mathcal G)$ is a \textbf{measurable space.} The space $(\psi,\mathcal G,m)$ is a \textbf{measure space.}
+\end{definition}
+
+\vskip.1in 
+
+\begin{eg}
+Let $\psi$ be a set. The set $\{\varnothing,\psi\}$ is the smallest $\sigma$-algebra of $\psi$.
+\vskip.1in
+
+Suppose that $|\psi|>1.$ Let $A\subset \psi$. Then $\{\varnothing,A,A^c,\psi\}$ is the smallest non-trivial $\sigma$-algebra.
+\vskip.1in
+\end{eg}
+
+\begin{eg}
+The $\sigma$-algebra $\mathcal G=\{A:A\subseteq\psi\}=\mathcal P(\psi)$ is the power set of $\psi.$ Hence, if
+$$\psi=\{\omega_1,\omega_2,\ldots,\omega_k\},$$
+then $|\mathcal G|=2^{|\psi|}=2^k$.
+\end{eg}
+
+\begin{eg}
+	Is $m(A)=|A|$, i.e., the number of elements of $A,$ a well-defined measure?
+
+\begin{enumerate}[i.)]
+    \item $m(A)\geq 0?$ \checkmark
+    \item $m(\varnothing)=0$? $\checkmark$
+    \item if $A_1,A_2,\ldots$ are disjoint,
+    $$m\left(\bigcup^\infty_{i=1}A_i\right)=\left|\bigcup^\infty_{i=1}A_i\right|=\sum^\infty_{i=1}\left|A_i\right|=\sum^{\infty}_{i=1}m\left(A_i\right). \quad \checkmark$$
+\end{enumerate}
+	
+\end{eg}
+

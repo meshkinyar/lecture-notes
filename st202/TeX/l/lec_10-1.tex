@@ -1,0 +1,230 @@
+% ! TeX root = ..\main.tex
+\lecture{10}{Lecture 1}{Tue 30 Nov 2021 14:00}{}
+
+\subsection{Sums of Random Variables}
+\begin{recall}
+For random variables $X,Y$,
+$$
+\mathbb E(X+Y)=\mathbb E(X) +\EE(Y).
+$$
+$$
+\Var(X+Y)=\Var(X)+2\Cov(X,Y)+\Var(Y)
+$$
+$$
+\mathbb E[(X+Y)^r]=\sum^r_{j=0}\binom{r}{j}\mathbb E(X^jY^{r-j})
+=\sum^r_{j=0}\binom{r}{j}\mu'_{j,r-j}.
+$$
+\end{recall}
+
+\begin{prop}
+If $Z=X+Y,$ then
+$$
+f_Z(z)=\begin{dcases}\sum_u f_{X,Y}(u,z-u), \ &\text{ (discrete),} \\
+\int_{\mathbb R}f_{X,Y}(u,z-u) du &\text{ (continuous).}
+\end{dcases}
+$$
+\end{prop}
+
+\begin{proof}
+For the discrete case, note that
+\begin{align*}
+    f_Z(z)&=P(Z=z)\\&=P(X+Y=z)\\&=\sum_u P(X=u, \ Y=z-u)\\
+    &=\sum_u f_{X,Y}(u,z-u).
+\end{align*} 
+By the Law of Total Probability, $$\{X+Y=Z\}=\bigcup_u\{X=u, \ Y=Z-U\}.$$
+For the continuous case, note that
+\begin{align*}
+    Z=X+Y, \ U=X\iff X=U, \ Y=Z-U.
+\end{align*}
+Let
+$$(Z,U)=\boldsymbol\partial(X,Y), \quad (X,Y)=\mathbf h (U,Z).
+$$
+Then
+\begin{align*}
+    J_{\mathbf h}(x,y)&=
+    \left|
+    \begin{array}{cc}
+        \frac{\partial x}{\partial u} & \frac{\partial x}{\partial z} 
+        \\
+         \frac{\partial y}{\partial u} & \frac{\partial y}{\partial z} 
+    \end{array}
+    \right| \\
+    &=
+    \left|
+    \begin{array}{cc}
+        1 & 0 
+        \\
+        -1 & 1 
+    \end{array}.
+    \right| 
+\end{align*}
+Then
+$$f_{U,Z}(u,z)=f_{X,Y}(u,z-u)|J_\hh|=1,$$
+which implies that
+$$f_Z(z)=\int_{\mathbb R}f_{U,Z}(u,z)\ du=\int_{\mathbb R}f_{X,Y}(u,z-u)\ du$$
+\end{proof}
+
+\vskip.2cm
+\begin{definition}
+		Let $f$ and $g$ be functions. The \textbf{convolution} of $f$ and $g$ is
+\[
+\intR f(x)g(y-x) \ dy
+.\] 
+\end{definition}
+\begin{notation}
+		If $f$ and $g$ are functions, their {convolution} is denoted by $f*g$.
+\end{notation}
+
+\begin{remark}
+If $X\ind Y,$ then 
+$$
+f_Z(z)=
+\begin{cases}
+\sum_u f_X(u)f_Y(z-u) \ &\text{ (discrete),} \\
+\intR f_X(u)f_Y(z-u) \ du & \text{ (continuous).}
+\end{cases}
+$$
+Hence,
+$$
+f_Z=f_X*f_Y=f_Y*f_X.
+$$
+\end{remark}
+
+\vskip.1in
+
+Assume $X\ind Y.$ To work out the distribution of $Z=X+Y,$ either work out the convolution of $f_X, f_Y,$ or use their MGFs/CGFs:
+$$
+M_Z(t)=M_X(t)M_Y(t) \iff K_Z(t)=K_X(t)+K_Y(t).
+$$
+
+\begin{eg}
+$$X\sim N(\mu_X,\sigma_x^2),\ Y\sim N(\mu_Y(\sigma^2_Y),\ 
+\quad \text{with } \quad X\ind Y, \ Z= X+Y$$
+Recall that $K_x(t)=\mu_Xt+\sigma^2_X\frac{t^2}{2}$, so
+\begin{align*}
+    K_Z(t)&= K_X(t) + K_Y(t) \\
+    &=\mu_xt+\sigma^2_x\frac{t^2}{2}+\mu_Yt+\sigma^2_Y\frac{t^2}{2} \\
+    &=(\mu_X+\mu_Y)t+(\sigma^2_X+\sigma^2_Y)\frac{t^2}{2} \\
+	\implies \ &Z\sim \Normal(\mu_X+\mu_Y,\sigma^2_X+\sigma^2_Y).
+\end{align*}
+\end{eg}
+
+\begin{eg}
+Let
+$$X\sim \text{Exp}(\lambda), \ Y\sim \text{Exp}(\theta), \quad \quad X\ind Y, \ Z=X+Y$$
+Observe that
+\begin{align*}
+    f_Z(z)&=\intR f_X(u)f_Y(z-u) \ du \\
+    &=\int^z_0 \lambda e^{-\lambda u}\theta e^{-\lambda(z-u)} \ du \\
+    &=\lambda \theta e^{-\theta z}\left[-\frac{1}{\lambda-\theta}e^{-(\lambda \theta)u}\right]^z_0 \\
+    &=\frac{\lambda \theta}{\lambda - \theta}e^{-\theta z} (1-e^{-(\lambda-\theta)z} \\
+    &=\frac{\lambda\theta(e^{-\theta z}-e^{-\lambda z})}{\lambda -\theta}, \quad \text{for } z>0,\ \lambda\neq 0
+\end{align*}
+\end{eg}
+
+\begin{eg}
+$\text{Consider }$ $$ X_1, X_2, \dots, X_n.$$ Let $S=\sum_{i=1}^nX_i.$ $\text{Suppose that } (X_i)$ are mutually independent. Then
+\begin{align*}
+    &f_S=f_{X_1}* f_{X_2}*\dots f_{X_n}, \quad M_S(t)=\prod^n_{i=1} M_{X_i}(t).
+\end{align*}
+\end{eg}
+
+If $X_1,\dots, X_n$ are IID (identically distributed), then 
+
+$$
+M_S(t)=\prod^n_{i=1}M_{X_i}(t)=(M_{X_1}(t))^n,
+$$
+which implies that $K_S(t)=nK_{X_1}(t).$
+
+\begin{eg}
+If $X_1,\dots,X_n\sim \Bernoulli(p),$ then
+$$
+M_S(t)=(M_{X_1}(t))^n=(1-p+pe^t)^n,
+$$
+which implies that $S\sim \Bin(n,p).$
+\end{eg}
+    
+\subsection{Multivariate Normal Distributions}
+
+\subsubsection{Bivariate Normal Distribution}
+
+How can we derive a bivariate normal distribution? Starting point: take $U,V\sim \Normal(0,1)$, with $U\ind V$. Then
+
+$$f_{U,V}(u,v)=f_U(u)f_V(v)=\frac{1}{2\pi}e^{-(u^2+v^2)/2}, \quad u,v\in \mathbb R.$$
+Moreover,
+$$
+M_{U,V}(s,t)=e^{(s^2+t^2)/2}, \quad s,t\in\mathbb R 
+$$
+
+Let $U,V\sim^i N(0,1).$ Define
+$$
+X=U, Y=\rho U+\sqrt{1-\rho^2}V, \quad \text{where } |\rho|\leq 1.
+$$
+Some quick properties of the bivariate standard normal:
+
+\begin{enumerate}[(1)]
+    \item $X\sim N(0,1)$ by definition. Moreover, $Y$ is normal, as it is a sum of independent Normals: 
+    $$
+    \mathbb E(Y)=\mathbb E(\rho U+\sqrt{1-\rho^2}V)=0,
+    $$
+	and thus,
+    \begin{align*}
+        \Var(Y)&=\rho^2\Var (U) + (\sqrt{1-\rho^2})^2\Var(V) \\
+        &=\rho^2+1-\rho^2=1,
+    \end{align*}
+    which implies that $Y\sim \Normal(0,1)$.
+    \item $\Corr(X,Y)=\rho$. Observe that 
+    \begin{align*}
+        \Cov(X,Y)&=\Cov(U,\rho U+\sqrt{1-\rho^2}\\
+        &=\Cov(U,\rho U)+\Cov(U,\sqrt{1-\rho^2}V)\\
+        &=\rho \Cov(U,U) \\
+        &=\rho.
+    \end{align*}
+   Thus, 
+    \begin{align*}
+        \Corr(X,Y)=\frac{\Cov(X,Y)}{\sqrt{\Var(X)\Var(Y)}}=\rho
+    \end{align*}
+    
+    \item Any linear combination of $X$ and $Y$ is normally distributed:
+    \begin{align*}
+        aX+bY+c&=aU+b(\rho +\sqrt{1-\rho^2}V)+c \\
+        &=(a+b\rho)u+b\sqrt{1-\rho^2}V+c.
+    \end{align*}
+    which is Normal, as $U\ind V.$
+    \vskip.1in
+\end{enumerate}
+
+\vskip.1in
+
+\begin{eg}
+Let $U,V\sim^i \Normal(0,1)$, and 
+$$
+X=U, \quad Y=\rho U+\sqrt{1-\rho^2}V.
+$$
+We have
+\begin{align*}
+    \fXY&=\dots \text{(try this!)}\\
+    &=\frac{1}{2\pi\sqrt{1-\rho^2}}\exp\left({-\frac{x^2-2\rho xy+y^2}{2(1-\rho^2)}}\right), \quad x,y\in \RR \\
+    &= \fUV|J_\uu(x,y)|, \quad x,y\in \RR.
+\end{align*}
+\end{eg}
+
+\vskip.2cm
+
+\begin{eg}
+Let $U,V\sim^i \Normal(0,1)$, and 
+$$
+X=U, \quad Y=\rho U+\sqrt{1-\rho^2}V.
+$$
+Then
+		$$\KXY=\frac12(s^2+2\rho st+t^2).$$
+\end{eg}
+
+\begin{proof}
+Try this!
+\end{proof}
+
+Finally, to obtain the bivariate normal from $X$ and $Y$, we take 
+$$X^*=\mu_X+\sigma_XX, \quad Y^*=\mu_Y+\sigma_YY.$$
+
+Then $X^*\sim N(\mu_X, \sigma_X),$ and $Y^*\sim N(\mu_Y, \sigma_Y)$, and $\Corr(X^*,Y^*)=\rho.$

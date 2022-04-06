@@ -1,0 +1,80 @@
+% ! TeX root = ..\main.tex
+\lecture{2}{Lecture 2}{Wed 6 Oct 2021 10:00}{}
+
+\begin{eg}
+Suppose that 1.2\% of live births lead to twins. Further suppose that $\frac{1}{3}$ are identical twins, and $\frac{2}{3}$ are fraternal. We can describe each of these events with the outcomes and their associated probabilities below:
+\begin{align*}
+		&\frac{1}{3} \ \text{ identical} \quad \quad (\underset{\frac{1}{2}}{BB},\underset{\frac{1}{2}}{GG})\\
+		&\frac{2}{3} \ \text{ fraternal} \quad \quad (\underset{\frac{1}{4}}{BB},\underset{\frac{1}{4}}{GG},\underset{\frac{1}{4}}{BG}, \underset{\frac{1}{4}}{GB})
+.\end{align*}
+Define the events $T,I,F,M$ as $T:$ twins, $I:$ identical twins, $F:$ fraternal, $M:$ twin boys. We now work out each of their associated probabilities.
+\incfig{w2_l2_fig1}{A probability tree representing this situation.}
+
+By multiplying along the paths of each event, we can obtain the probabilities of the events $I,$ $F,$ $M,$ and $P(F\mid M).$
+
+\begin{align*}
+	P(I)&=P(I\mid T)P(T)=\frac{1}{3}\times 0.012=0.004 \\
+	P(F)&=P(F\mid T)P(T)=\frac{2}{3}\times 0.012 = 0.008 \\
+	P(M)&=\frac{1}{4}\times \frac{2}{3} \times 0.012 + \frac{1}{2}\times \frac{1}{3} \times 0.012 = 0.004 \\
+	P(F\mid M)&=\frac{P(M\mid F)P(F)}{P\left( M \right) }=\frac{\frac{1}{4}\times 0.008}{0.004}=\frac{1}{2}
+.\end{align*}
+
+\end{eg}
+
+\subsection{Independence}
+Let $A,B\in \Omega.$ If $A$ and $B$ are independent, then
+$$
+P(A|B)=P(A) \implies \frac{P(A\cap B)}{P(B)}=P(A),
+$$
+which, in turn implies our definition of independence:
+\begin{definition}
+If $A$ and $B$ are \textbf{independent}, or $A\ind B,$ then $P(A\cap B)=P(A)P(B).$ 
+\end{definition}
+
+What if $B=\varnothing$? Then $P(B)=0,$ but also $P(A\cap B)=0.$ The definition also implies the following:
+\begin{enumerate}[(i.)]
+    \item if $A\ind B$ and $P(B)>0,$ then $P(A\mid B)=P(A)$
+    \item if $A\ind B$, then $A^c\ind B,$ $A\ind B^c$, and $A^c\ind B^c.$
+\end{enumerate}
+
+Let $A_1, A_2, A_3, \dots, A_n\in \mathcal F.$ When do we say that these are independent?
+
+\begin{definition}
+		
+\begin{enumerate}[(1)]
+    \item The set $\{A_1,\dots, A_n\}$ are \textbf{pairwise independent} if
+    $$
+    P(A_i\cap A_j)=P(A_i)P(A_j) \quad \text{ for all } i\neq j
+    $$
+    
+    \item The set $\{A_1,\dots, A_n\}$ are (mutually) independent if any subset of at least two events are (mutually) independent.
+\end{enumerate}
+
+\end{definition}
+
+\chapter{\texorpdfstring{Random Variables \& Univariate Distributions}{Random Variables and Univariate Distributions}}
+
+\lecture{2}{Lecture 2 (continued)}{Wed 6 Oct 2021 10:00}{}
+\subsection{The Random Variable}
+
+What is a random variable? Informally, it is a numerical quantity that takes different values with different probabilities. Its value is determined by the outcome of experiments.
+
+\begin{eg}
+Consider the twin example from before. Let $X$ represent the number of girls from a given birth. We can map each event to some value of $X$:
+
+\incfig[0.35]{w2_l2_fig2}{}
+
+More formally we can say that $X$ is a function, that is, $X: \Omega \to \RR$, where for $\omega\in \Omega$,$X(\omega)\in\RR$. Then
+\begin{align*}
+		P(X=1)&=P(\{\omega\in \Omega: X(\omega)=1\}\\
+			  &=P(\{BG,GB\})=\frac{2}{4}=\frac{1}{2} \\
+		P(X>0)&= P(\{\omega\in \Omega: X(\omega)>0\}) \\
+			  &= P(\{BG,GB,GG\})=\frac{3}{4}
+.\end{align*}
+\end{eg}
+
+\begin{definition}
+Let $\Omega$ be a sample space and $E$ be a measurable space. For our purposes, let $E=\mathbb R$. A \textbf{random variable} is a function $X: \Omega \to E$ with the property that, if $A_x=\{\omega \in \Omega \ : \ X(\omega)\leq x\}$, then $A_x\in \mathcal F$ for all $x\in \mathbb R.$
+\end{definition}
+\vskip.1in
+

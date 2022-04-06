@@ -1,0 +1,137 @@
+% ! TeX root = ..\main.tex
+\lecture{11}{Lecture 1}{Tue 7 Dec 2021 14:00}{}
+
+\subsection{Conditional Expectation}
+
+\begin{definition}
+The \textbf{conditional expectation} of $Y$ given $X$ is $\EE(Y\mid X) =\psi(X)$.
+\end{definition}
+
+\begin{eg}[Hurricanes]
+$$
+(Y\mid X =x) \sim \Bin(x,p),
+$$
+so $\EE(Y\mid X=x)=xp \implies \EE(Xp)$.    
+\vskip.1in
+
+Important difference: $\EE (Y\mid X)$ gives a random variable, $\EE(Y\mid X = x)$ gives $\psi(x).$
+\end{eg}
+
+\subsection{Law of Iterated Expecations}
+\label{ssec:LoIE}
+
+\begin{prop}
+For random variables $X$ and $Y$, we have
+$$\EE(Y)=\EE(\EE(Y\mid X)].$$
+\end{prop}
+
+\begin{proof}
+\begin{align*}
+    \mathbb E[\mathbb E(Y\mid X)] &= \EE[\psi(X)] \\
+    &=\intR \psi(x)f_X(x) \ dx \\
+    &=\intR \EE(Y\mid X=x) f_X(x) \ dx \\
+    &=\intR \left(\intR y \fYgX \ dy\right) f_X(x) \ dx \\
+    &= \intRR y \fYgX f_X(x) \ dy \ dx \\
+    &=\intRR y \fXY \ dy \, \ dx \\
+    &=\EE (Y).
+\end{align*}
+\end{proof}
+\vskip.2cm
+\begin{eg}[More Hurricanes]
+$\EE(Y) = \EE[\EE(Y\mid X)]=\EE(Xp)=\lambda p$. Then $X\sim \Poisson(\lambda),$ $(Y\mid X=x)\sim \Bin(x,p).$
+\end{eg}
+
+\vskip.2cm
+
+Note that the Law of Iterated Expectations is conceptually similar to \nameref{ssec:TLoTP}, which states
+$$
+P(A)=\sum_{i\in \NN}P(A\mid B_i)P(B_i).
+$$
+
+\begin{eg}
+Let $X$, $Y$ be random variables with joint density
+$$\fXY=\begin{cases} xe^{-xy}e^{-x}, \quad &x,y>0, \\ 0, \quad & \text{otherwise.} \end{cases}$$
+
+Find $\EE(Y\mid X):$
+
+\begin{align*}
+    \intR \fXY \ dy &= \int^\infty_0 xe^{-xy}e^{-x} \ dy \\
+    &=[e^{-xy}e^{-x}]^{y\to \infty}_{y=0}\\
+    &=e^{-x}, \quad x>0.
+\end{align*}
+Hence, $X\sim \Exp(1).$
+It is often helpful to write this explicitly. Now, 
+$$
+\fYgX=\frac{\fXY}{f_X(x)}=\frac{xe^{-xy}e^{-x}}{e^{-x}}=xe^{-xy}.
+$$
+Hence, $(Y\mid X=x)\sim \Exp (x).$ This implies that
+$$
+\EE(Y\mid X=x)=\frac1x \quad \text{ and } \quad \EE(Y\mid X)=\frac1X.
+$$
+\end{eg}
+
+If $g: \RR \to \RR$ is a well-behaved function, and we define
+$$
+h(x)=\EE[g(Y)\mid X=x]=\begin{dcases}
+		\sum_yg(y)\fYgX \quad &\text{(discrete)}\\
+		\intR g(y) \fYgX \ dy \quad & \text{(continuous)},
+\end{dcases}
+$$
+then the conditional expectation of $g(Y)$ given $X$ is $\EE(g(Y)\mid X)=h(X).$
+\vskip.1in
+
+\subsection{Properties of Conditional Expectation}
+For any two random variables $X$ and $Y$,
+\begin{itemize}
+\item $\EE((aX+b)\mid Y)=a\EE(X\mid Y) +b,$
+\item $E(XY\mid X)=X\EE(Y\mid X)$.
+\item Think about: $\EE(XY\mid X=x)=\EE(xY\mid X=x)=x\EE(Y\mid X=x).$
+\item $\EE[\EE(X\mid Y)Y\mid X]=\EE(Y\mid X)\EE(Y\mid X)=\EE(Y\mid X)^2,$ since $\EE(Y\mid X)$ is a function of $X.$
+\end{itemize}
+
+\begin{definition}
+The $r$th \textbf{conditional moment} of $Y$ given $X$ is $\EE(Y^r\mid X)$,  and the $r$th conditional central moment is 
+$$
+\EE[(Y-\EE(Y\mid X))^r\mid X].
+$$
+\end{definition}
+
+\begin{eg}[Conditional Variance]
+Let $X,Y$ be random variables. Then
+\begin{align*}
+    \Var(Y\mid X)&=\EE[(Y-\EE(Y\mid X))^2|X] \\
+    &=\EE(Y^2\mid X)-\EE(Y\mid X)^2.
+\end{align*}
+\end{eg}
+
+\begin{proof}
+		Prove this!
+\end{proof}
+
+\subsection{Law of Iterated Variance}
+\label{ssec:LoIV}
+\begin{prop}
+Let $X$ and $Y$ be random variables. Then
+$$\Var(Y)=\EE[\Var(Y\mid X)]+\Var[\EE(Y\mid X)].$$
+\end{prop}
+
+\begin{proof}
+		We have
+\begin{align*}
+    \Var(Y)&=\EE(Y^2)-\EE(Y)^2 \\
+    &= \EE[\EE(Y^2\mid X)]-(\EE[\EE(Y\mid X)])^2 \\
+    &= \EE[\Var(Y\mid X)+\underbrace{\EE(Y\mid X)^2}_{\psi(X)^2}]-\EE[\underbrace{\EE(Y\mid X)}_{\psi(X)}]^2 \\
+    &=\EE[\Var(Y\mid X)]+\EE[\psi(X)^2]-(\EE(\psi(X)))^2 \\
+    &=\EE[\Var(Y\mid X)]+\Var[\EE(Y\mid X)].
+\end{align*}
+\end{proof}
+\subsubsection{Hurricanes Again}
+\begin{eg}
+Let $(Y\mid X=x)\sim \Bin (x,p),$ and $X\sim \Poisson(\lambda)$. Then
+\begin{align*}
+    \Var(Y)&=\EE[\Var(Y\mid X)]+\Var[\EE(Y\mid X)] \\
+    &=\EE(Xp(1-p))+\Var(Xp) \\
+    &=\lambda p(1-p)+\lambda p^2 \\
+    &=\lambda p.
+\end{align*}
+\end{eg}

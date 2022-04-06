@@ -1,0 +1,99 @@
+% ! TeX root = ..\main.tex
+\lecture{3}{Lecture 1}{Tue 12 Oct 2021 14:00}{}
+
+\subsection{Examples of Random Variables}
+
+\begin{eg}
+	Let $X$ be a random variable. For $x=2,$ we have $A_2\in \mathcal F,$ so we can write $P(A_2)=P(X\leq 2).$
+\end{eg}
+
+
+\begin{eg}
+Suppose there is a family with two children. Let $X=$ the number of girls. Then
+\begin{align*}
+	&P(A_0)=P(\{BB\})=\frac{1}{4} \\
+	&P(A_1)=P(\{BB,BG,GB\})=\frac{3}{4} \\
+	&P(A_{\frac32})=P(A_1)=\frac34 \\
+	&P(A_2)=P(\Omega)=1 \\
+	&P(A_{-1})=P(\{\})=0 \\
+	&P(A_\pi)=P(\Omega)=1.
+\end{align*}
+\end{eg}
+\subsection{The Cumulative Distribution Function}
+\vskip.1cm
+\begin{definition}
+		A random variable $X$ is \textbf{positive} if $X(\omega)\geq 0$ for all $\omega\in \Omega.$
+\end{definition}
+
+\begin{definition}
+		The \textbf{cumulative distribution function} (\textbf{CDF}) of a random variable $X$ is the function $F_X:\mathbb R\to [0,1]$ given by $F_X(x)=P(\underbrace{X\leq x}_{A_x}).$
+\end{definition}
+
+\begin{eg}
+Let $X$ be a random variable and $F_X$ be a valid CDF. Then
+$$P(A_1)=P(X\leq 1)=F_X(1).$$ 
+\end{eg}
+
+\begin{eg}
+In our two child example,
+$$
+F_X(0)=\frac{1}{4}, \quad F_X(1)=\frac34, \quad F_X(2)=1, \quad F_X(-1)=0, \quad F_X\left(\frac32\right)=\frac34, \dots
+$$
+Moreover, note that the CDF in this case is a step function, as seen in the figure below.
+\incfig[0.7]{w3_l1_fig1}{The Cumulative Distribution Function of the two child example.}
+\end{eg}
+
+\begin{definition}
+A function $g:\mathbb R\to \mathbb R$ is \textbf{right-continuous} if $g(x+)=g(x)$ for all $x\in \RR$, where
+\begin{align*}
+     &g(x+)=\lim_{h\downarrow 0}g(x+h), \\
+    \text{and} \quad &g(x-)=\lim_{h\downarrow 0}g(x-h).
+\end{align*}
+\end{definition}
+
+\begin{prop}
+If $F_X$ is a CDF, then 
+\begin{enumerate}[i.]
+    \item $F_X$ is increasing, i.e., if $x<y$ then $F_X(x)\leq F_X(y).$
+    \item $F_X$ is right-continuous, i.e. $F_X(x+)=F_X(x)$ for all $x\in \RR.$
+    \item $\lim_{x\to -\infty}=0$ and $\lim_{x\to \infty} F_X(x)=1$.
+\end{enumerate}
+\end{prop}
+
+\begin{proof}
+\begin{enumerate}[i.]
+\item
+If $x<y,$ then $A_X\subseteq A_y$, so
+$$
+F_X(x)=P(A_x)\leq P(A_y)=F_X(y).
+$$
+\item
+Take a decreasing sequence $\{x_n\}$ such that $x_n\downarrow x$ as $n\to \infty$ $(x_1\geq x_2\geq x_3\geq \cdots).$ We have
+$$
+A_{x_1}\supseteq A_{X_2} \supseteq \cdots
+$$
+and $A_x\supseteq A_{x_n}$. So 
+$$
+A_x=\bigcap^\infty_{n=1}A_{x_n}.
+$$
+Then
+\begin{align*}
+    \lim_{x\to \infty} F_X(x_n)&=\lim_{n\to \infty}P(A_{x_n})\\
+    &=P\left(\bigcap_{n\in\mathbb N}A_{x_n}\right)\\
+    &=P(A_x) \\
+    &=F_X(X) \\
+	\implies \lim_{h\downarrow 0} F_X(x+h)&=F_X(x).
+\end{align*}
+
+\item In M\&P textbook.
+\end{enumerate}
+
+\end{proof}
+\subsubsection{Some basic properties of CDFs}
+Observe that
+\begin{itemize}
+    \item $P(X>x)=1-P(X\leq x)=1-F_X(x)$
+    \item $P(x<X\leq y)=F_X(y)-F_X(x)$
+    \item $P(X<x)=F_X(x-)$
+    \item $P(X=x)=F_X(x)-F_X(x-).$
+\end{itemize}
