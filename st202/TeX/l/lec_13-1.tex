@@ -1,0 +1,164 @@
+% ! TeX root = ..\main.tex
+\lecture{13}{Lecture 1}{Tue 25 Jan 2022 14:00}{}
+
+\subsection{A Normal Sample}
+\begin{prop}Let $Y_1,\dots,Y_n\sim \Normal(\mu,
+\sigma^2)$. Then
+\begin{enumerate}[(i)]
+    \item $\bar Y\ind (Y_j-\bar Y)$ for all $j=1,\dots,n$
+    \item $\bar Y\ind S^2$.
+\end{enumerate}
+\end{prop}
+\begin{proof}
+\phantom{x}
+	\begin{enumerate}[(i)]
+			\item Since we can express any linear combination of $\bar Y$ and $(Y_j-\bar Y)$ as a linear combination of $Y_1,\dots, Y_n$, $\bar{Y}$ and $(Y_j-\bar{Y})$ are jointly normally distributed. Moreover, they are uncorrelated:
+    \begin{align*}
+    \Cov(\bar Y, Y_j-\bar Y)&=\Cov\left(\frac{1}{n}\sum^n_{i=1}Y_i, \ Y_j-\frac{1}{n}\sum^n_{i=1}Y_i\right) \\
+    &=\Cov(\bar Y,Y_j)-\Cov(\bar Y,\bar Y) \\
+    &=\Cov\left(\frac{1}{n}Y_j,\ Y_j\right)-\Var(\bar{Y}) \\
+    &=\frac{1}{n}\Var(Y_j)-\frac{\sigma^2}{n}\\
+	&=\frac{\sigma^2}{n}-\frac{\sigma^2}{n}\\
+	&= 0.
+    \end{align*}
+    Hence, $\bar Y$ and $\Normal(\mu,\sigma^2)$ are jointly normal and uncorrelated. Thus, they are independent.
+    \item Note that $S^2=\frac{1}{n-1}\sum^n_{j=1}(Y_j-\bar Y)^2$ is independent of $\bar Y.$
+\end{enumerate}
+\end{proof}
+
+\subsection{\texorpdfstring{The $\chi^2$ Distribution}{The Chi-Squared Distribution}}
+
+\begin{recall}
+Let $X_1,\dots,X_n\sim F_x$. Then 
+\begin{align*}
+M_{\bar X}(t)&=\EE(e^{t\bar X}\\
+&=\EE\left(e^{\frac{t}[n}\sum^n_{i=1}X_i\right)\\
+&=\EE(e^{\frac{t}{n}}X_1) \cdots \EE(e^{\frac{t}{n}X_n} \\
+&=\left(M_X\left(\frac{t}{n}\right)\right)^n
+\end{align*}
+\end{recall}
+
+\begin{prop}
+Let $Z_1,\dots,Z_n\sim \Normal(0,1)$. Then
+\begin{enumerate}[(i)]
+    \item $\bar Z\sim\Normal\left(0,\frac{1}{n}\right)$
+    \item $(n-1)S^2\sim\chi^2_{n-1}$.
+\end{enumerate}
+\end{prop}
+
+\begin{remark}
+		Note that $\chi^2_k$, where $k$ is the degrees of freedom, is the same as $\Gamma\left(\frac{k}{2},\frac{1}{2}\right)$. So, if $U\sim \chi^2_k$, then $$M_n(t)=(1-2t)^{-\frac{k}{2}},$$ which is the MGF of the distribution of $\sum^k_{i=1}Z_i^2.$
+\end{remark}
+
+\begin{proof}
+\phantom x
+\begin{enumerate}[(i)]
+    \item Note that
+\begin{align*}
+		M_{\bar Z}&=\left(M_{Z_1}\left(\frac{t}{n}\right)\right)^n \\
+				  &= \left(e^{\frac{\left(\frac{t}{n}\right)^2}{2}}\right) \\
+				  &= e^{\frac{t^2}{2n}},
+\end{align*}
+which is the MGF of $\Normal\left( 0,\frac{1}{n} \right)$.
+
+    \item Observe that
+			$$\underbrace{\sum^n_{i=1}Z_i^2}_{\sim\chi^2_n}=\underbrace{\sum^n_{i=1}(Z_i-\bar Z)^2}_{(n-1)s^2} \ +\underbrace{n\bar Z^2}_{\left(\frac{\bar Z-0}{\sqrt{1/n}}\right)^2\sim\chi^2_1}.$$
+   	Observe that the MGF of the left hand side is 
+	$(1-2t)^{-\frac{n}{2}}$, and the MGF of the right hand side is 
+	$$M_{(n-1)s^2}(t)\times(1-2t)^{-\frac{1}{2}}.$$ 
+	This is because the two terms are independent random variables. This implies that
+    $$M_{(n-1)s^2}(t)=\frac{(1-2t)^{-n/2}}{(1-2t)^{-1/2}}=(1-2t)^{-\frac{n-1}{2}},$$ 
+	so
+    $$
+    (n-1)s^2\sim\chi^2_{n-1}.
+    $$
+\end{enumerate}
+\end{proof}
+We can extend these properties to the general normal.
+\begin{prop}
+	 Let $X_1,\dots,X_n\sim \Normal(\mu,\sigma^2)$. Then
+    \begin{enumerate}[(i)]
+        \item $\bar X \sim
+        \Normal\left(\mu,\frac{\sigma^2}{n}\right)$
+        \item $\frac{(n-1)s^2}{\sigma^2}\sim \chi^2_{n-1}$.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+		We can set $X_i=\mu+\sigma Z_i,$ where $Z_i\sim \Normal(0,1)$. The rest of the proof follows. 
+\end{proof}   
+    \subsection{Sample quantiles and order statistics}
+\begin{definition}
+		The $\alpha$-\textbf{quantile} $q_\alpha$ is the smallest value such that
+		$$F_Y(q_\alpha)=\alpha.$$
+\end{definition}
+\begin{eg}
+		The median is $q_{0.5}$, and $q_{0.25}$ is the lower quartile.
+		\end{eg}
+\begin{notation}
+    If $Y_1,\dots,Y_n$ is a random sample. Then 
+   	\begin{align*}
+    Y_{(1)}=\min\{Y_1,\dots,Y_n\}
+    \vdots
+    Y_{(n)}=\max\{Y_1,\dots,Y_n\}.
+	\end{align*}
+\end{notation}
+\begin{definition}
+    We say that $Y_{(1)}\leq Y_{(2)}\leq \cdots \leq Y_{(n)}$ are the \textbf{order statistics} of the sample. 
+\end{definition} 
+\begin{remark}
+    Notice that $\EE(Y_{(n)})>\EE(Y).$ Order statistics do \textit{not} have the same distribution as the population they came from: 
+    \begin{align*}
+            F(Y_{(n)})&=P(Y_{(n)}\leq y)\\
+			&=P(Y_1\leq y, \dots, Y_n\leq y) \\
+			&=P(Y_1\leq y)\cdots P(Y_n\leq y) \\
+			&=(F_Y(y))^n.
+    \end{align*}
+Similarly, $F_{Y_{(1)}}(y)=1-(1-F_Y(y))^n.$ How do we find the PDF/PMF?
+\end{remark}
+
+\subsubsection{Continuous Case}
+\begin{align*}
+    f_{Y_{(n)}}(y)&=\der{y}F_{Y_{(n)}}(y)\\
+    &=\der{y}(F_Y(y))^n \\
+    &=n(F_Y(y))^{n-1}f_Y(y).
+\end{align*}
+Moreover,
+\begin{align*}
+    f_{Y_{(1)}}(y)&=\der{y}(1-(1-F_Y(y))^n) \\
+    &=n(1-F_Y(y))^{n-1}f_Y(y).
+\end{align*}
+\subsubsection{Discrete Case}
+If the support is $\{a_1,a_2,\dots\}$, then
+
+$$
+f_{Y_{(n)}}(y)=\begin{cases}(F_Y(a_k))^n-(F_Y(a_{k-1}))^n, \quad &\text{if } y=\alpha_k, \\
+0, &\text{otherwise.}	
+\end{cases}
+$$
+
+\subsection{Sample quantiles}
+\begin{notation}
+		For $a\in \RR$, $\{a\}$ is equal to $a$ rounded to the nearest integer.  
+\end{notation}
+
+\begin{definition}
+The \textbf{sample} $\alpha$-\textbf{quantile} is defined as
+$$
+Q_{\alpha}=\begin{dcases}
+		Y_{(\{n\alpha\})}, \quad &\frac{1}{2n}<\alpha<\frac{1}{2} \\
+		Y_{(n+1-\{n(1-\alpha)\})}, \quad & \frac{1}{2}<\alpha<1-\frac{1}{2n}. 
+\end{dcases}
+$$
+\end{definition}
+Try applying this definition, for, say, $n=5$ and various $\alpha$.
+
+\begin{eg}
+The sample median is
+$$
+Q_{0.5}=
+\begin{dcases}Y_{\left(\frac{n+1}{2}\right)}, \quad &\text{ if $n$ is odd} \\
+		\\
+		\frac{Y_{\left(\frac{n}{2}\right)}+Y_{\left(\frac{n}{2}+1\right)}}{2}, \quad  &\text{ if $n$ is even}.
+\end{dcases}
+$$
+\end{eg}

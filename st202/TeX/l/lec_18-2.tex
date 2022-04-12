@@ -1,0 +1,81 @@
+% ! TeX root = ..\main.tex
+\chapter{Inferential Theory}
+\lecture{18}{Lecture 2}{Thu 3  Mar 2022 10:00}{}
+
+\subsection{Sufficiency}
+When you summarize information into a statistic, you are also throwing away some information included within the sample. Moreover, not all statistics are equally useful. What we're trying to do with sufficiency is to show if something is a useful summary, and if it throws away too much information.
+
+\begin{definition}
+Let $Y_1,\ldots, Y_n\sim F_Y(y;\theta)$ be a random sample. Consider the statistic $U=h(\YY).$ We say $U$ is \textbf{sufficient} for $\theta$ if the conditional distribution of $\YY \mid U$ does not depend on $\theta.$
+\end{definition}
+\begin{note}
+Both $\YY$ and $U$ are both sample statistics. 
+\end{note}
+
+First, consider the discrete case:
+
+\subsubsection{Discrete Case}
+
+Let $f_{\YY\mid \UU}(\yy\mid \uu).$ If $\YY=\yy$, then $h(\YY)=h(\yy),$ which implies that $\mathbf U=\mathbf u.$ We can say that $\YY=\yy$ is a \textit{subset} of $\UU=\uu.$ Note that we can express
+\begin{align*}
+f_{\YY\mid \UU}(\yy\mid \uu) &= \frac{f_{\YY,\UU}(\yy,\uu)}{f_{\UU}} \\
+&=\frac{P(\YY=\yy,\UU=\uu)}{P(\UU=\uu)}\\
+&\implies f_{\YY\mid \UU}(\yy\mid \uu)=\begin{cases}
+\frac{f_{\YY}(\yy)}{f_{\UU(\uu)}},\quad &\text{if } \uu=h(\yy) \\
+0, \quad &\text{otherwise.}
+\end{cases}
+\end{align*}
+
+\begin{eg}
+Let $Y_1,\ldots, Y_n\sim \Bernoulli(p)$ and consider $U=\sum^n_{i=1}Y_i$ $\sim \Bin(n,p)$. Then
+\begin{align*}
+    f_\YY(\yy)&=\prod^n_{i=1}f_Y(y_i)\\
+    &=\prod^n_{i=1}p^{y_i}(1-p)^{1-y_i} \\
+    &=p^{\sum^n_{i=1}y_i}(1-p)^{n-\sum^n_{i=1}y_i}\\
+    &=p^u(1-p)^{n-u},
+\end{align*}
+where $u=\sum^n_{i=1}y_i.$ So
+\begin{align*}
+f_{\YY\mid \UU}{(\yy\mid u)}&=\frac{f_\YY(\yy)}{f_U(u)} \\
+    &=\frac{p^u(1-p)^{n-u}}{\binom{n}{u}p^u(1-p)^{n-u}} \\
+    &=\frac{1}{\binom{n}{u}},
+\end{align*}
+which does not depend on $p.$ This implies that $U=\sum^n_{i=1}Y_i$ is a sufficient statistic for $p.$ Hence, $\yy$ is a vector of 0s and 1s with $\binom{n}{u}$ possibilities. Moreover, this tells us nothing about $p.$
+\end{eg}
+\begin{remark}
+The key idea of sufficiency is that knowing the raw data tells us nothing about the parameter. Estimation of unknown parameters should be based on sufficient statistics. We will see that there is a strong link between sufficiency and MLEs.
+\end{remark}
+
+\subsection{Finding Sufficient Statistics}
+\begin{theorem}[Factorisation Criterion]
+If we can express the joint \phantom{xxx} \linebreak mass/density of $\YY$ in the form
+$$
+f_\YY(\yy;\theta)=L(\theta;\yy)=b(\theta,h(\yy))c(\yy),
+$$
+then $\UU=h(\YY)$ is sufficient for $\theta.$ 
+\end{theorem}
+\begin{proof}
+If $\UU$ is sufficient for $\theta,$ then $f_{\YY\mid \UU}(\yy\mid \uu)=\frac{f_\YY(\yy)}{f_\UU(\uu)}$ does not depend on $\theta.$ This implies that
+$$
+f_\YY(\yy)=\underbrace{f_\UU(\uu)}_{b(\theta,h(\yy))}\underbrace{f_{\YY\mid\UU}(\yy\mid \uu)}_{c(\yy)}.
+$$
+The "if" direction for the discrete case is covered in Theorem 10.1.14, page 330 in the course textbook. The full proof for both cases is very involved, and can be found \href{https://en.wikipedia.org/wiki/Sufficient_statistic#Fisher%E2%80%93Neyman_factorization_theorem}{here}.
+\end{proof}
+
+\begin{eg}[Bernoulli Case]
+Let $Y_1,\ldots,Y_n\sim \Bernoulli(p)$. Then 
+$$
+L(p;\yy)=\underbrace{p^{\sum^n_{i=1}y_i}(1-p)^{n-\sum^n_{i=1}y_i}}_{b\left(p,\sum^n_{i=1}y_i\right)},
+$$
+with $c(\yy)=1.$ This implies that $\sum^n_{i=1}Y_i$ is sufficient for $p,$ Note that this isn't unique, as we can instead write this in terms of $\bar Y.$
+\end{eg}
+
+\begin{eg}[Poisson Case]
+We have
+$$
+L(\lambda;\yy)=\prod^n_{i=1}\frac{e^{-\lambda}\lambda^{y_i}}{y_i!}=\underbrace{e^{-n\lambda}\lambda^{n\bar y}}_{b(\lambda,\bar y)}\frac{1}{\underbrace{\prod^n_{i=1}y_i!}_{c(\yy)}},
+$$
+which implies that $\bar Y$ is sufficient for $\lambda.$ \end{eg}
+
+MLEs are always functions of sufficient statistics. The part that is not a function of the sufficient statistic plays no role in finding the MLE.
+

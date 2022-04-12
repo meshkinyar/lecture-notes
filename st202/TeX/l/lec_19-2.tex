@@ -1,0 +1,107 @@
+% ! TeX root = ..\main.tex
+\lecture{19}{Lecture 2}{Thu 10 Mar 2022 10:00}{}
+
+\subsection{The Rao-Blackwell Theorem}
+
+\begin{theorem}[Rao-Blackwell Theorem]
+Let $\YY=(Y_1,\ldots, Y_n)^T$ be a random sample with parameter $\boldsymbol \theta$, estimator $\UU$ (of $\btheta$), sufficient statistic $\mathbf S$. Then $\mathbf T=\EE(\UU\mid \bS)$ is an estimator with
+$$
+\MSE_{\btheta}(\bT)\leq \MSE_\btheta(\UU).
+$$
+\end{theorem}
+
+\begin{proof}
+Observe that
+\begin{align*}
+		\MSE_\btheta(\UU)&=\EE[(\UU-\btheta)^2] \\
+    &=\EE[\EE[(\UU-\btheta)^2\mid \bS]] \\
+    &\geq \EE[[\EE((\UU-\btheta)\mid \bS)]^2] \\
+    &=\EE[(\EE(\UU\mid \bS)-\btheta)^2] \\
+    &=\EE[(\bT-\btheta)^2] \\
+    &=\MSE_\btheta(\bT).
+\end{align*}
+\end{proof}
+Also notice that 
+$$\EE(\bT)=\EE[\EE(\UU\mid\bS)]=\EE(\UU).$$
+For equality, we need
+$$
+\EE[(\UU-\btheta)^2\mid \bS]=[\EE(\UU-\btheta)\mid \bS]^2 \iff \Var(\UU-\btheta \mid \bS)=0,
+$$
+so $\UU$ \text{ is a function of } $\bS.$ 
+
+\subsection{Cramer-Rao lower bound}
+
+What is the best unbiased estimator? The one with the lowest variance: the minimum-variance unbiased estimator (MVUE).
+
+\begin{theorem}[Cramer-Rao Bound]
+Let $\YY=(Y_1,\ldots,Y_n)^T$ be a random sample with distribution $f_Y(y;\theta)$. If $U=h(\YY)$ is an \textit{unbiased} estimator of $g(\theta),$ then:
+$$
+\Var(U)\geq \frac{(\der{\theta}g(\theta))^2}{\mathcal I_\YY(\theta)}.
+$$
+Special case: if $g(\theta)=\theta,$ then $\Var(U)\geq \frac{1}{\mathcal I_\YY(\theta)}.$
+\end{theorem}
+An unbiased estimator that is fully-efficient attains this lower bound. MLEs are asymptotically unbiased, asymptotically normal, and asymptotically fully-efficient.
+\begin{proof}
+Recall that $\EE(s(\theta;\YY))=0,$ $\Var(s(\theta,\YY))=\mathcal I_\YY(\theta).$ If $U=h(\YY)$ is unbiased for $g(\theta),$ then 
+\begin{align*}
+    g(\theta)&=\EE(U) \\
+    &=\int_{\RR^n}h(\yy)f_\YY(\yy;\theta) \ d\yy,
+\end{align*}
+which implies that
+\begin{align*}
+    \der{\theta}g(\theta)&=\int_{\RR^n}h(\yy)\der{\theta}f_\YY(\yy;\theta)\ d\yy \\
+    &=\int_{\RR^n}h(\yy)s(\theta;\yy)f_\YY(\yy;\theta) \ d\yy \\
+    &=\EE[h(\YY)s(\theta;\YY)] \\
+    &=\Cov(h(\YY),s(\theta;\YY)), 
+\end{align*}
+which implies that
+\begin{align*}
+    \left(\der{\theta}g(\theta)\right)^2&=\left(\Cov(h(\YY),s(\theta;\YY))\right)^2 \\
+    &\leq \Var(h(\YY))\Var(s(\theta;\YY)) \\
+    &=\Var(h(\YY))\mathcal I_\YY(\theta) \\
+    &\implies \Var(h(\YY))\geq \frac{\left(\der{\theta}g(\theta)\right)^2}{\mathcal I_\YY(\theta)}.
+\end{align*}
+\end{proof}
+When do we have equality? We need 
+\begin{align*}
+&\Cov(h(\YY),s(\theta;\YY))^2=\Var(h(\YY))\Var(s(\theta;\YY))\\
+\iff 
+&\Corr(h(\YY),s(\theta;\YY))^2=1,
+\end{align*}
+so $s(\theta;\YY)=b(\theta)U+a(\theta)$, \textit{but}
+$$
+\EE(s(\theta;\YY))=0\implies b(\theta)\EE(U)+a(\theta)=0,
+$$
+which in turn implies that $a(\theta)=-b(\theta)g(\theta)$, and we can write
+$$
+s(\theta;\YY)=b(\theta)[U-g(\theta)].
+$$
+Then $U$ is the MLE.
+
+So, if we can write the score function as
+$$
+s(\theta;\YY)=b(\theta)[U-g(\theta)],
+$$
+where $b(\theta)$ is a function of $\theta$ \textit{only}, the quantity of interest is $g(\theta)$, and $U$ is our estimator of $g(\theta),$ we can deduce:
+\begin{enumerate}[(1)]
+    \item $U=h(\YY)$ is the MLE of $g(\theta)$.
+    \item $U$ is unbiased for $g(\theta).$
+    \item $U$ attains the Cramer-Rao lower bound (CRLB).
+    \item $U$ is the MVUE.
+\end{enumerate}
+If we \textit{can't}, then no unbiased estimator can attain the CRLB.
+
+\begin{eg}[Normal Case]
+Let $Y_1,\ldots,Y_n\sim \Normal(\mu,\sigma^2),$ where $\sigma^2$ is known. Then
+\begin{align*}
+    L(\mu;\yy)&=(2\pi\sigma^2)^{-\frac{n}{2}}\exp\left(-\frac{1}{2\sigma^2}\sum^n_{i=1}(Y_i-\bar Y)^2+n(\bar Y-\mu)^2\right)\\
+    &\propto \exp\left(-\frac{n}{2\sigma^2}(\bar Y-\mu)^2\right) \\
+    &\implies \ell(\mu;\yy)=-\frac{n}{2\sigma^2}(\bar Y-\mu)^2 +C \\
+    &\implies s(\mu;\YY)=\frac{n}{\sigma^2}(\bar Y-\mu) 
+\end{align*}
+which is in the form $b(\mu)[U-g(\mu)],$ so $\hat \mu$ is the MLE, it is unbiased, it attains the CRLB, and it is the MVUE. So
+$$
+\Var(\bar Y)=\frac{1}{\mathcal I_\YY(\mu)}=\frac{1}{n/\sigma^2}=\frac{\sigma^2}{n}.
+$$
+This is an example of a case where the CRLB is attainable.
+\end{eg}

@@ -1,0 +1,94 @@
+% ! TeX root = ..\main.tex
+\lecture{18}{Lecture 1}{Tue 1 Mar 2022 14:00}{}
+\label{sec:wk18}
+
+\subsection{More on MLEs}
+
+\begin{eg}
+Let $Y_1,\ldots, Y_n \sim \Exp(\lambda)$. Then 
+\begin{align*}
+		&L(\lambda;\yy)=\prod^n_{i=1}\lambda e^{0\lambda y_i} = \lambda^n e^{-\lambda n \yy} \\
+		\implies &\ell(\lambda; \yy)=n\log \lambda -n\yy\lambda \\
+				 &\implies s(\lambda;\yy)=\frac{n}{\lambda}-n\yy.
+.\end{align*}
+Setting this final expression equal to 0 yields
+\begin{align*}
+&\frac{n}{\hat{\lambda}}-n\yy=0 \\
+		\implies&\hat{\lambda}=\frac{1}{\yy} \quad &\text{(estimate)}
+		\implies &\hat{\lambda}=\frac{1}{\YY} \quad \text{(estimator).}
+\end{align*}
+Take $$\pder[{}^{2}]{\lambda^2}\ell(\hat{\lambda};\yy)=-\frac{n}{\lambda^2},$$ which is negative. Hence, we know that $\hat{\lambda}$ is indeed a maximum.
+\end{eg}
+
+\begin{remark}
+Given $Y_1,\dots,Y_n\sim F_Y(y;\theta)$, and $\hat{\theta}$ as the MLE of $\theta$,
+\[
+		\hat{\theta}\to^d \Normal(\theta,\mathcal I_\YY(\theta)^{-1}) \quad \text{as }n\to \infty.
+.\] Since $\mathcal I_\YY(\theta)=n\mathcal I_Y(\theta),$ we have
+$$
+\mathcal I_\YY(\theta)^{-1}=\frac{1}{n\mathcal I_Y(\theta)}.
+$$
+\end{remark}
+
+If you have a large sample, we can use this limiting distribution as an approximation, and thus construct a pivotal and therefore a confidence interval.
+
+\begin{eg}
+		In the $\Exp(\lambda)$ case, we have
+$$
+\hat \lambda =\frac{1}{\bar Y}, \quad \mathcal I_\YY=\frac{n}{\lambda^2},
+$$
+so $\hat \lambda \to^d \Normal\left(\lambda, \frac{\lambda^2}{n}\right).$ In this example we use the rate parameter $\lambda$. There are, however, two parameters for the exponential. Recall that the scale parameter is $\theta=\frac{1}{\lambda}.$ Now is it the case that $\hat \theta =\frac{1}{\hat \lambda}$? Yes, since a particular value of $\lambda$ maximizes the likelihood, that same value maximizes the likelihood of $\theta$. Thus, likelihood is transformation-invariant. This holds for both 1-1 and many-to-one transformations.
+\end{eg}
+
+\begin{eg}[Odds]
+Let $Y_1,\ldots,Y_n\sim \Bernoulli(p).$ We often prefer to work with \textbf{odds:} $\frac{p}{1-p}$. What is the MLE of odds? The MLE of $p$ is $\hat p=\bar Y.$ So the MLE of odds is
+$$
+\frac{\hat p}{1-\hat p}=\frac{\bar Y}{1-\bar Y}.
+$$
+\end{eg}
+
+\begin{note}
+		Check out the section on induced likelihood.
+\end{note}
+
+\subsection{Likelihood-ratio test}
+\begin{definition}
+Let 
+$$
+H_0:\theta \in \Theta_0, \quad H_1:\theta\in \Theta_1,
+$$
+i.e., we have $\Theta_0\cup \Theta_1=\Theta.$ The \textbf{likelihood ratio test statistic} is
+$$
+r(\YY)=\frac{\sup_{\theta\in\Theta}L(\theta;\YY)}{\sup_{\theta\in \Theta_0}L(\theta;\YY)}=\frac{L(\hat \theta;\YY)}{L(\hat \theta_0;\YY)},
+$$
+where $L(\hat \theta_0;\YY)$ is the \textbf{constrained MLE.}
+\end{definition}
+The likelihood ratio test tells us to reject $H_0$ for large values of $r(\YY).$ We find some value $k$ then reject $H_0$ when $r(\YY)>k.$ How do we find $k$? We set 
+$$
+P_{H_0}(r(\YY)>k)=\alpha.
+$$
+\begin{eg}
+\label{eg:lrtnormal}
+Let $Y_1,\ldots, Y_n\sim \Normal(\mu,\sigma^2),$ with $\sigma^2$ known. Let
+$$
+H_0:\mu=\mu_0, \quad H_1:\mu\neq \mu_0
+$$
+Note that
+$$
+L(\mu;\yy)=(2\pi\sigma^2)^{-n/2}e^{-\frac{1}{2\sigma^2}[(n-1)s^2+n(\bar y-\mu)^2]}
+$$
+and
+\begin{align*}
+    r(\YY)&=\frac{L(\hat \mu;\YY)}{L(\mu_0;\YY)}\\
+    &=\frac{(2\pi\sigma^2)^{-n/2}e^{-\frac{1}{2\sigma^2}(n-1)s^2}e^{-\frac{n(\bar Y-\bar Y)}{2\sigma^2}}}{(2\pi\sigma^2)^{-n/2}e^{-\frac{1}{2\sigma^2}(n-1)s^2}e^{-\frac{n(\bar Y-\mu_0)}{2\sigma^2}}}\\
+    &= e^{\frac{n}{2\sigma^2}(\bar Y-\mu_0)^2}
+\end{align*}
+This is an increasing function of $|\bar Y-\mu_0|,$ i.e., $r(\bar Y)$ is large when $\bar Y$ is far from $\mu_0.$ Then
+\begin{align*}
+    \alpha&=P_{H_0}(r(\YY)>k) \\
+    &=P_{\mu_0}\left(e^{\frac{n}{2\sigma^2}(\bar Y-\mu_0)^2}>k\right) \\
+    &=P_{\mu_0}\left({\frac{n(\bar Y-\mu_0)^2}{\sigma^2}}>2\log k\right).
+\end{align*}
+Since ${\frac{n(\bar Y-\mu_0)^2}{\sigma^2}}\sim^{H_0}\chi^2_1$, we can find a value of $k.$
+\incfig{w18_l1_fig1}{The rejection region of the likelihood-ratio test in \autoref{eg:lrtnormal}, with $X\sim \chi^2_1$.}
+\end{eg}

@@ -1,0 +1,146 @@
+% ! TeX root = ..\main.tex
+\lecture{22}{Lecture 2}{Thu 31 Mar 10:00}{The End}
+
+\begin{note}
+	Every distribution we've given a name to in this course is a part of the exponential family.
+\end{note}
+
+\section{Lent Term}
+\vskip.1in
+
+The random sample: $Y_1,\ldots,Y_n\sim F_Y$. The main stuff we need to know here is
+\begin{itemize}
+	\item Random samples
+	\item Distinguishing between a random sample $\YY$ and the observed sample $\yy$. 
+	\item In practice, when we get a dataset and we compute statistics, we are computing some function $h(\yy),$ say,  $\overline{y}=\frac{1}{n}\sum_{i=1}^{n} y_i$, where we have $h(\YY)=\YY).$ 
+	\item What we care about is not the sample (or observed sample) but the population.
+\end{itemize}
+
+\subsection{Problem Set 1}
+
+In questions using sample statistics, it is useful to be able to manipulate the expressions.
+
+\begin{eg}
+	Note:
+	\[
+	\sum_{i=1}^{n} (Y_i=\overline{Y})^2=\sum_{i=1}^{n}Y_i^2-n\overline{Y}^2	.\] 
+\end{eg}
+
+\begin{eg}[Sampling from a Normal]
+	$Y_1,\ldots,Y_n\sim \Normal(\mu,\sigma^2)$ and $\overline{Y}\sim\Normal\left( \mu, \frac{\sigma^2}{n} \right) $. Always look for a shortcut when proving distributional results. We can use the property that the MGF of the sum of independent random variables is equal to the product of their respective MGFs. We have \[
+		(n-1)S^2\sim\chi^2_{n-1}.
+	.\] 
+	We obtain this from 
+	\[
+	\sum_{i=1}^{n} (Y_i-\mu)^2=\sum_{i=1}^{n} (Y_i-\overline{Y})^2=n(\overline{Y}-\mu)^2
+	.\] 
+\end{eg}
+
+Some useful facts about the $\chi^2$ distribution:
+
+\begin{itemize}
+	\item $Z_1,Z_2,\ldots\sim \Normal(0,1)$
+	\item $\sum_{i=1}^{k} Z_i^2\sim \chi^2_k$.
+	\item Special case of the Gamma: $\chi^2_k=\Gamma\left( \frac{k}{2},\frac{1}{2} \right)$
+\end{itemize}
+\begin{remark}
+	Remember the connections between the distributions!
+	\begin{itemize}
+		\item Binomial is a sum of Bernoullis
+		\item MGF of Bernoulli takes one line
+		\item Then we can just multiply the MGFs.
+		\item The Gamma distribution is a sum of exponentials.
+		\item MGF of the Exponential $\to$ MGF of the Gamma $\to$ MGF of the $\chi^2$.
+	\end{itemize}
+\end{remark}
+
+\subsection{Order Statistics}
+\vskip.1in
+We have \[
+	Y_{(1)}\leq Y_{(2)}\leq \ldots Y_{(n)}
+.\] 
+
+Hence, $F_{Y(n)}=(F_Y(y))^n$, since if $Y_{(n)}$ is \ldots.
+
+Do not memorize the formula, but understand the idea.
+
+\subsection{Survival Functions}
+
+\begin{recall}
+	$$S_{Y_{(1)}}=P(Y_{(1)}>y=(S_Y(y))^n$$
+\end{recall}
+
+\subsection{Estimators}
+We only want  estimators that are the same dimension as the parameter we are trying to estimate.
+
+Some properties:
+\begin{itemize}
+	\item Unbiasedness: We don't care too much about the bias of an estimator.
+	\item Variance: We wouldn't use an estimator if it has a huge variance.
+	\item $\MSE_{\theta}(\hat{\theta})=(\Bias_\theta(\hat{\theta}))^2+\Var(\hat{\theta)}$.
+	\item Consistency: $\hat{\theta}\to^p\theta$ as $n\to \infty$
+	\item If we are asked to prove something is consistent, then we should also ask whether it is mean-square consistent, because that is generally easier.
+\end{itemize}
+
+\subsection{Interval Estimation}
+Some things we should know:
+\begin{itemize}
+	\item Sometimes the intervals are symmetric, other cases not.
+	\item We are trying to find a range of plausible values for some parameters with a percentage probability.
+	\item We usually start by first finding a pivotal.
+	\item A pivotal function is a quantity that is a function of the sample, and the parameter we care about, and its distribution is fully known.
+\end{itemize}
+
+\begin{eg}
+	For a normal sample, a pivotal function is \[
+		\frac{\overline{Y}-\mu}{\frac{s}{\sqrt{n} }} \sim t_{n-1}
+	.\] 
+\end{eg}
+
+How do pivotals help us get interval estimators? If we know the distribution of a pivotal, we know the values it can take. Steps to making an interval estimator:
+
+\begin{enumerate}
+	\item Set the pivotal between two values, with probability that it's between them equal to some probability. 
+	\item Rearrange, solve for the unknown quantity
+\end{enumerate}
+
+In general pivotals are \textbf{NOT} statistics
+
+For the likelihood function, we've observed the outcome, and we're trying to find the process for that function. What do we need to know?
+
+\begin{itemize}
+	\item How to calculate the likelihood
+	\item Log-likelihood
+	\item The score function
+	\item The information is a measure about how much we can learn from the parameter from the sample. 
+\end{itemize}
+
+\begin{remark}
+	The Fisher Information increases linearly with the sample size.
+\end{remark}
+
+\subsection{Cramer-Rao}
+
+\begin{remark}
+The easiest way to establish that the Cramer-Rao lower bound is attainable is to rearrange the score function. If you can't it isn't attainable. 
+\end{remark}
+
+\subsection{Factorization Criterion}
+\vskip.1in
+
+Applies to sufficient statistics.
+
+\begin{recall}
+	A sufficient statistic contains all the information we need to know. It summarizes all the relevant information without throwing anything else. 
+\end{recall}
+
+The factorization criterion is on the Likelihood function. 
+
+Explain why we are using a practice.
+
+\subsection{Hypothesis Testing}
+\vskip.1in
+
+NP Lemma: There exists an MPT for a simple hypothesis test.
+
+Where we can apply the LRT and the NPT.

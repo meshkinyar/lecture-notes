@@ -1,0 +1,110 @@
+% ! TeX root = ..\main.tex
+\lecture{13}{Lecture 2}{Thu 27 Jan 2022 10:00}{}
+
+\subsection{More on Order Statistics}
+\begin{eg}
+\label{eg:Yn}
+		Let $Y_1,\ldots,Y_n\sim \Unif[0,\theta].$ Then $f_Y(y)=\frac{1}{\theta},$ for $0\leq y\leq \theta.$ Moreover,
+$$
+F_Y(y)=\begin{cases}
+0, \quad &y<0, \\
+\frac{y}{\theta}, \quad & 0\leq y\leq \theta \\
+1, \quad &y>\theta.
+\end{cases}
+$$
+		\incfig[1]{w13_l2_fig1}{The PDF and CDF of the $\Unif[0,\theta]$ distribution, respectively.}
+
+So 
+\begin{align*}
+    f_{Y(n)}(y)&=n(F_Y(y))^{n-1}f_Y(y) \\
+    &=n\left(\frac{y}{\theta}\right)^{n-1}\frac{1}{\theta} \\
+    &=\frac{ny^{n-1}}{\theta^n}
+\end{align*}
+\begin{note}Alternatively, we could differentiate $F_{Y(n)}(y)=\left(\frac{y}{\theta}\right)^n.$
+\end{note}
+
+\incfig{w13_l2_fig2}{The PDF of $Y_{(n)}$ in \autoref{eg:Yn}. As $n$ increases, the degree of the polynomial also increases. This, in turn, increases the probability that $Y_{(n)}$ takes a value closer to $\theta$.} 
+
+But what about $Y_{(i)}$?
+
+\subsubsection{\texorpdfstring{The CDF of $Y_{(i)}$}{The CDF of an order statistic}}
+
+
+\incfig{w13_l2_fig3}{For a given random variable Y, the probability that the observed value is less than $y$ is $F_Y(y)$, and the probability that it is greater than $y$ is $1-F_Y(y)$.}
+
+Using \autoref{fig:w13_l2_fig3}, we have
+\begin{align*}
+		F_{Y_{(i)}}(y)&=P(Y_{(i)}\leq y) \\
+    &=P(\text{"At least $i$ observations are $\leq y$"}) \\
+    &=\sum_{j=i}^nP(\text{"Exactly $j$ observations are $\leq y$"}) \\
+    &=\sum_{j=i}^n \binom{n}{j} (F_Y(y))^j(1-F_Y(y))^{n-j} \\
+    \text{(try it for $i=1$ and $i=n$).}
+\end{align*}
+\end{eg}
+
+\subsubsection{\texorpdfstring{PDF of $Y_{(i)}$ (continuous case)}{PDF of an order statistic (continuous case)}}
+Note that
+\begin{align*}
+    f_Y(y)&=\lim_{h\downarrow 0}\frac{F_Y(y+h)-F_Y(y)}{h} \\
+    &=\lim_{h\downarrow 0}\frac{P(y<Y\leq y+h)}{h}\\
+    &\implies P(y<Y\leq y+h)\approx hf_Y(y) \quad \text{(if $h$ is small)}.
+\end{align*}
+What does this tell us? Refer to \autoref{fig:w13_l2_fig4}:
+\incfig{w13_l2_fig4}{As $h$ approaches 0, the shape under the distribution approaches a rectangle.}
+
+More rigorous explanation? Note that
+\begin{align*}
+    P(y<Y\leq y+h) &= hf_Y(y)+o(h).
+\end{align*}
+As $h$ approaches 0, $o(h)$ converges to 0. Now, what is the probability that $y$ takes a value between $y$ and $y+h?$ 
+
+\incfig{w13_l2_fig5}{The probability that a value falls between $y$ and $y+h$ is approximately equal to $hf_Y(y)$ for small values of $h$.}
+
+Note that if $i$ falls between $y$ and $y+h$, we must have exactly $i-1$ observations to the left of it. Now, note that an observation can fall in each of the three intervals. We know $i-1$ observations are in the interval $(-\infty, y]$ and that for very small $h$, only one observation falls within $[y,y+h]$.
+
+Finally, $n-i$ observations fall within $(y+h,\infty)$. Using the multinomial coefficient, we can write down the density function of the $i$th order statistic directly:
+
+\begin{align*}
+    f_\Yi(y)&=\lim_{h\downarrow 0}\frac{P(y<\Yi\leq y+h)}{h} \\
+    &=\lim_{h\downarrow 0}\frac{\frac{n!}{(i-1)!1!(n-i)!}(F_Y(y))^{i-1}hf_Y(y)(1-F_Y(y+h))^{n-i}}{h} \\
+    &=\frac{n!}{(i-1)!(n-i)!}(F_Y(y))^{i-1}f_Y(y)(1-F_Y(y))^{n-i}.
+\end{align*}
+
+\subsection{The Beta Distribution}
+
+\begin{eg}[Beta Distribution]
+Let $Y_1,\dots,Y_n\sim \Unif[0,1],$ $f_Y(y)=1,$ $0\leq y\leq 1$ and 
+$$
+F_Y(y)=\begin{cases}
+0, \quad &y<0 \\
+y, \quad &0\leq y\leq 1 \\
+1, \quad &y>1
+\end{cases}
+$$
+
+Note that 
+
+\begin{align*}
+    f_\Yi(y)=\frac{n!}{(i-1)!(n-i)!}y^{i-1}(1-y)^{n-i}, \quad 0\leq y \leq 1.
+\end{align*}
+If $X\sim \Beta(\alpha, \beta),$
+\begin{align*}
+  f_X(x)=\frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha-1}(1-x)^{\beta-1}, \quad 0\leq x \leq 1.  
+\end{align*}
+\end{eg}
+
+Note that
+$$
+\text{B}(\alpha,\beta)=\frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)}.
+$$
+\subsubsection{Joint PDF of Two Order Statistics}
+The approach we used to find density functions directly can be used to find joint densities, i.e., the joint PDF of $\Yi$ and $Y_{(j)},$ $(i\neq j).$
+
+\incfig{w13_l2_fig6}{}
+
+We have
+\begin{align*}
+f_{{\Yi}, Y_{(j)}}(x,y)
+		=&\frac{n!}{(i-1)!(j-i-1)!(n-j)!}\times(F_Y(x))^{i-1}f_Y(x)\\
+&\times(F_Y(y)-F_Y(x))^{j-i-1}\times f_Y(y)(1-F_Y(y))^{n-j}
+.\end{align*}

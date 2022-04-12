@@ -1,0 +1,99 @@
+% ! TeX root = ..\main.tex
+\lecture{16}{Lecture 2}{Thu 17 Feb 2022 10:00}{}
+
+\subsection{Vector Parameter Extension}
+Recall that if $\YY$ is a random sample, 
+\begin{align*}
+    &L_\YY(\theta, \yy)=\prod^n_{i=1} L_Y(\theta; y_i) \\
+    \implies \ &l_\YY(\theta,\yy)=\sum^n_{i=1}l_Y(\theta;y_i) \\
+    \implies \ &s_\YY(\theta,\yy)=\sum^n_{i=1}s_Y(\theta;y_i) \\
+    \implies \ &\mathcal I_\YY(\theta)=nI_Y(\theta).
+\end{align*}
+
+\begin{eg}
+Let $Y_1,\dots,Y_n\sim N(\mu,\sigma^2)$ be a random sample. Then
+\begin{align*}
+    &L_Y(\mu;y_1)=\frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{1}{2}\left(\frac{y_1-\mu}{\sigma}\right)^2} \\
+    \implies &l_Y(\mu;y_1)=-\frac{1}{2}\log(2\pi\sigma^2)-\frac{(y_1-\mu)^2}{2\sigma^2} \\
+    \implies &s_Y(\mu;y_1)=\frac{2(y_1-\mu)}{2\sigma^2}=\frac{y_1-\mu}{\sigma^2} \\
+    \implies &\mathcal I_Y(\mu)=-\EE\left[\pder{\mu}s_Y(\mu;Y_1)\right]=-\EE\left[-\frac{1}{\sigma^2}\right]=\frac{1}{\sigma^2} \\
+    \implies &\mathcal I_\YY(\mu)=\frac{n}{\sigma^2}
+\end{align*}
+\end{eg}
+
+\begin{definition}
+A \textbf{normalizing constant} ensures that the CDF equals 1.
+\end{definition} 
+
+If $\btheta=(\theta_1,\dots,\theta_r)^T$, then
+\begin{align*}
+    \nabla_{\btheta}l_\YY(\theta;\yy)=
+    \begin{pmatrix}
+    \pder{\theta_1}l_\YY(\theta;\yy) \\ \vdots \\ \pder{\theta_r}l_\YY(\theta;\yy)
+    \end{pmatrix}
+\end{align*}
+is the same vector. Moreover,
+\begin{align*}
+    I\YY(\btheta)=\EE[s_\YY(\btheta;\YY)s_\YY(\btheta;\YY)^t] 
+\end{align*}
+is the $r\times r$ information matrix. As in the scalar case, $\EE[s_\YY(\btheta;\YY)]=0$, so
+\begin{align*}
+    \mathcal I_\YY(\btheta)&=\Var(s_\YY(\btheta; \YY)) \\
+    &=-\EE[\nabla_{\btheta^T}s_\YY(\btheta;\YY)]
+\end{align*}
+
+\subsection{Maximum Likelihood Estimation}
+
+\incfig[0.7]{w16_l2_fig1}{For a function $y=f(x)$, the $\argmax f(x)$ is the $x$ value which outputs $\max f(x)$.}
+
+\begin{definition}
+Let $Y_1,\dots,Y_n\sim f_Y(y;\theta)$ be a random sample. The \textbf{maximum-likelihood estimate} of $\theta$ is 
+\begin{align*}
+    \hat \theta&=\argmax_{\theta}L(\theta;\yy) \\
+    &=\argmax_{\theta}\ell(\theta;y).
+\end{align*}
+If $\hat \theta(\yy)$ is the maximum-likelihood estimate, then $\hat \theta(\YY)$ is the \textbf{maximum-likelihood estimator.}
+\end{definition}
+
+\begin{eg}
+If $\hat \mu(\yy)=\bar y,$ then $\hat \mu(\YY)=\bar Y.$
+\end{eg}
+
+\begin{note}
+		Be careful, MLE can mean either maximum-likelihood \textit{estimate} or maximum-likelihood \textit{estimator}. A bit inconvenient.
+\end{note}
+
+\vskip.1in
+If $\ell(\theta;\yy)$ is differentiable, we find $\hat\theta$ by taking 
+$$
+\left.\pder[\,\ell(\theta;y)]{\theta}\right|_{\theta=\hat \theta}=0,
+$$
+
+since $s(\hat\theta;\yy)=0.$
+
+\vskip.1in
+The maximum likelihood estimate $\hat \theta$ is consistent, i.e., $\hat\theta \to^p\theta$ as $n\to \infty.$ But it gets even better than this!
+
+
+\begin{prop}
+Let $\mathbf Y$ be a random sample with parameter $\theta$. Then
+$$
+\sqrt n(\hat \theta-\theta)\to^d\Normal(0,\mathcal I_\YY^{-1}(\theta)), \quad \text{as } n\to \infty.
+$$
+\end{prop}
+\begin{proof}
+	This proof is quite involved. See Proposition 9.3.4 in the textbook for a sketch proof, and see Section 5.2 \href{https://ocw.mit.edu/courses/18-443-statistics-for-applications-fall-2003/c823fc1783bd0040a120f0371fb0e162_lec5.pdf}{here} for a rigorous proof.
+\end{proof}
+
+\begin{remark}
+Note that 
+\begin{enumerate}
+\item This is a \textit{general result} about the error of estimation.
+    \item It puts a distribution on the error of estimation.
+    \item This result shows that MLEs are asymptotically unbiased.
+    \item The accuracy of the MLE is the inverse of the information matrix.
+\end{enumerate}
+\begin{note} The quantity $\sqrt{n}(\hat{\theta}-\theta)$ is \textit{not} a pivotal, but it is functionally close to one. 
+\end{note}
+In principle, if you have a pivotal, then you can build a confidence interval. This property shows that for large samples, we have an approximate pivotal in the MLE. 
+\end{remark}

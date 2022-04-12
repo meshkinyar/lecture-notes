@@ -1,0 +1,159 @@
+% ! TeX root = ..\main.tex
+\lecture{14}{Lecture 2}{Thu 3 Feb 2022 10:00}{}
+
+\subsection{Estimator Convergence}
+\begin{eg}
+Let $Y_1,\dots,Y_n\sim F_Y( \cdot \, ; \btheta)$ be a random sample. We now expand our definition of an estimator. Suppose that the underlying distribution is $\Normal(\mu,\sigma^2)$ distributed:
+
+$$
+\btheta=\binom{\mu}{\sigma^2} \quad \text{example estimator: } \binom{\bar Y}{s^2}
+$$
+
+\end{eg}
+We denote the estimator $U(\YY)=\hat \theta$. Unfortunately we also denote the \textit{estimate} $\hat \theta=U(\yy)$.
+
+\begin{recall}
+The definition of $\MSE$ is
+\begin{align*}
+    \MSE_\theta(\hat \theta)&=\EE[(\hat \theta -\theta)^2] \\
+    &=\left(\Bias_\theta(\hat \theta)\right)^2+\Var(\hat \theta).
+\end{align*}
+\end{recall}
+
+\begin{eg}
+Let $$Y_1,\dots, Y_n\sim F_Y, \quad \EE(Y_1)=\mu, \ \Var(Y_1)=\sigma^2.$$
+Take $\hat \mu=\bar Y.$ Then
+$$
+\MSE_\mu(\hat \mu)=\left(\Bias_\mu(\hat \mu)\right)^2+\Var(\hat \mu)=\frac{\sigma^2}{n}.
+$$
+Note that $\lim_{n\to \infty} \frac{\sigma^2}{n}=0.$ This is the single most important property of an estimator. 
+\end{eg}
+
+Note that we've only talked about convergence in terms of sequences. We can consider $\hat \theta =\hat \theta(\YY)$ as a \textit{sequence} of estimators:
+
+$$\hat\theta_1=\hat \theta(Y_1), \ \hat \theta_2=\hat \theta(Y_1,Y_2),\dots, \ \hat \theta_n=\hat \theta(Y_1,\dots,Y_n)$$
+
+\begin{remark}
+Convergence in distribution to a \textit{constant} is equivalent to convergence in probability. 
+\end{remark}
+
+\begin{definition}
+An estimator $\hat \theta$ is a \textbf{consistent} estimator of $\theta$ if $\hat \theta \to^P \theta$ as $n\to \infty.$ Alternatively,
+$$
+P(|\hat\theta -\theta|<\epsilon)\to 1 \text{ as } n\to \infty.
+$$
+\end{definition}
+
+\begin{remark}
+Basically, consistency implies that however small you want $\epsilon,$ you can achieve this by increasing the sample size.
+
+But is it enough for an estimator to be consistent? No. This fact alone doesn't tell us the rate of convergence. But it is an essential first property.
+\end{remark}
+
+\begin{eg}
+If $\hat \theta \to^{\text{m.s}} \theta,$ then $\hat \theta$ is a mean-square consistent estimator.
+\end{eg}
+\vskip.1in
+
+Note that mean square consistency is easy to show; bias and variance should converge to 0 for a mean square consistent estimator.
+
+\begin{recall}
+$$
+\bar Y \to^P\mu \quad \text{is the weak law of large numbers}
+$$
+\end{recall}
+We can rephrase this as "$\bar Y$ is a consistent estimator of $\mu.$" Moreover,
+
+$$
+\boxed{\bar Y \to^{\text{a.s.}}\mu \quad \text{is the strong law of large numbers.}}
+$$
+
+The strong law of large numbers implies the weak law, but does not imply mean-square consistency. 
+
+\begin{remark}
+In principle, we always want to pick the estimator that minimizes the MSE. In practice, the minimum MSE estimator typically has no closed form. What's the next best thing? Choose an unbiased estimator, so the MSE only depends on $\Var(\hat \theta).$ Among all estimators, the best is the one that minimizes $\Var(\hat \theta).$ 
+\vskip.1in
+\end{remark}
+Ultimately, we need a guarantee that our estimator gets better with more data.
+
+\subsection{The Method of Moments (Moment Matching)}
+So how do we find estimators for unknown quantities? Suppose we have a random sample $Y_1,\dots, Y_n\sim F_Y(\, \cdot \ ; \btheta)$, where
+$$
+\btheta =\begin{pmatrix}
+\theta_1 \\ \vdots \\ \theta_k
+\end{pmatrix}
+$$
+Which "moments" are we talking about? Well, we can either be looking at the moments of the probability distribution, or the sample moments:
+\begin{align*}
+  &m_1'=\bar Y, \quad &\mu_1'=\EE(Y)\\
+  &\phantom{xxx}\vdots &\vdots\phantom{xxxx} \\
+  &m_r'=\frac{1}{n}\sum^n_{i=1}Y_i^r, \quad &\underbrace{\mu_r'=\EE(Y^r)}_{\text{functions of }\btheta}.
+\end{align*}
+
+Sample moments are statistics, as they are functions of random variables. Population moments are constants. For $\Gamma(\alpha,\lambda)$, we have
+$$
+		\mu_1'=\frac{\alpha}{\lambda}, \quad \mu_2'=\frac{\alpha^2}{\lambda^2}+\frac{\alpha}{\lambda^2}.
+$$
+
+These are functions of the parameters. So, how do we use the sample to estimate the unknown parameters? We take the first sample moment and set it equal to the first population moment, and the second and so on. 
+
+\begin{eg}
+Take $Y_1,\dots,Y_n\sim \Normal(\mu,\sigma^2).$ Note that
+\begin{align*}
+  &m_1'=\bar Y, \quad &\mu_1'=\mu\\
+  &m_2'=\frac{1}{n}\sum^n_{i=1}Y_i^2, \quad &\mu_2'=\EE(Y^2)=\mu^2+\sigma^2.
+\end{align*}
+Now, set $\hat \mu=\bar Y$ and $\hat \mu^2+\hat \sigma^2=\frac{1}{n}\sum^n_{i=1}Y_i^2$. We have
+$$
+\hat \mu = \bar Y, \quad \quad \hat \sigma^2=\frac{1}{n}\left(\sum^n_{i=1}Y_i-n\bar Y^2\right)=m_2=\frac{n-1}{n}s^2.
+$$
+\end{eg}
+
+In practice, we are relying on a method to maximize a very complicated equation. Methods are sensitive to starting values. The faster they converge, the more sensitive they are.
+
+\begin{eg}
+Let $Y_1,\dots,Y_n\sim \Bin(r,p)$. Then
+\begin{align*}
+    \mu_1'=rp, \quad \quad \mu_2'&=rp(1-p)+(rp^2) \\
+    &=\mu_2+(\mu_1')^2.
+    \end{align*}
+We can set $\hat \mu_2=m_2.$ We have
+\begin{align*}
+	\bar Y=\hat r \hat p.
+    \frac{1}{n}\left(\sum^n_{i=1}Y_i^2-n\bar Y^2\right)&=\hat r\hat p(1-\hat p).
+\end{align*}
+
+So $\hat p=\frac{\bar Y}{\hat r},$ which implies
+\begin{align*}
+    &\hat r\frac{\bar Y}{\hat r}\left(1-\frac{\bar Y}{\hat r}\right)=\bar{Y}\left( 1-\frac{\bar{Y}}{\hat{r}} \right) =m_2 \\
+    &\implies 1-\frac{\bar Y}{\hat r}=\frac{m_2}{\bar Y}. \\
+    &\implies \frac{\bar Y}{\hat r}= 1-\frac{m_2}{\bar Y} \\
+    &\implies \hat r=\frac{\bar Y}{1-\frac{m_2}{\bar Y}}=\frac{\bar Y^2}{\bar Y-m_2}.
+\end{align*}
+\end{eg}
+
+\subsection{Interval Estimation}
+An interval estimator of $\theta$ is a \textit{random interval} of the form $(U_1,U_2)$, where $U_1,U_2$ are \textit{statistics} with the property $U_1\leq U_2.$ With an interval estimator, we want a range of values that contains $\theta.$
+\begin{definition}
+The \textbf{coverage probability} is
+$$
+P(U_1\leq \theta\leq U_2).
+$$
+\end{definition}
+
+\begin{definition}
+
+The \textbf{confidence coefficient} is
+$$
+\inf_{\theta}P(U_1\leq \theta \leq U_2)
+$$
+\end{definition}
+
+Is it enough to have a high confidence coefficient? No, we also care about the expected length of the interval. 
+
+\begin{definition}
+The \textbf{expected length} is 
+$$
+\EE(U_2-U_1).
+$$
+\end{definition}

@@ -1,0 +1,92 @@
+% ! TeX root = ..\main.tex
+\lecture{15}{Lecture 1}{Tue 8 Feb 2022 14:00}{}
+
+\subsection{More Interval Estimation}
+
+\begin{definition}
+Let $(U_1,U_2)$ be an interval estimator, with $U_1\leq U_2$. Then $(u_1,u_2)$ is an interval estimate, where $u_1=u_1(\yy)$.
+\end{definition}
+
+\begin{eg}
+Let $Y_1,\ldots,Y_n\sim \Normal(\mu,\sigma^2),$ where $\sigma^2$ is known. A pivotal quantity for $\mu$ is
+$$
+\frac{\bar Y-\mu}{\sigma/\sqrt n}\sim\Normal(0,1).
+$$
+
+\incfig{w15_l1_fig1}{A 95\% confidence interval of the standard normal.}
+
+Recall that a pivotal quantity relies only on known parameters. How do we turn a pivotal into a confidence interval? Since our pivotal is standard normal, we can utilize the $z$-score at the limits of a 95\% confidence interval:
+
+$$
+0.95=P\left(-1.96<\frac{\bar Y-\mu}{\sigma/\sqrt n}<1.96\right).
+$$
+After rearranging, the solution is
+$$
+P\left(\bar Y-1.96 \frac{\sigma}{\sqrt n}<\mu<\bar Y+1.96 \frac{\sigma}{\sqrt n}\right)
+$$
+Then 
+$$
+\left(\bar Y-1.96 \frac{\sigma}{\sqrt n}, \ \bar Y+1.96 \frac{\sigma}{\sqrt n}\right)
+$$
+is an interval estimator for $\mu,$ or, a 95\% confidence interval.
+\end{eg}
+
+In general, we take $\alpha_1+\alpha_2=\alpha$, with
+$$
+1-\alpha=P\left(Z_{\alpha_1}<\frac{\bar Y-\mu}{\sigma/\sqrt n}<Z_{1-\alpha_2}\right).
+$$
+The confidence interval is thus $$\left(\bar Y-Z_{1-\alpha 1}\frac{\sigma}{\sqrt n},\bar Y+Z_{1-\alpha 2}\frac{\sigma}{\sqrt n}\right).$$
+
+\incfig{w15_l1_fig2}{A more general case for a standard normal pivotal.}
+
+\subsection{Some Pivotal Assumptions}
+\begin{remark} For the purposes of this course, we assume that our pivotals have the following properties:
+\begin{itemize}
+    \item The distribution of our pivotal, $W$, is unimodal.
+    
+    \item Moreover, $W$ is continuous and linear in $\theta,$ with $W=g(\YY ,\theta)=a(\YY)+b(\YY)\theta$.
+\end{itemize}
+\incfig{w15_l1_fig3}{A unimodal (left) distribution vs. a multimodal distribution.}
+\end{remark}
+Thus,
+\begin{align*}
+		1-\alpha&=P(w_1<W<w_2) \\
+    &=P(w_1<a(\YY)+b(\YY)\theta<w_2) \\
+    &=P\left(\frac{w_1-a(\YY)}{b(\YY)}<\theta<\frac{w_2+a(\YY)}{b(\YY)}\right)
+\end{align*}
+The length of the CI is $\frac{w_2-w_1}{b(\YY)}$.
+The \textit{optimal} CI is where $w_1$ and $w_2$ have the same density. Why? No formal proof here; a geometric argument is presented in \autoref{fig:w15_l1_fig4}:
+
+\incfig{w15_l1_fig4}{Suppose that the area encompassed by $w_1$ and $w_2$ corresponds to the desired value of $\alpha$, and $w^*$ is the mode. If we shift $w_1$ to the left, then it follows that we will have to shift $w_2$ to the left as well. However, we shift $w_2$ \textit{less} than $w_1$, because the area under the distribution curve is greater to the left of $w_2$ than $w_1$. If we shift $w_1$ to the right, it follows that we shift $w_2$ to the right by a greater amount to maintain the same value of $\alpha$. Both of these actions therefore \textit{increase} the length of the confidence interval. A similar argument holds for $w_2$. Hence, the optimal interval is $w_1$, $w_2$.}
+
+
+\begin{eg}
+Let $Y_1,\ldots,Y_n\sim \Exp(\lambda)$. Then
+\begin{align*}
+    &\lambda Y_1, \lambda Y_2, \ldots, \lambda Y_n \sim \Exp(1) \\
+    &\implies \sum^n_{i=1}\lambda Y_i\sim \Gamma(n,1) \\
+	&2\sum^n_{i=1} \lambda Y_i=2n\lambda \bar{Y}\sim \Gamma\left(n,\frac{1}{2}\right)
+\end{align*}
+
+Choose $w_1,w_2$ so that
+$$
+f_W(w_1)=f_W(w_2).
+$$
+
+In practice, $w_1,w_2$ are difficult to find, and have no closed form solution. The equal-tail CI is a good approximation:
+
+\incfig[0.8]{w15_l1_fig5}{Equal-tail confidence interval (top) vs. optimal equal-density confidence interval for a Gamma distribution. 
+\textit{Note: Gamma curve taken from \href{https://en.wikipedia.org/wiki/Gamma_distribution}{Wikimedia Commons.}}}
+
+\end{eg}
+\begin{eg}
+Let $Y_1,\ldots, Y_n\sim \Normal(\mu, \sigma^2)$. We have
+$$\frac{\bar Y-\mu}{s/\sqrt n}\sim t_{n-1}$$
+Then
+$$1-\alpha=P\left(-t_{n-1, \ 1-\frac{\alpha}{2}} \leq \frac{\bar Y-\mu}{s/\sqrt n}\leq t_{n-1, \ 1-\frac{\alpha}{2}}\right)
+$$
+So $100(1-\alpha)\%$ confidence interval for $\mu$ is 
+$$
+\left(\bar Y-t_{n-1, \ 1-\frac{\alpha}{2}}\frac{S}{\sqrt n},\bar Y+t_{n-1, \ 1-\frac{\alpha}{2}}\right).
+$$
+\end{eg}

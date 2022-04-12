@@ -1,0 +1,79 @@
+% ! TeX root = ..\main.tex
+
+\begin{prop}
+	Let $\YY$ be a random sample. Let $\phi_S(\YY)$ be a decision function, $c_s$ be the critical region, and $\beta_S(\theta)$ be the power function. Then
+
+	$$\beta_S(\theta)=\EE_\theta[\phi_S(\YY)]$$
+\end{prop}
+
+\begin{proof}
+    \begin{align*}
+        \EE_\theta[\phi_S(\YY)]&=\int_{\RR^n} \phi_S(\yy)f_\YY(\yy;\theta) \ d\yy \\
+        &= \int_{C_S} \phi_S(\yy) f_\YY(\yy;\theta) \ d\yy  \\
+        &= \int_{C_S} \phi_S(\yy) \ f(\YY)(\yy;\theta) \ d\yy\\
+        &= \int_{C_S}f_\YY(\yy;\theta) \\
+        &= P_\theta(\YY\in C_S) \\
+        &= P_\theta(\text{reject } H_0) \\
+        &= \beta_S(\theta) 
+    .\end{align*}
+\end{proof}
+
+\begin{remark}
+    Let $H_0: \theta=\theta_0$, and  $H_1:\theta=\theta_1$. Then the size is $\beta(\theta_0)$, and the power is $\beta(\theta_1)$. We say that $T$ is a most powerful test (MPT) if $\beta_T(\theta_1)\ge \beta_S(\theta _1)$ for all tests $S$ such that $\beta_T(\theta_0)=\beta_S(\theta_0)$.  
+\end{remark}
+
+\subsection{Neyman-Pearson Lemma}
+\vskip.1in
+
+\begin{lemma}[Neyman-Pearson Lemma]
+For testing $H_0:\theta=\theta_0$ vs. $H_1:\theta=\theta_1$, the MPT of size  $\alpha$ is the one which rejects $H_0$ if
+
+\[
+	\frac{L_\YY(\theta_1;\yy)}{L_\YY(\theta_0;\yy)}>k_\alpha \iff L_\YY(\theta_1;\yy)-k_\alpha L_\YY(\theta_0;\yy)>0
+.\] 
+Critical Region: $C_T=\{\yy \in \RR^n:L_\YY(\theta_1;\yy)-k_\alpha L_\YY(\theta_0;\yy)>0\}$
+\end{lemma}
+\begin{proof}
+	Observe that
+\begin{align*}
+    \beta_S(\theta_1)-k_\alpha\beta_S(\theta_0)&= \int_{R^n} \phi_S(\yy)[f_\YY(\yy;\theta_1)-k_\alpha(f_\YY(\yy;\theta_0))]\, d\yy\\
+		      &\leq \int_{C_T} \phi_S(\yy)[f_\YY(\yy;\theta_1)-k_\alpha f_\YY(\yy;\theta_0)]\, d\yy \\
+		      &\leq \int_{C_T} \phi_T(\yy)[f_\YY(\yy;\theta_1)-k_\alpha f_\YY(\yy;\theta_0)] \, d\yy \\
+		      &= \int_{\RR^n}\phi_T(\yy)[f_\YY(\yy;\theta_1)-k_\alpha f_\YY(\theta_0)] \, d \yy \\
+		      &= \beta_T(\theta_1)-k_\alpha\beta_T(\theta_0)
+	.\end{align*}
+But $\beta_S(\theta_0)=\beta_T(\theta_0)=\alpha$, so we have proved that $\beta_S(\theta_1)\leq \beta_T(\theta_1)$, as required.
+\end{proof}
+
+
+\begin{eg}
+	Let $Y_1,\dots,Y_n\sim\Bernoulli(p)$, with $H_0:p=p_0$ and $H_1:p=p_1$. Then
+	\[
+		L(p;\yy)=\prod^n_{i=1}p^{y_i}(1-p)^{1-y_i}=p^{n \bar{y}}(1-p)^{n-n\overline{y}}
+	.\] 
+	Now utilize the Neyman-Pearson Lemma, and take the test statistic:
+	\begin{align*}
+		h(\yy)&=\frac{L(p_1;\yy)}{L(p_0;\yy)} \\
+		      &= \frac{p_1^{n\bar{y}}(1-p_1)^{n(1-\overline{y})}}{p_0^{n\overline{y}}(1-p_0)^{n(1-\overline{y}}} \\
+		      &= \underbrace{\left( \frac{p_1(1-p_0)}{p_0(1-p_1)} \right)^{n\bar{y}}}_{>1}\left( \frac{1-p_1}{1-p_0} \right) ^n
+	.\end{align*}
+\end{eg}
+Suppose that $p_1>p_0$. Then $h(\yy)$ is increasing in $\yy$, or equivalently, in $n\bar{y}=\sum^n_{i=1}y_i$.
+
+\incfig{w20_l1_fig1}{Intuition behind the critical region .}
+
+The fact that the function is monotonic increasing shows that $h(\yy)>k_\alpha$ is equivalent to $\bar{y}>k_\alpha'$. Then
+\[
+\text{Reject $H_0$ if } h(\YY)>k_\alpha \iff \text{Reject $H_0$ if } n\bar{Y}>k_\alpha'
+.\] 
+We want $P_{\theta_0}(n\bar{Y}>k_\alpha')=\alpha$, which we can find because $\bar{Y}\sim^{H_0} \Bin(n,p_0)$. Note that if $p_0>p_1$, then $h(\yy)$ is a monotonic decreasing function, and a similar argument holds. 
+
+In general, if $h(\YY)=\frac{L(\theta_1;\YY)}{L(\theta_0;\YY)}$ is 
+increasing in some sufficient statistic $T(\YY)$, then:
+\begin{align*}
+	\text{Reject $H_0$ if } h(\YY)>k_\alpha \iff \text{Reject $H_0$ if } T(\YY)>k_\alpha' 
+.\end{align*}
+If $h(\YY)$ is decreasing in $T(\YY)$, this becomes 
+\begin{align*}
+	\text{Reject } H_0 \text{ if } h(\YY)>k_\alpha \iff  \text{Reject $H_0$ if } T(\YY)<k_{\alpha}'.
+\end{align*}

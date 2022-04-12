@@ -1,0 +1,89 @@
+% ! TeX root = ..\main.tex
+\setcounter{chapter}{6}
+\chapter{Sample Moments and Quantiles} 
+Chapter 7 is the first topic covered this term, and the bulk of Chapter 6 is the \textit{last} topic covered this term. Chapter 6 is thus at the \textit{end} of this document. I had to compromise a little between chronological consistency and  consistency with the textbook, so unfortunately this half of the course might be a little weird as a reference. 
+
+\lecture{12}{Lecture 1}{Tue 18 Jan 2021 14:00}{}
+
+\subsection{First bit of Ch. 6}
+First, we start with some data:
+$$y_1,y_2,\dots,y_n \quad (\mathbf y)\quad \text{with } y_i\in \RR$$
+This is our \textit{observed sample}. We can think of these as single realizations of our sample:
+$$
+Y_1, Y_2, \dots, Y_n \quad (\mathbf Y).
+$$
+We let $\Theta = (\theta_1,\dots, \theta_r)^T$ be our parameters.
+
+\begin{definition}
+		A \textbf{random sample} is a set of IID random variables $\{Y_1,\ldots,Y_n\}$ such that 
+		$$Y_1,\dots,Y_n\sim F_Y,$$
+		for some distribution $F_Y$. An \textbf{observed sample}, denoted $y_1,\dots,y_n$, is a set of possible values for each random variable.
+\end{definition}
+
+\begin{note}		
+When we take a random sample, we do so \textit{without} replacement.
+\end{note}
+
+\subsection{Sample Moments}
+\begin{definition}
+Let $Y$ be a random variable with moment and central moment $\mu'_r,\mu_r$ and MGF $M_Y(t).$ The \textbf{sample mean}, given some random sample $Y_1,\dots, Y_n$, is
+
+$$
+\bar Y =\frac{1}{n}\sum_{i=1}^nY_i.
+$$
+\end{definition}
+Some properties of $\bar{Y}$:
+\begin{enumerate}[(i)]
+    \item $\EE(\bar Y)=\mu,$ the population mean:
+    $$
+    \EE(\bar Y)=\EE\left[\frac{1}{n}\sum^n_{i=1}Y_i\right]=\frac{1}{n}\sum^n_{i=1}\EE(Y_i)=\frac1nn\mu=\mu.
+    $$ 
+    \item Note that $\Var(\bar Y)=\frac{\sigma^2}{n}$, where $\sigma^2$ is the population variance (as long as $\sigma^2<\infty.$ Then
+    \begin{align*}
+        \Var(\bar Y)&=\Var\left(\frac{1}{n}\sum^n_{i=1}Y_i\right)\\
+        &=\frac{1}{n^2}\sum^n_{i=1}\Var(Y_i)\\
+        &=\frac{1}{n^2}n\sigma^2 \\
+		&=\frac{\sigma^2}{n}.
+    \end{align*}
+\end{enumerate}  
+
+\subsection{The Central Limit Theorem}
+\label{ssec:CLT}
+\vskip.2cm
+
+\begin{theorem}[Central Limit Theorem]
+		Given a random sample \phantom{xx} $Y_1,\dots,Y_n$ with $\EE(Y_1)=\mu,$ $\Var(Y_1)=\sigma^2<\infty,$ and $\bar Y_n=\frac{1}{n}\sum^n_{i=1}Y_i,$ 
+$$
+\frac{\bar Y_n-\mu}{\sqrt{\sigma^2/n}} \overset{d}{\longrightarrow} \Normal(0,1), $$
+as $n\to \infty.$
+
+\end{theorem}
+    
+\begin{proof}
+    Let 
+\[Z_n= \frac{\bar Y_n-\mu}{\sqrt{\frac{\sigma^2}{n}}},\]
+	and note that
+	$$Z_n=\frac{\bar{Y}_n-\mu}{\sqrt{\frac{\sigma^2}{n}}}=\frac{n\bar Y_n-n\mu}{\sqrt{n \sigma^2}}.$$
+    Let $S_n=\bar{Y}_n$. Note that
+    \begin{align*}
+        M_{Z_n}&=\EE(e^{tZ_n}) \\
+        &=\EE\left[\exp\left(t\frac{S_n -n\mu}{\sqrt{n\sigma^2}}\right)\right]\\
+        &=\EE\left[\exp\left(\frac{t}{\sqrt{n\sigma^2}}S_n\right)\right]\exp\left(-\frac{n\mu t}{\sqrt{n\sigma^2}}\right)\\
+        &=M_{S_n}\left(\frac{t}{\sqrt{n\sigma^2}}\right)\exp\left(\frac{-\sqrt n \mu t}{\sigma}\right) \\
+        &=\left[M_{Y_1}\left(\frac{t}{\sqrt{n\sigma^2}}\right)\right]^n
+        \exp\left(\frac{-\sqrt n \mu t}{\sigma}\right).
+    \end{align*}
+    The last equality is justified through the IID property of random samples. Now observe that
+    \begin{align*}
+        K_{Z_n}(t)&=nK_{Y_1}\left(\frac{t}{\sqrt{n\sigma^2}}\right)-\frac{\mu t\sqrt n}{\sigma} \\
+        &= n\left(\mu\frac{t}{\sqrt{n\sigma^2}}
+        +\frac{\sigma^2}{2}\left(\frac{t}{\sqrt{n\sigma^2}}\right)+\binom{\text{terms in}}{\left(\frac{1}{n}\right)^{3/2}\text{ and higher}}\right) - \frac{\mu t\sqrt n}{\sigma} \\
+        &=\frac{\mu t\sqrt n}{\sigma} + \frac{t^2}{2}+ \binom{\text{terms in}}{\left(\frac{1}{n}\right)^{1/2}\text{ and higher}}- \frac{\mu t\sqrt n}{\sigma} \\
+		&=\frac{t^2}{2} + \binom{\text{terms in}}{\left(\frac{1}{n}\right)^{1/2}\text{ and higher}}
+    \end{align*}
+    So $K_{Z_n}(t)\to \frac{t^2}{2}$ as $n\to \infty,$ i.e. the CGF of $\Normal(0,1).$ Since the CGF of a distribution characterizes that distribution,
+    $$
+    Z_n\to \Normal(0,1)
+    $$
+	as $n\to \infty$.
+    \end{proof}

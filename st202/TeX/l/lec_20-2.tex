@@ -1,0 +1,119 @@
+% ! TeX root = ..\main.tex
+\lecture{20}{Lecture 2}{Tue 15 Mar 2022 14:00}{}
+
+\subsection{Uniformly Most Powerful Tests}
+\begin{eg}
+Let $Y_1,\dots,Y_n\sim \Normal(\mu,1)$ (i.e. variance is known) Let $H_0: \mu = \mu_0$ and $H_1:\mu = \mu_1$. We have
+\begin{align*}
+	L(\mu;\yy)&=\prod^n_{i=1}\frac{1}{2\pi}e^{\frac{-(y_i-\mu)^2}{2}} \\
+		  & \propto e^{-\frac{1}{2}\sum(y_i^2-2\mu_i+\mu^2)} \\
+		  & \propto e^{\mu n \bar{y}}e^{\frac{-n\mu^2}{2}}
+.\end{align*}
+Our test statistic is 
+\begin{align*}
+h(\yy)&=\frac{L(\mu_1;\yy)}{L(\mu_0;\yy)}=\frac{e^{\mu_1n\bar{y}}e^{-n\frac{\mu_1^2}{2}}}{e^{\mu_0n\bar{y}}e^{-n\frac{\mu_0^2}{2}}} \\
+	      &=e^{\frac{n}{2}(\mu_0^2-\mu_1^2)}e^{n(\mu_1-\mu_0)\bar{y}}  
+.\end{align*}
+Then if $\mu_1>\mu_0$, $h(\yy)$ is increasing in $\bar{y}$, and we reject $H_0$ when $\bar{Y}>k_\alpha$. To find $k_\alpha,$ we set: $P_{H_0}(\YY> k_\alpha)=\alpha$. If we change $\mu_1$ to another value larger than $\mu_0$, then the form of the test does not change, and the critical region doesn't change either, because $k_\alpha$ depends on $\mu_0$, not $\mu_1$. Any size calculation is performed under the null hypothesis, assuming that the null hypothesis is true. The power of the test assumes the alternative. Notice that this MPT is the same for any $\mu_1>\mu_0$. This is an important property.
+\end{eg}
+
+\begin{definition}
+	Suppose we want to test $H_0: \theta\in\Theta_0$, $H_1:\theta\in \Theta_1$. If we take any $\theta\in \Theta_1$, and obtain the same MPT, then that MPT is the is the \textbf{Uniformly MPT (UMPT).} 
+\end{definition}
+
+Now, what if the alternative were two-sided? Is the MPT always the same? No, because for values greater than $\mu_0$, we reject for $\bar{y}>k,$ but for $\mu_1<\mu_0$ we reject for $\bar{y}<k$. If you had a two sided alternative, you could not come up with a UMPT because you do not obtain the same MPT for every special case. The form of the test changes for different parameter values. 
+
+\begin{eg}
+	In these cases, a UMPT exists: 
+	\begin{align*}
+		&H_1:\mu<\mu_0 \\
+		&H_1: \mu>\mu_0
+	.\end{align*}
+	But in this case, a UMPT does not exist:
+	\begin{align*}
+		H_1:\mu\neq \mu_0
+	.\end{align*}
+
+	\begin{remark}
+Aside: how would you test $H_0: \mu=\mu_0,$ $H_1:\mu\neq \mu_0 $? We could use the Likelihood-ratio test. 
+	\end{remark}
+
+	\incfig[1]{w20_l2_fig1}{The alternative hypotheses $H_1: \mu<\mu_0$ and $H_1: \mu>\mu_0$ are more powerful than $H_1:\mu\neq \mu_0$ at values less than and greater than $\mu_0$, respectively.}
+\end{eg}
+
+\begin{remark}
+It's not always possible to find a UMPT for a one-sided test, but it is more often the case.
+\end{remark}
+
+
+Note that the most powerful test is on the side of the alternative that you care about. It is not always the case that we can find a UMPT for a one-sided alternative but not for a two-sided case, but it \textit{is} often true. 
+
+\begin{eg}
+\label{eg:NormalUMPT}
+Now, what if we had:
+\begin{align*}
+	&H_0: \mu\leq \mu_0 \\
+	&H_1:\mu>\mu_0
+.\end{align*}
+
+Firstly, if we were to test the simple null vs. the alternative, we would get a UMPT of size $\alpha$. For $H_0^*:\mu=\mu_0 \quad \text{vs.} \quad H_1$, we have the UMPT which rejects $H_0^*$ when $\bar{Y}>k_\alpha$, where 
+\begin{align*}
+	\alpha&=P_{H_0}(\bar{Y}>k_\alpha)\\
+	      &=P_{H_0}\left( \frac{\bar{Y}-\mu_0}{\sqrt{\frac{1}{n}}} > \frac{k_\alpha-\mu_0}{\sqrt{\frac{1}{n}}}  \right)\\
+	      &= P(Z>\sqrt{n}(k_\alpha-\mu_0)) 
+.\end{align*}  
+So $k_\alpha=\mu_0+z_\alpha\sqrt{\frac{1}{n}}$.
+We use $\mu_0$ because this is a size calculation. Note that under $H_0,$ the first term is $\Normal(0,1)$ distributed. 
+Moreover, $Z$ is in the right tail of the standard normal.
+
+\incfig{w20_l2_fig2}{The rejection region of $Z$ in \autoref{eg:NormalUMPT}.}
+
+Now what if $\mu=\mu_0',$ where $\mu_0'<\mu_0?$ The probability of Type I error would be 
+\begin{align*}
+	P_{\mu_0'}(\bar{Y}>k_{\alpha}) 
+	&=P_{\mu_0'}\left(\bar{Y}>\mu_0+z_{1-\alpha}\sqrt{\frac{1}{n}}\right) \\
+	&=P_{\mu_0'}\left(\frac{\bar{Y}-\mu_0'}{\sqrt{\frac{1}{n}}} >\frac{\mu_0-\mu_0'+z_{1-\alpha}\sqrt{\frac{1}{n}}}{\sqrt{\frac{1}{n}}}\right)\\ 
+	&=P(Z>z_{1-\alpha}+\sqrt{n} (\mu_0-\mu_0') ) \\
+	&<\alpha.
+\end{align*}
+
+Note that the inequality holds because $z_{1-\alpha}+\sqrt{n} (\mu_0-\mu_0') > z_{1-\alpha}$. The probability of type I error for any $\mu_0'<\mu_0$ is less than $\alpha.$ The worst case scenario for this test is therefore $\alpha$. In fact,  $\alpha$ is the \textit{supremum} of the size of the test. Hence, the UMPT has
+\begin{align*}
+	\sup_{\mu\leq \mu_0}P_\mu(\text{reject } H_0)=\alpha
+.\end{align*}
+So, it has size $\alpha.$ 
+\end{eg}
+
+\begin{recall}
+	In general, the size of a test is the supremum of the type I error.
+\end{recall}	
+
+\subsection{LRT and nuisance parameters}
+\vskip.1in
+
+\begin{eg}
+	Let $X_1\ldots X_n \sim \Poisson(\lambda)$ and $Y_1,\ldots Y_n\sim \Poisson(\mu)$, with 
+	\begin{align*}
+		H_0: \lambda=\mu,\\
+		H_1: \lambda\neq \mu
+	.\end{align*}
+	We have an alternative parameterisation: $\mu=\lambda+\psi.$ Our parameter of interest is $\psi$, so the test becomes
+	\begin{align*}
+		H_0:\psi=0, \\
+		H_1:\psi\neq 0
+	.\end{align*}
+	Now, $\lambda$ is a \textit{nuisance} parameter. It is an added layer of complexity that we have to work around, but is not the parameter of interest. When we set up LRTs, we are expressing the hypotheses in terms of the parameter of interest. 
+	\begin{remark}
+		If we had a third sample, then we would have two parameters of interest. The advantage of the above formulation is that it is easy to write it for an arbitrary number of samples. 
+	\end{remark}
+The test statistic for LRT:
+\begin{align*}
+	h(\YY)&= \frac{\sup_\theta(\theta;\YY)}{\sup_{\theta\in\Theta_0}L(\theta;\YY)} \\
+	&=\frac{L(\hat{\theta};\YY)}{L(\hat{\theta_0};\YY)}  
+.\end{align*}
+If $\theta=\binom{\psi}{\delta}$, then $\hat{\theta}=\binom{\hat{\psi}}{\hat{\lambda}}$and $\hat{\theta}_0=\binom{0}{\hat{\lambda}_0}$. Under both the null and the alternative, you have to estimate the nuisance parameters. For a null hypothesis of $\psi_1=\psi_2=\cdots=\psi_k=0$, however, we only have to estimate the distribution of the parameter that each is equal to, in this case $\lambda$. The unconstrained model therefore requires that we estimate $k-1$ additional parameters. Moreover, the asymptotic distribution for $2\log(h(\YY))$ is $\chi^2_{d}$, where $d$ is the dimension of $\boldsymbol \psi$. 
+\end{eg}
+
+\begin{remark}
+	For the LHR test statistic, we assume that we can solve both for the null and the alternative. There are situations where this is not feasible. There exist alternatives to the LHR in the score and Wald test.
+\end{remark}

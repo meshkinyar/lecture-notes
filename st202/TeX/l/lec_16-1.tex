@@ -1,0 +1,172 @@
+% ! TeX root = ..\main.tex
+\chapter{Likelihood-based Inference}
+\lecture{16}{Lecture 1}{Tue 15 Mar 2022 14:00}{}
+\subsection{Likelihood}
+
+\begin{definition}
+Let $\YY=(Y_1,Y_2,\ldots,Y_n)^T,$ and $f_\YY(\yy;\theta)$. The \textbf{likelihood} or \textbf{likelihood function} is
+$$
+L_{\YY}(\theta;\yy)=f_\YY(\yy;\theta).
+$$
+The \textbf{log-likelihood} function is 
+$$
+\ell_\YY(\theta;\yy)=\log L_\YY(\theta; \yy).
+$$
+\end{definition}
+
+Note that
+
+\begin{align*}
+    L_\YY(\theta;\yy)&= f_\YY(\yy;\theta) \\
+    &= \prod^n_{i=1}f_{Y_1}(y_i;\theta)\\
+    &=\prod^n_{i=1}L_Y(\theta;y_i) 
+\end{align*}
+
+Then
+$$
+\ell_\YY(\theta;y)=\sum^n_{i=1}\ell l_Y(\theta;y_i).
+$$
+
+Remember, we can have $\btheta=(\theta_1,\ldots,\theta_r)^T$, so 
+$$
+L_\YY(\btheta;\yy)=L_\YY(\theta_1,\ldots,\theta_r;\yy).
+$$
+
+\begin{eg}
+Let $Y_1,\ldots,Y_n\sim \Exp(\lambda).$ Then
+\begin{align*}
+    L(\lambda_i;\yy)&=\prod^n_{i=1}f_Y(y;\lambda)\\
+    &=\prod^n_{i=1}\lambda e^{-\lambda y_i} \\
+    &=\lambda^ne^{-\lambda\sum^n_{i=1}y_i} \\
+    &=\lambda^ne^{-\lambda n \bar y}.
+\end{align*}
+This implies
+\begin{align*}
+   \ell(\lambda;\yy)&=n\log\lambda -n\bar y\lambda, \quad \lambda>0.
+\end{align*}
+\end{eg}
+
+\begin{eg}
+Let $Y_1,\ldots, Y_n\sim \Normal(\mu,\sigma^2),$ with $\btheta=(\mu,\sigma^2)^T$. Then we have
+\begin{align*}
+    L(\btheta; \yy)&=L(\mu,\sigma^2;\yy) \\
+    &=\prod^n_{i=1} f_Y(y_i;\mu,\sigma^2) \\
+    &=\prod^n_{i=1} \frac{1}{\sqrt{2\pi \sigma^2}} \exp\left(-\frac{1}{2}\left(\frac{y_i-\mu}{\sigma}\right)^2\right) \\
+    &=(2\pi\sigma^2)^{\frac{-n}{2}}\exp\left(-\frac{1}{2\sigma^2}\sum^n_{i=1}(y_i-\mu)^2\right), \quad \mu\in \RR, \ \sigma^2>0. 
+\end{align*}
+This implies that 
+\begin{align*}
+   \ell(\mu,\sigma^2;y)&=-\frac{n}{2}\log(2\pi \sigma^2)-\frac{1}{2\sigma^2}\sum^n_{i=1}(y_i-\mu)^2.
+\end{align*}
+\end{eg}
+\begin{remark}
+So, what exactly are we going to do with this likelihood function? How do we interpret it, how does this let us accomplish anything? Quick aside: maximizing the likelihood also maximizes the log-likelihood, because both are increasing functions. Moreover, why do we like the log-likelihood? Because the likelihood is a product, while the log-likelihood is a sum, and you'd rather differentiate sums than products.
+\end{remark}
+
+\subsection{The Score Function}
+\begin{definition}
+We define the \textbf{score function} as
+$$
+s_{\YY}(\theta;\yy)=\pder{\theta}\ell_\YY(\theta;\yy).
+$$
+\end{definition}
+By the chain rule,
+\begin{align*}
+    s_\YY(\theta;\yy)&=\pder{\theta}\log L_\YY(\theta;\yy)\\
+    &=\frac{1}{L_\YY(\theta;\yy)}\pder{\theta}{L_\YY(\theta;\yy)}.
+\end{align*}
+Now, what is $\EE(s_\YY(\theta;\YY))$?
+\begin{align*}
+    \EE(s_\YY(\theta;\YY))
+    &=\int_{\RR^n} s_\YY(\theta;\yy) f_\YY(\yy;\theta) \ d\yy\\
+    &=\int_{\RR^n} \frac{\pder{\theta}L_\YY(\theta;\yy)}{L_\YY(\theta;\yy)}f_\YY(\yy;\theta) \ d\yy\\
+    &=\int_{\RR^n} \frac{\pder{\theta}L_\YY(\theta;\yy)}{L_\YY(\theta;\yy)}L_\YY(\theta;\yy) \ d\yy \\
+    &=\int_{\RR^n} \pder{\theta}{L_\YY(\theta;\yy)}\ d\yy \\
+    &=\pder{\theta}\int_{\RR^n}L_{\YY}(\theta;\yy)\ d\yy \\
+    &=\pder{\theta}\int_{\RR^n}f_{\YY}(\yy;\theta)\ d\yy \\
+    &=\pder{\theta}[1]\\
+    &=0.
+\end{align*}
+Remember this!
+
+\subsection{Fisher Information}
+
+\begin{remark}
+		In general, log-likelihood functions tend to be concave.
+\end{remark}
+We generally want to have a log-likelihood. Consider the following (crude) figure:
+
+\incfig[1]{w16_l1_fig1}{
+Two log-likelihood functions. The function that is relatively flat (left) doesn't tell us much about $\theta$ since its likelihood function does not differ much, and therefore has low information. The likelihood of different values of $\theta$ differs significantly on the right function, and so we say it has higher information.}
+\begin{definition}
+The \textbf{Fisher information} is
+$$
+\mathcal I_{\YY}(\theta)=\EE\left[\left(\pder{\theta}\ell_\YY(\theta;\yy)\right)^2\right].
+$$
+\end{definition}
+
+\subsection{Properties of Information}
+Note that
+\begin{align*}
+	\mathcal I_\YY(\theta)&=\EE[(s_{\YY}(\theta;\yy))^2] \\
+    &=\Var(s_\YY(\theta;\YY)),
+\end{align*}
+since $\EE(s_\YY(\theta;\YY))=0.$ 
+\begin{prop}
+For a random sample $\YY$ and parameter $\theta,$
+\begin{align*}
+    \mathcal I_\YY(\theta)&=-\EE\left[\pder[^2]{\theta^2}l_\YY(\theta;\yy)\right] \\
+    &=-\EE\left[\pder{\theta}{s_\YY(\theta;\yy)}\right].
+\end{align*}
+\end{prop}
+
+\begin{proof}
+Observe that
+\begin{align*}
+    \pder{\theta}\EE[s(\theta;\YY)]&=\pder{\theta}\int_{\RR^n}s(\theta;\YY) f_Y(\yy;\theta)\ d \yy \\
+    &=\int_{\RR^n}\pder{\theta}\left(s_\YY(\theta;\yy) f_Y(\yy;\theta)\right)\ d \yy \\
+    &=\int_{\RR^n}\left(\pder{\theta}s(\theta;\yy)\right) f_\YY(\yy;\theta)+s(\theta;\yy)\left(\pder{\theta}f_\YY(\yy;\theta)\right) \ d \yy\\
+    &=\int_{\RR^n}\left(\pder{\theta}s(\theta;\yy)\right) f_\YY(\yy;\theta) \ d \yy +\int_{\RR^n}s(\theta;\yy)\left(\pder{\theta}f_\YY(\yy;\theta)\right) \ d \yy \\
+    &=\EE\left[\pder{\theta}s(\theta;\yy)\right]+\int_{\RR^n} \frac{\pder{\theta}L_\YY(\theta;\yy)}{L_\YY(\theta;\yy)}\left(\pder{\theta}L_\YY(\theta;\yy)\right) \ d \yy \\
+    &=\EE\left[\pder{\theta}s(\theta;\yy)\right]+\int_{\RR^n} \frac{\left(\pder{\theta}L_\YY(\theta;\yy)\right)^2}{L_\YY(\theta;\yy)} \ d \yy \\
+    &=\EE\left[\pder{\theta}s(\theta;\yy)\right]+\int_{\RR^n} \left(\pder{\theta}l_\YY(\theta;\yy)\right)^2{f_\YY(\theta;\yy)} \ d \yy \\
+    &=\EE\left[\pder{\theta}s(\theta;\yy)\right]+\EE\left[\left(\pder{\theta}l_\YY(\theta;\yy)\right)^2\right].
+\end{align*}
+Since $\pder{\theta}\EE[s(\theta;\YY)]=0,$
+$$
+    \mathcal I_\YY(\theta)=\EE\left[\left(\pder{\theta}l_\YY(\theta;\yy)\right)^2\right]=-\EE\left[\pder{\theta}s(\theta;\yy)\right].
+$$
+\end{proof}
+\vskip.2cm
+
+\begin{eg}
+Applying this to $\Exp(\lambda),$ we have
+$$
+\ell(\lambda;\yy)=n\log\lambda-n\bar y \lambda,
+$$
+which implies that
+\begin{align*}
+s(\lambda;\yy)&=\pder{\lambda}\ell(\lambda;\yy) \\
+&=\frac{n}{\lambda}-n\bar y.
+\end{align*}
+Now we check the expectation:
+\begin{align*}
+    \EE(s(\lambda;\YY))&=\EE\left(\frac{n}{\lambda}-n\bar Y\right)\\
+    &=\frac{n}{\lambda}-\frac{n}{\lambda} \\
+    &=0.
+\end{align*}
+Now we have
+\begin{align*}
+    \mathcal I(\lambda)&=\Var(s_\YY(\lambda,\YY))\\
+    &=\Var\left(\frac{n}{\lambda}-n\bar Y\right)\\
+    &=(-n)^2\Var(\bar Y) \\
+    &=\frac{\frac{1}{\lambda^2}}{n} \\
+    &=\frac{n}{\lambda^2}.
+\end{align*}
+Or,
+\begin{align*}
+    \mathcal I(\lambda)&=-\EE\left[\pder{\lambda}s_\YY(\lambda;\YY)\right]\\
+    &=-\EE\left[-\frac{n}{\lambda^2}\right] \\
+    &=\frac{n}{\lambda^2}.
+\end{align*}
+\end{eg}

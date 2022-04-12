@@ -1,0 +1,127 @@
+% ! TeX root = ..\main.tex
+
+\lecture{15}{Lecture 2}{Thu 10 Feb 2022 10:00}{}
+
+\subsection{Hypothesis Testing}
+
+\begin{definition}
+We denote the \textbf{null hypothesis} as $H_0:\theta\in\Theta_0$, where $\Theta_0\subset\Theta$, the \textbf{parameter space.}
+\end{definition}
+
+We can have either a \textit{simple} or a \textit{composite} null hypothesis. Some examples:
+\begin{align*}
+    &\Theta_0=\{\theta_0\}, & (H_0:\theta=\theta_0) \quad &\text{(simple)} \\
+    &\Theta_0=[a,b], & (H_0:\theta=\theta_0a\leq \theta\leq b) \quad &\text{(composite)} \\ 
+    &\Theta_0=[a,\infty), & (H_0:\theta=\theta\geq a) \quad &\text{(composite)}.
+\end{align*}
+
+\begin{remark}
+		The general form of a hypothesis test is
+\begin{align*}
+    &\text{null: } \ &H_0:\theta\in \Theta_0 \quad  &\Theta_0\cap\Theta_1=\varnothing, \quad \Theta_0,\Theta_1\subset \Theta \\
+    &\text{alternative: } \ &H_1:\theta\in \Theta_1 \quad &(\text{but we don't require $\Theta_0\cup \Theta_1=\Theta$})
+\end{align*}
+\end{remark}
+
+\begin{definition}
+Let $\yy=(y_1,\dots,y_n)^T$. The \textbf{decision} rule is 
+$$
+\phi(\yy)=\begin{cases}1, \quad &\text{when $H_0$ is rejected} \\ 0, \quad &\text{when $H_0$ is not rejected.}\end{cases}
+$$
+\end{definition}
+\begin{definition}
+The \textbf{rejection} or \textbf{critical} region is defined as
+$$
+C=\{\yy:\phi(\yy)=1\}.
+$$
+\end{definition}
+
+Hence, we can write
+$$
+\phi(\yy)=
+\begin{cases}
+1, \quad &\text{if }\yy\in C \\
+0, \quad &\text{if } \yy\not \in C.
+\end{cases}
+$$
+\begin{definition}
+We define \textbf{Type I error} as rejecting a true $H_0$, and \textbf{Type II} error as not rejecting a false $H_0.$
+\end{definition}
+
+\begin{definition}
+Let $H_0: \theta\in \Theta_0$. A test has \textbf{significance level} $\alpha$ if
+\begin{align*}
+    &\sup_{\theta\in \Theta_0} P_\theta(\text{reject }H_0) \leq \alpha,
+\end{align*}
+and \textbf{size} $\alpha$ if
+$$
+\sup_{\theta\in \Theta_0} P_\theta(\text{reject }H_0)=\alpha.
+$$
+\end{definition}
+If $H_0:\theta=\theta_0$, then 
+\begin{align*}
+    \text{size}&=P_\theta(\text{reject } H_0) \\
+    &=P(\text{type I error})
+\end{align*}
+
+If something has size $\alpha,$ it has significance level $\alpha.$ It is often difficult to find a test of size $\alpha,$ so we set an upper bound instead.
+
+\subsection{Power Function}
+
+\begin{definition}
+For $\theta\in \Theta_1$, the \textbf{power function} is
+$$
+\beta(\theta)=P_\theta(H_0 \text{ rejected}).
+$$
+\end{definition}
+
+\begin{definition}
+The \textbf{power} of a specific $\theta_1\in \Theta_1$ is 
+\begin{align*}
+\beta(\theta_1)&=P_{\theta_1}(H_0\text{ rejected}) \\
+&=1-P_{\theta_1}(H_0 \text{ not rejected}) \\
+&=1-P_{\theta_1}(\text{type II error}).
+ \end{align*}
+\end{definition}
+
+When we talk about a study being underpowered, often we do not see the effect of the treatment.
+
+For $\theta_0\in \Theta_0$ we have
+$$
+\beta(\theta_0)=P_{\theta_0}(H_0 \text{ rejected})=P_{\theta_0}(\text{type I error})
+$$
+
+So, if 
+$$
+\sup_{\theta\in \Theta_0}\beta(\theta)=\alpha,$$
+the test has size $\alpha$.
+
+\begin{eg}
+\label{eg:normalpower}
+Let $Y_1,\dots,Y_n\sim \Normal(\mu,\sigma^2),$ with $\sigma^2$ known. We have
+\begin{align*}
+&H_0: \ \mu=\mu_0 \quad \text{simple}\\
+&H_1: \ \mu<\mu_0 \quad \text{composite},
+\end{align*}
+with critical region
+$$C=\left\{\yy: \bar y <\mu_0-Z_{1-\alpha}\frac{\sigma}{\sqrt n}\right\}.$$
+We want
+\begin{align*}
+    \beta(\mu)&=P_\mu(\text{reject } H_0)\\
+    &=P_\mu(\YY\in C) \\
+    &=P_\mu \left(\bar Y<\mu_0-Z_{1-\alpha}\frac{\sigma}{\sqrt n}\right)
+\end{align*}
+If $\mu=\mu_0,$
+\begin{align*}
+    \beta(\mu_0)&=P_{\mu_0}\left(\bar Y<\mu_0-Z_{1-\alpha}\frac{\sigma}{\sqrt n}\right) \\
+    &=P_{\mu_0}\left(\frac{\bar Y-\mu_0}{\sigma/\sqrt n}<-Z_{1-\alpha}\right) \\
+	&=\alpha,
+\end{align*}
+the size. If $\mu<\mu_0,$
+\begin{align*}
+    \beta(\mu)&=P_\mu\left(\frac{\bar Y-\mu}{\sigma/\sqrt n}<\frac{\mu_0-\mu}{\sigma/\sqrt n}-Z_{1-\alpha}\right)\\
+    &=\Phi\left(\frac{\mu_0-\mu}{\sigma/\sqrt n}+Z_\alpha\right)\\
+	&>\alpha.
+\end{align*}
+\incfig{w15_l2_fig1}{The power function in \autoref{eg:normalpower}.}
+\end{eg}

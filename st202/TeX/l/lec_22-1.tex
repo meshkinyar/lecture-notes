@@ -1,0 +1,116 @@
+% ! TeX root = ..\main.tex
+
+\lecture{22}{Lecture 1}{Tue 29 Mar 2022 14:00}{}
+
+\subsection{Linear Models II}
+
+Consider the following situation. We have $(X_i,Y_i),$ with $i=1, \ldots, n$. Moreover,
+\begin{align*}
+	X_i=\begin{cases}
+		0, \quad \text{if $Y_i$ is from population A,} \\
+		1, \quad \text{if $Y_i$ is from population B.}
+	\end{cases}
+.\end{align*}
+
+Now, we have a simple linear regression model:
+\[
+Y_i=\alpha+\beta X_i+\epsilon_i, \quad i=1,\ldots,n
+.\] 
+Then
+\begin{align*}
+	&\EE(Y_i\mid X_i=0)=\alpha,\\
+	&\EE(Y_i\mid X_i=1)	= \alpha+\beta.
+\end{align*}
+Note that both of the populations still have the same variance $\sigma^2.$ The parameter $\beta$ determines whether these populations are the same or different. 
+
+\vskip.2cm
+
+What if we have populations $0,1,2, \ldots, k-1$? Observe:
+\begin{align*}
+	Y_i=\beta_0+\beta_1X_{i,1}+\beta_2 X_{i,2} + \cdots + \beta_{i,k-1} + \epsilon_i
+.\end{align*}
+and
+\begin{align*}
+      X_{i,j}=
+      \begin{cases}
+      	0, \quad \text{if $Y_i$ is not from population $j$} \\
+	1, \quad \text{if $Y_i$ is from population $j$.}
+      \end{cases}
+\end{align*}
+
+If we define $$\mu_j=\EE(Y_i\mid X_{i,j}=1)=\beta_0+\beta_j, \quad \text{for } j=1,\ldots,k-1$$
+
+then $\mu_0=\beta_0$, the baseline. Note that $\beta_j$ tells us how much the $j$\textsuperscript{th} group differs from the baseline. 
+
+\begin{remark}
+	When you treat something as a categorical variable, the different values it can take are now categories. And if you have a categorical value that can take $k$ different values you can represent this using $k$ populations and the $k-1$ indicator variables. If you attempt to fit this in your statistical analysis software of your choice, you will typically get coefficients for $k-1$ of the different groups.
+\end{remark}
+
+\begin{definition}
+		We can use this model to test whether the groups are different from each other. This application is known as \textbf{1-way ANOVA} (\textbf{ANalysis Of VAriance}).
+\end{definition}
+
+In ANOVA, the key quantities we are comparing are 
+
+\begin{itemize}
+	\item $\sum_{i=1}^{n} (Y_i-\bar{Y})^2$ : the total sum of squares (or total variability in data)
+	\item $\sum^n_{i=1}(Y_i-\hat{Y_i})^2$ : the residual sum of squares (the within-group variability),
+\end{itemize}
+where $\hat{Y}_i=\hat{\mu}_j$ if $Y_i$ comes from population $j$. 
+
+\begin{remark}
+	In ANOVA, we compare how much smaller the residual sum of squares is than the total sum of squares. If we find the RSS is very small, we reduce the within-group variability a lot, and hence within-group variability is smaller than between group variability. Thus, there would be evidence that this group alignment is statistically significant. If there isn't a big difference, we would conclude that the groups aren't very different. This is known as the \textit{$F$-test}.
+\end{remark}
+
+\subsection{Logistic Regression}
+
+In a logistic regression model, $Y_i\mid \XX_i=x_i \sim \Bernoulli(p_i)$ , where \[
+p_i=\mu(\xx_i)=\EE(Y_i\mid\XX_i=\xx_i)
+.\] 
+
+\begin{definition}
+	The standard choice of link function for a logistic regression is the \textbf{logit} function, or the \textbf{log-odds}. The logit function is defined as
+	\[
+		\log\left( \frac{p_i}{1-p_i} \right) =\xx_i^T\beta \iff p_i=\frac{{e}^{\xx_i^T\bbeta }}{1+e^{\xx_i^T\bbeta}}
+	.\] 
+\end{definition}
+
+\begin{remark}
+	Least squares does not work here because, for the linear model, we assumed that $\Var(\epsilon_i)=\Var(\epsilon_j)$ for all $i,j\in\{1,\ldots, n\}.$ With a logistic regression, this constant-variance assumption breaks down. If $Y_i$ is Bernoulli distributed with probability $p_i$, the different $Y_i$ values have different variance. We can however, fit them using maximum-likelihood:
+	\begin{align*}
+			f(y_i\mid x_i) &= p_i^{y_i}(1-p_i)^{1-y_i} \\
+						   &= \left( \frac{e^{\xx_i^T\bbeta}}{1+e^{\xx_i^T\bbeta}} \right)^{y_i}\left(1-\frac{e^{\xx_i\bbeta}}{1+e^{\xx_i^T\bbeta}}  \right)^{1-y_i}  
+.\end{align*}
+\end{remark}
+
+\vskip.1in
+Two choices of link functions for a logistic regression are
+
+\begin{itemize}
+	\item logit: $\xx_i^T\beta=\log\left( \frac{p_i}{1-p_i} \right)$
+	\item probit: $\xx_i^T\bbeta = \Phi^{-1}(p_i)$,
+\end{itemize}
+where $\Phi$ is the CDF of the Standard Normal. Note that $p_i=\frac{1}{2}$ implies
+
+\begin{align*}
+\log\left( \frac{p_i}{1-p_i}=0 \right) \\
+\Phi^{-1}(p_i)=0 
+.\end{align*}
+
+\incfig[1]{w22_l1_fig1}{We can visualize the probit method through a latent scale depending on $z_i$. If individual $i$ falls to the right of the standard normal, our model predicts that they default. The probability that an individual defaults is $\Normal(z_i,1)$ distributed, with this example showing a positive value of $z_i$.}
+
+Let $z_i=\xx_i^T\bbeta$. Then 
+\[
+	P(Y_i=1\mid \xx_i=\xx_i)= p_i = \Phi(\xx_i^T\bbeta) = \Phi(z_i)
+.\] 
+The probability of default is the shaded area from 0 to $\infty$. 
+
+\begin{definition}
+		A \textbf{latent scale} is a scale derived from unobserved variables that are inferred from a mathematical model.
+\end{definition}
+
+We do not observe whether a person is a safer investment, i.e., where they are on the latent scale. We \textit{do} observe whether they default on a loan or not. Every individual is drawn on a normal distribution centered at a mean somewhere on a latent scale. 
+
+\begin{note}
+		Lecture 2 was a revision lecture, and covered no new content.
+\end{note}

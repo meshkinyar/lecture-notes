@@ -1,0 +1,141 @@
+% ! TeX root = ..\main.tex
+
+\lecture{21}{Lecture 2}{Thu 24 Mar 10:00 2022}{}
+
+\subsection{The Hat and the Annihilator}
+
+Let $\YY=\XX\boldsymbol \theta +\boldsymbol \epsilon$ be a linear model. Recall that $\EE(\bepsilon)=0$, and $\Var(\boldsymbol\epsilon)-\sigma^2\boldsymbol I_n$. Note that 
+ \begin{align*}
+	 S(b)=(\YY-\hat{\YY})^T(\YY-\hat{\YY})=\sum^n_{i=1}(Y_i-\hat{Y}_i)^2
+.\end{align*}
+Then $\hat{\boldsymbol{{\beta}}}=(\XX^T\XX)^{-1}\XX^T\YY$ minimizes $S(b)$, and
+$$\YY=\XX\hat{\boldsymbol{{\beta}}}=\underbrace{\XX(\XX^T\XX)^{-1}\XX^T}_{\mathbf{H}, \text{ the hat matrix.}}\YY=\mathbf {H}\YY.$$
+
+The residuals are
+\begin{align*}
+		\hat{\boldsymbol{{\epsilon}}}&=\YY-\XX\hat{\boldsymbol{{\beta}}}\\
+									 &=\YY-\hat{\YY}\\
+									 &=\YY-\mathbf{H}\YY \\
+									 &=\hspace{-2.5em}\underbrace{(\mathbf I_n-\mathbf{H})}_{\mathbf A,\text{ the annihilator matrix}} \hspace{-2.5em}\times \YY\\ 
+									 &=\mathbf A \YY
+.\end{align*} 
+
+Note that $\HH$ and $\mathbf A$ are symmetric and idempotent.
+
+\begin{definition}
+	An \textbf{idempotent} matrix $\mathbf A$ satisfies the property $\mathbf A=\mathbf A^2$. 
+\end{definition}
+
+\subsection{Linear Models I}
+\[
+		\mathbf 1_n=\underset{\substack{\\ (n\times 1)}}{\begin{pmatrix} 1 \\ 1 \\ \vdots \\ 1, \end{pmatrix}}, \quad \mathbf e_1= \underset{\substack{\\ (p+1)\times 1}}{\begin{pmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{pmatrix}} 
+.\]
+Moreover,
+\[\XX=
+		\underset{\substack{\\ \\ n\times(p+1)}}{\begin{pmatrix} 1 & X_{1,1} &\cdots & X_{1,p} \\ \vdots &\vdots &\ddots &\vdots \\ 1 & X_{n,1} &\cdots X_{n,p} \end{pmatrix}}
+.\] 
+Then
+
+\begin{align*}
+	&\mathbf 1^T\YY=\sum^n_{i=1}Y_i, \quad \XX \mathbf e_1=1
+.\end{align*}
+
+Moreover,
+
+\begin{align*}
+	\mathbf 1^T \hat{\YY} 
+	&= (\XX\mathbf e_1)^T \XX(\XX^T\XX)^{-1} \XX^T\YY \\
+	&= \mathbf e_1^T \XX^T\XX(\XX^T\XX)^{-1}\XX^T\YY\\
+	&= \mathbf 1^T \YY
+.\end{align*}
+Or, 
+\begin{align*}
+	\sum_{i=1}^{n} \hat{Y_i}=\sum_{i=1}^nY_i \iff \sum^n_{i=1} \left(Y_i-\hat{Y_i} \right) =0
+,\end{align*}
+i.e., the residuals sum to zero. Moreover,
+
+\begin{align*}
+	\frac{1}{n}\mathbf 1^T\XX 
+	&=\frac{1}{n}\left( n\sum^n_{i=1}X_{i,1} \cdots \sum^n_{i=1}X_{i,p}  \right) \\
+	&= (1\times  \bar{X}_{\cdot 1}\ldots \bar{X}_{\cdot p}) \\
+	&= \bar{\mathbf X}^T 
+.\end{align*}
+
+Then 
+\begin{align*}
+	\hat{\YY} &=\bar{\XX}\hat{\bbeta} \\
+	&= \frac{1}{n} \mathbf 1^T \bar{\XX} \hat{\bbeta}\\
+	&= \frac{1}{n}\mathbf 1^T\XX (\XX^T\XX)^{-1}\XX^T\YY  \\
+	&= \frac{1}{n} \mathbf 1^T \hat{\YY} \\
+	&= \frac{1}{n}\sum^{n}_{i=1} Y_i \\
+	&=\bar{Y}
+.\end{align*}
+
+This shows that the hyperplane passes through the vector $\left(\bar{\XX}, \YY \right) $.
+
+
+\subsubsection{Properties }
+Some properties:
+\begin{enumerate}
+	\item $\EE(\hat{\boldsymbol{\beta}}=\boldsymbol \beta$ (unbiased).
+	\item $\Var(\hat{\boldsymbol\beta})=(\XX^T\XX)^{-1}\sigma^2$.
+	\item $\EE(\hat{\boldsymbol \epsilon})=0.$
+\end{enumerate}
+
+To estimate $\sigma^2$, take
+
+\begin{align*}
+	\sum^n_{i=1}\hat{\epsilon_i^2} = \hat{\boldsymbol \epsilon}^T \hat{\boldsymbol \epsilon}=S(\hat{\boldsymbol \beta}) 
+.\end{align*}
+
+This has $n-p-1$ degrees of freedom, so
+\[
+	\hat{\sigma^2} = \frac{1}{n-p-1} \sum^n_{i=1}\hat{\epsilon}_i^2
+.\] 
+\begin{eg}
+If $\YY=\XX\boldsymbol \bbeta+\boldsymbol \epsilon,$ $\boldsymbol \epsilon \sim \Normal(0,\sigma^2\mathbf I_n),$ then $\YY\sim\Normal(\XX\bbeta,\sigma^2\mathbf I_n)$. Also:
+\[
+	\hat{\bbeta}=(\XX^T\XX)^{-1}\XX^T\YY \quad \text{is Normal}
+.\] 
+because for a multivariate normal distribution, any linear transformation of the variable is also normal. Moreover,
+\[
+\hat{\YY=\mathbf{H}\YY} \quad \text{is Normal}
+.\] 
+and 
+\[
+\hat{\boldsymbol \epsilon} =(\mathbf I_n-\mathbb{H})\YY) \quad \text{is Normal}
+.\] 
+and
+\[
+\hat{\bepsilon} = (I_n-\HH)\YY \quad \text{is Normal}
+.\] 
+\end{eg}
+
+Now, what if $Y_i$ is Bernoulli distributed? 
+
+\begin{definition}
+	The \textbf{mean function} is \[
+	\mu(\mathbf x_i)=\EE(Y_i\mid \XX_i=\mathbf x_i)=\mathbf x_i^T\boldsymbol \beta
+	.\] 			
+\end{definition}
+
+\begin{definition}
+	Let $g(\mu(\mathbf x_i))=\mathbf x_i^T\boldsymbol\beta,$ where $g$ is the \textbf{link function}. Then
+	$\mu(\mathbf x_i)=g^{-1}(\mathbf x_{i}^T\boldsymbol \beta).$
+\end{definition}
+
+\begin{note}
+	The link function is the inverse of the mean function.
+\end{note}
+
+\begin{eg}[Logistic Regression]	
+	Let $Y_i\mid \XX_i=\mathbf x_i\sim \Bernoulli(p(\mathbf x_i))$, where  \[
+	p(\mathbf x_i)=\mu(\mathbf x_i)=\EE(Y_i\mid \XX_i=\mathbf x_i)
+	.\] 
+\end{eg}
+
+Note that \[
+		\underbrace{\log\left( \frac{p_i}{1-p_i}\right)}_{\in \RR}=\mathbf x_i^T\boldsymbol \beta,
+\] 
+
+so $$\mu(\xx_i^T\bbeta)=\frac{e^{\xx_i^T\bbeta}}{1+e^{\xx_i^T\bbeta}}.$$

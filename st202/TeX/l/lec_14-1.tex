@@ -1,0 +1,147 @@
+% ! TeX root = ..\main.tex
+\chapter{\texorpdfstring{Estimation, Testing, and Prediction}{Estimation, Testing, and Prediction}}
+\lecture{14}{Lecture 1}{Tue 1 Feb 2022 14:00}{}
+
+In this lecture, we introduce three topics that we will focus on for the rest of the term: point estimation, interval estimation, and hypothesis testing.
+
+\subsection{A Few Questions}
+What's one of the first things you do when you first get a dataset? Well, you find summary statistics, namely, the means. The sample mean is an example of a statistic.
+
+\begin{definition}
+Let $\YY=(Y_1,\ldots,Y_n)^T$ be a random sample. A \textbf{statistic} is a function of the \textit{sample} and \textit{known constants} alone.
+\end{definition}
+
+Let $\mathbf u=\hh(\YY)$ be a statistic. Is it a random variable? Yes, it is a function of the sample mean, which itself is a random variable. In practice, what we observe is not a random variable, because we plug in the observed values for $\YY.$ 
+
+\begin{definition}
+We denote an \textbf{observed statistic} as $\mathbf u=\hh(\yy).$
+\end{definition}
+
+\begin{eg}[Sample Mean]
+Note that 
+$$
+\bar Y=\frac{1}{n}\sum^n_{i=1}Y_i
+$$
+is a statistic, but
+$$
+\frac{Y_1+Y_2^3+e^{Y_3}}{Y_4}
+$$
+is also. We are interested in statistics that give us a meaningful value, generally some dimension reduction.
+\end{eg}
+
+\begin{definition}
+The distribution of a statistic $\mathbf U$ is known as a \textbf{sampling distribution.}
+\end{definition}
+In practice, what we observe is not the statistic itself, but the observed statistic. We do not see the distribution unless we repeat data collection. The sampling distribution of a statistic is going to depend on three things: the function of the statistic, the population distribution, and the sample size.
+
+\subsection{Pivotals}
+
+\begin{eg}
+\label{eg:firstpivotal}
+Let $Y_1,\ldots,Y_n\sim \Normal(\mu,1)$. Then 
+$$
+\frac{\bar Y-\mu}{\sqrt{1/n}}=\sqrt n(\bar Y-\mu)\sim \Normal(0,1).
+$$
+Note that $\sqrt n(\bar Y-\mu)$ is not a statistic, because the expression includes $\mu,$ a parameter of the underlying distribution.
+\end{eg}
+
+\begin{definition}
+		The quantity $g({\bar Y},{\theta})$, where $\bar Y$ is a random sample and $\theta$ is a parameter, is a \textbf{pivotal} if its distribution does not depend on $\theta$ (or any unknown parameters).
+\end{definition} 
+
+\begin{eg}
+Let $Y_1,\ldots, Y_n\sim \Normal(\mu,\sigma^2)$. We know
+$$
+\frac{\bar Y-\mu}{\sigma/\sqrt n}\sim \Normal(0,1)
+$$
+and thus it is a pivotal.
+\end{eg}
+\begin{remark}
+		While pivotals are functions of the sample, they are not always statistics, as seen in \autoref{eg:firstpivotal}. In fact, they more often aren't.
+\end{remark}
+
+\subsubsection{The $t$-distribution}
+\begin{definition}
+Let $Z\sim \Normal(0,1),$ $V\sim \chi^2_K,$ $Z\ind V$. Then
+$$
+\frac{z}{\sqrt{v/k}}\sim t_k,
+$$
+which is the \textbf{$t$-distribution} with $k$ degrees of freedom.
+\end{definition}
+
+\incfig{w14_l1_fig1}{A $t$-distribution compared with a Normal distribution. The $t$-distribution has clearly fatter tails.}
+
+The $t$-distribution is another bell curve distribution, but its different because it has heavier tails for lower values of $k,$ and thus slimmer peaks. In general, if you are sampling from the standard normal, you're probably going to be moderately far from the mean. But if you sample from the $t$-distribution, you're probably going to be closer to the mean than the standard normal. Occasionally, however, you will be at the extremes.
+
+Why is the $t$-distribution helpful?
+\begin{eg}
+Let $Y_1,\ldots, Y_n\sim \Normal(\mu,\sigma^2)$. Then
+$$
+\frac{Y-\mu}{\sigma/\sqrt{n}}\sim \Normal(0,1), \quad \frac{(n-1)s^2}{\sigma^2}\sim \chi^2_{n-1}, \quad Y\ind s^2.
+$$
+This implies that
+$$
+\frac{\frac{\bar Y-\mu}{\sigma/\sqrt n}}{\sqrt{\frac{\frac{(n-1)s^2}{\sigma^2}}{n-1}}}=\boxed{\frac{\bar Y-\mu}{s/\sqrt n}\sim t_{n-1}}
+$$
+a pivotal quantity $g(\mathbf Y,\mu).$
+\end{eg}
+
+\subsubsection{Obtaining Pivotals}
+There are no standard steps in obtaining a pivotal. Using some properties from previous distributions, however, can be helpful. 
+
+\begin{eg}
+Let $Y_1,\ldots,Y_n\sim \Exp(\lambda).$ Note that 
+\begin{align*}
+    \sum_{i=1}^nY_i\sim \Gamma(n,\lambda).
+\end{align*}
+Moreover,
+$$
+kY_1\sim \Exp(\lambda/k),
+$$
+so
+\[
+		M_{Y_1}(t)=\left( 1-\frac{t}{\lambda} \right)^{-1}
+,\]
+and
+\begin{align*}
+		M_{kY_1}(t)&= \EE(e^{tkY_1}) \\
+				   &= M_{Y_1}(tk) \\
+				   &= \left( 1-\frac{tk}{\lambda} \right)^{-1}
+.\end{align*} 
+\end{eg}
+
+\subsection{Point Estimation}
+\begin{definition}
+Any scalar statistic $U$ can be considered as a \textbf{point estimator} for a parameter $\theta.$ Moreover,
+\begin{align*}
+    &U=h(\YY) \text{ is a point estimator} \\
+    &u=h(\yy) \text{ is a \textbf{point estimate}.}
+\end{align*}
+\end{definition}
+
+An estimator is a random variable. In practice, we obtain \textit{estimates.}
+
+\subsubsection{Bias}
+
+\begin{definition}
+We define \textbf{bias} as
+$$\Bias_\theta(U)=\EE_\theta(U)-\theta$$
+\end{definition}
+Note that
+$$
+\EE_\theta(U)=\begin{dcases}
+		\sum uf_U(u;\theta) \quad &\text{(discrete)}\\
+\intR u f_U(u;\theta) \ du \quad &\text{(continuous)}
+\end{dcases}
+$$
+Moreover, $U$ is \textit{unbiased} for $\theta$ if $\Bias_\theta(U)=0.$ 
+
+All else being equal, we want no bias. But in practice, we also want low variance, because an estimator with high variance isn't very useful. 
+
+\begin{definition}
+The \textbf{mean squared error} of an estimator is $$\MSE[\theta](U)=\EE_\theta[(U-\theta)^2]=\left(\Bias_\theta(U)\right)^2+\Var(\theta).$$
+\end{definition}
+
+\begin{ex}
+		Prove the second equality of this definition.
+\end{ex}

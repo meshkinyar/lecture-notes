@@ -1,0 +1,129 @@
+% ! TeX root = ../main.tex
+\setcounter{chapter}{5}
+\chapter{Statistical Models}
+\lecture{21}{Lecture 1}{Tue 22 Mar 2022 14:00}{}
+
+	Let $X,Y$ be variables, where $Y$ is the response variable (dependent variable, outcome), and $X$ is the explanatory variable (independent variable, covariate, treatment). We have data
+	\[
+		\{(X_1,Y_1),(X_2,Y_2),\ldots,(X_n,Y_n)\}
+	.\] 
+	A simple linear model for this can be written as \[
+	Y_i=\alpha+\beta X_i +\epsilon_i
+	.\] for $i=1,2,\ldots n.$  What can we say about the noise/error terms $\epsilon_1,\epsilon_2,\ldots,\epsilon_n$? 
+
+	\begin{enumerate}[(i)]
+		\item $\EE(\epsilon_i)=0$,
+		\item $\Var(\epsilon_i)=\sigma^2$,
+		\item The sequence $\epsilon_1,\ldots,\epsilon_n$ are IID.
+	\end{enumerate}
+
+Every statistical model is going to have a signal (randomness we can quantify), and noise (randomness that is irreducible). We can write
+\[
+Y_i\mid X_i = x_i = \alpha +\beta x_i+\epsilon_i
+.\] 
+So $\EE(Y_i\mid X_i=\alpha+\beta\EE(x_i)$, and
+ \begin{align*}
+		 \Var(Y_i\mid X_i=x_i)&=\EE[(\alpha+\beta x_i +\epsilon_i-\alpha -\beta x_i)^2]\\
+				     &=\EE[(\epsilon_i-\EE(\epsilon))^2] \\
+					 &=\sigma^2
+.\end{align*} 
+
+The simple linear model has 3 parameters that we need to fully quantify the model: $\alpha;$ $\beta;$ and $ \sigma^2$, the variance of the error terms. 
+
+\begin{remark}
+	In M\&P, we use $Y_i=\alpha+\beta X_i+\sigma\epsilon_i$, where $\EE(\epsilon_i)=0,$ and $\Var(\epsilon_i)=1$.
+\end{remark}
+
+\incfig{w21_l1_fig1}{We can imagine a density curve at each point on the fitted model that determines $y_i$. The distance from the mean is the error $\epsilon_i$.}
+
+In practice, however, we don't have data that is produced based on a line. We instead have a scatter plot:
+
+\incfig{w21_l1_fig2}{A simple fitted linear model. The dispersed vertical lines represent the size of the error.}
+
+So, what exactly are the optimal values of $a,b$? By what measure are some lines a better fit than other lines, and what is a line of best fit? We can define our linear model as $\hat{Y_i}=a+b X_i$, so take $Y_i-\hat{Y_i}$ (the residual). We minimize the residuals by minimizing  \[
+S(a,b)=\sum_{n=1}^{n} (Y_i-\hat{Y}_i)^2,
+\] 
+the sum of squares of the residuals. 
+
+\begin{remark}
+	The advantage of taking the square of the residuals vs. the absolute value is that $(Y_i-\hat{Y}_i)^2$ is differentiable, while $|Y_i-\hat{Y_i}|$ is not. Taking absolute values in an $L_1$ regression \textit{is} more robust, and allows us to better quantify the residuals, but it is not mathematically convenient.
+\end{remark}
+
+We then have 
+$$(\hat{\alpha},\hat{\beta})=\argmin_{(a,b)}S(a,b).$$
+
+\begin{definition}
+This approach is known as \textbf{OLS}, or \textbf{(ordinary least squares).}
+\end{definition}
+
+\subsection{Multiple Linear Regression}
+\vskip.1in
+
+Suppose we have $p$ explanatory variables: \[
+	\{(X_{1,1}, X_{1,2},\ldots,X_{1,p}, Y_1),\ldots,(X_{n,1},\ldots,X_{n,p},Y_n)\}
+,\]
+
+where $X_{i,j}$ is the $i$th observation, and the $j$th variable. We have
+\begin{align*}
+	Y_i=\beta_0+\beta_1X_{i,1}+\cdots+\beta_pX_{i,p}+\epsilon_i, \quad i=1,\ldots,n
+.\end{align*}
+
+\begin{notation}
+	
+We can write this in matrix notation as
+
+\begin{align*}
+		\underbrace{\begin{pmatrix}Y_1 \\ \vdots \\Y_n \end{pmatrix}}_{\substack{\YY \\ \\ (n\times 1)}}=\underbrace{\begin{pmatrix} 1&X_{1,1}&\cdots & X_{1,p} \\ \vdots & \vdots & \ddots &\vdots \\ 1 & X_{n,1} & \cdots & X_{n,p} \end{pmatrix}}_{\substack{\XX \\ \\ (n\times (p+1))}} \underbrace{\begin{pmatrix} \beta_0 \\ \vdots \\ \beta_p \end{pmatrix}}_{\substack{\boldsymbol \beta \\ \\ ((p+1)\times 1)}} + \underbrace{\begin{pmatrix} \epsilon_1 \\ \vdots \\ \epsilon_n \end{pmatrix}}_{\substack{\phantom X \boldsymbol \epsilon \phantom X\\ \\ (n\times 1)}}
+.\end{align*}
+
+Or more concisely as $\YY=\XX \bbeta+\bepsilon$, the same model in matrix notation.
+\end{notation}
+Moreover,
+\[
+	\Var(\bepsilon)=\begin{pmatrix} \sigma^2 &0 &0 \\ 0 & \ddots & 0 \\ 0 & 0 & \sigma^2 \end{pmatrix}=\sigma^2\mathbf I_n.
+\] 
+
+	If we take $x_i^T=\begin{pmatrix} 1 & x_{i,1} & \cdots & x_{i,p} \end{pmatrix} $ and $\mathbf b=\begin{pmatrix} b_0 \\ b_1 \\ \vdots \\ b_p \end{pmatrix}, $ 
+	we can write
+	$$\hat{Y}_i(\mathbf b)=b_0+b_1+x_{i,1}+\ldots+b_p x_{i,p}=\mathbf x_i^T\mathbf b,$$
+	and so the sum of squares is:
+\begin{align*}
+	S(\mathbf b)&=\sum_{n=1}^{n} (Y_i-\hat{Y}_i)\\
+		    &=\sum_{n=1}^{n} (Y_i-\xx_i^T\bee)^2 \\
+		    &=(\YY-\XX\bee)^T(\YY-\XX\bee)
+.\end{align*}
+and the least-squares estimator of $\bbeta$ is $\hat{\bbeta}=\argmin_{\bee}S(\bee)$. 
+
+\begin{remark}
+	If $\mathbf A$ is an $r\times c$ constant matrix and $\mathbf w$ is a $c\times 1$ vector, then:
+	\begin{align*}
+			\pder{\mathbf A \mathbf w}{\mathbf w}=\mathbf A, \quad \pder[\mathbf w^T \mathbf A]{\mathbf w}=\mathbf A^T, \quad \pder[\mathbf w^T \mathbf A\mathbf w]{\mathbf w}=\mathbf w^T(\mathbf A+\mathbf A^T).
+	\end{align*}
+\end{remark}
+
+So: 
+\begin{align*}
+		\pder[S(\bee)]{\bee}&=\pder{\bee}\left[ (\YY-\XX\bee)^T(\YY-\XX\bee) \right]\\ 
+			    &= \pder{\bee} \left[ \YY^T\YY-\YY^T\XX\bee-\bee^T\XX^T\YY+\bee^T\XX^T\XX\bee \right]  \\
+			    &= 0 - \YY^T\XX - \YY^T\XX+\bee^T(\XX^T\XX+\XX^T\XX)\\
+				&=-2\YY^T\XX+2\bee^T\XX^T\XX
+.\end{align*}
+We set this final expression to 0, which implies
+\begin{align*}
+	&\bee^T \XX^T\XX = \YY^T\XX \\
+	&\implies \XX^T\XX\bee = \XX^T\YY \\
+	&\implies \bee = (\XX^T\XX)^{-1}\XX^T\YY  
+.\end{align*}
+
+We found $\hat{\bbeta}=(\XX^T\XX)^{-1}\XX^T\YY$. This is the solution for an arbitrary number of random variables. So:
+
+\[
+	\hat{\YY}=\XX \hat{\bbeta} = \underbrace{\XX(\XX^T\XX)^{-1}\XX^T}_{\text{the "hat" matrix}}\YY=\mathbf{H}\YY.
+\] 
+\begin{definition}
+We can say that $\hat{\bbeta}$ is a linear estimator of $\YY$. 
+\end{definition}
+
+\begin{note}
+	This proof is not examinable.
+\end{note}

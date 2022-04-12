@@ -1,0 +1,147 @@
+% ! TeX root = ..\main.tex
+\lecture{12}{Lecture 2}{Thu 20 Jan 2022 10:00}{}
+\subsection{More on Sample Moments}
+
+\begin{recall}
+    Let $Y_1,\dots, Y_n\sim F_Y$. Then
+    $$
+    \bar Y= \frac{1}{n}\sum^n_{i=1}Y_i.
+    $$
+\end{recall} 
+
+\begin{remark}
+    If you're interested in something without having access to the underlying distribution of the population, then you use the sample average. Sample averages converge to their population equivalent as the sample size increases. 
+\end{remark}
+
+\begin{recall}
+		Moments and central moments:
+    \begin{align*}
+        &\mu_1'=\EE(Y) \\
+        &\mu_r'=\EE(Y^r) \\
+        &\mu_r=\EE[(Y-\EE(Y))^r].
+    \end{align*}
+\end{recall}
+
+What is the sample equivalent of moments?
+
+\begin{definition}
+	Let
+    \begin{align*}
+        &m_r'=\frac{1}{n}\sum^n_{i=1}Y_i^r \\
+		&m_r=\frac{1}{n}\sum^m_{i=1}(Y_i-\bar Y)^2.
+    \end{align*}
+	Then $m_r'$ is the $r$th \textbf{sample moment} and $m_r$ is the $r$th {sample central moment}.
+\end{definition}
+
+    \begin{eg}
+    We have
+    \begin{align*}
+        &m_1'=\bar Y \\
+        &m_2=\frac{n-1}{n}s^2,
+    \end{align*}
+    where
+    $$
+    s^2=\frac{1}{n-1}\sum^n_{i=1}(Y_i-\bar Y)^2,
+    $$
+	the sample variance.
+    \end{eg}
+
+    \subsection{New Tricks, New Properties}
+    Let $Y_1,\dots, Y_n \sim^i F_Y$. Define
+    $$Z_i=Y_i-\bar Y, \quad \text{for } i=1,\dots n.$$
+	We have
+    \begin{align*}
+			m_r^{(Z)}&=\frac{1}{n}\sum^n_{i=1}(Z_i-\bar Z)^r\\
+        &=\frac{1}{n}\sum^n_{i=1}(Y_i-\bar Y)^r \\
+		&=m_r^{(Y)}.
+    \end{align*}
+    Moreover,
+    \begin{align*}
+			\bar Z&=\frac{1}{n}\sum_{i=1}^n Z_i \\
+        &=\frac{1}{n}\sum^n_{i=1}(Y_i-\bar Y)\\
+        &=\frac{1}{n}\left(\sum^n_{i=1}(Y_i) -n\bar Y\right)\\
+        &=0.
+    \end{align*}
+    But \begin{align*}
+        \EE(Z_i)&=\EE(Y_i-\bar Y) \\
+        &=\EE(Y_i)-\EE(\bar Y) \\
+        &=\mu_Y-\mu_Y \\
+        &=0.
+    \end{align*}
+    \subsection{Sample Variance}
+    Observe that
+    \begin{align*}
+        Y_i-\bar Y &=Y_i-\frac1n\sum^n_{j=1}Y_j \\
+        &=Y_i-\frac{1}{n}Y_i-\frac{1}{n}\sum^n_{j=1, j\neq i}Y_j \\
+        &=\underbrace{\frac{n-1}{n}Y_i}_{V_i}-\underbrace{\frac{1}{n}\sum^n_{j=1, j\neq i}Y_j}_{W_i}
+    \end{align*}
+    Notice that $V_i\ind W_i$, $Y_i\ind W_i$, and $V_1,\dots, V_n$ are independent. 
+    
+    \subsubsection{Alternative Expressions}
+We have
+    \begin{align*}
+        s^2&=\frac{1}{n-1}\left(\sum^n_{i=1}Y_i^2-n\bar Y_n^2\right) \\
+        &=\frac{1}{n-1}\sum^n_{i=1}Y_i(Y_i-\bar Y).
+    \end{align*}
+    So,
+    \begin{align*}
+        \EE(s^2)&=\EE\left(\frac{1}{n-1}\sum^n_{i=1}Y_i(Y_i-\bar Y)\right) \\
+        &=\EE\left(\frac{1}{n-1}\sum^n_{i=1}Y_i(V_i-W_i)\right) \\
+        &=\frac{1}{n-1}\sum^n_{i=1}\left(\EE(Y_iV_i)-\underbrace{\EE(Y_iW_i)}_{=0}\right) \\
+        &=\frac{1}{n-1}\sum^n_{i=1}\EE\left(\frac{n-1}{n}Y_i^2\right) \\
+        &=\frac{1}{n-1}n\frac{n-1}{n}\EE(Y_1^2) \\
+        &=\Var(Y_1)\\
+        &=\sigma^2.
+    \end{align*}
+
+Now, what is $\Cov(\bar Y,s^2)$?
+\begin{align*}
+    \Cov(\bar Y, s^2)&=\EE(\bar Ys^2)-\underbrace{\EE(\bar Y)}_{=0}\EE(s^2)\\
+    &=\EE\left[\left(\frac{1}{n}\sum^n_{i=1}Y_i\right)\left(\frac{1}{n-1}\sum^n_{j=1}Y_j(V_j-W_j)\right)\right] \\
+    &=\frac{1}{n(n-1)}\EE\left[\sum^n_{i=1}\sum^n_{j=1}(Y_iY_jV_j-Y_iY_jW_j)\right].
+\end{align*}
+Whenever $i\neq j$ in the expression $Y_iY_jV_j$, we have $Y_iY_jV_j=0$, since $Y_i\ind Y_j$ and $Y_i\ind V_j.$ Moreover, we have $Y_iY_jW_j=0$ where $i\neq j$. What about when $i=j?$
+\begin{align*}
+    \Cov(\bar Y,s^2)&=\frac{1}{n(n-1)}\EE\left[\sum^n_{i=1}\left(Y_i^2V_i-\underbrace{Y_i^2W_i}_{=\EE(Y_i^2-W_i^2)=0}\right)\right] \\
+    &=\frac{1}{n(n-1)}\EE\left[\sum^n_{i=1}\left(\frac{n-1}{n}Y_i^3\right)\right] \\
+    &=\frac{n-1}{n^2(n-1)}\sum^n_{i=1}\EE(Y_i^3) \\
+    &=\frac{1}{n^2}n\mu'_3 \\
+	&=\frac{1}{n^2}n\mu_3 \\
+    &=\frac{\mu_3}{n}.
+\end{align*}
+The penultimate equality results from $Y$ having 0 mean. Note that $\mu_3=0$ for any symmetrical distribution.
+
+\subsection{Joint Sample Moments}
+\vskip.2cm
+\begin{definition}
+\label{def:jsm}
+		Let $(X_1,Y_1),(X_2,Y_2),\dots,(X_n,Y_n)$ be a random sample. The \textbf{joint sample moment} and \textbf{joint central sample moment} are
+\begin{align*}
+    m_{r,s}'&=\frac{1}{n}\sum^n_{i=1}X_i^rY_i^s \\
+    m_{r,s}&=\frac{1}{n}\sum^n_{i=1}(X_i-\bar X)^r(Y_i-\bar Y)^s,
+    \end{align*}
+	respectively.
+\end{definition}
+
+\begin{eg}
+Note that
+\begin{align*}
+    m_{1,1}&=\frac{1}{n}\sum_{i=1}^n(X_i-\bar X)(Y_i-\bar Y)\\
+    &=   \frac{n-1}{n}C_{X,Y},
+\end{align*}
+where $C_{X,Y}$ is the sample covariance.
+\end{eg}
+\begin{definition}
+		With a random sample defined as in \autoref{def:jsm}, the \textbf{sample correlation} is
+\begin{align*}
+    r_{X,Y}&=\frac{C_{X,Y}}{\sqrt{s^2_Xs^2_Y}}.
+\end{align*}
+\end{definition}
+\begin{remark}
+Note that $|r_{X,Y}|\leq 1.$ We have $|r_{X,Y}|=1$ only when
+$$
+Y_i=\alpha+\beta X_i, \quad i=1,\dots n
+$$
+
+for some $\alpha,\beta\in \RR$, $(\beta\neq 0).$ Further note that $r_{X,Y}=1$ when $\beta>0$, and $r_{X,Y}=-1$ when $\beta<0$.
+\end{remark}
