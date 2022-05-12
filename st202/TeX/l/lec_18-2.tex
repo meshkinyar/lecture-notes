@@ -18,10 +18,10 @@ First, consider the discrete case:
 
 Let $f_{\YY\mid \UU}(\yy\mid \uu).$ If $\YY=\yy$, then $h(\YY)=h(\yy),$ which implies that $\mathbf U=\mathbf u.$ We can say that $\YY=\yy$ is a \textit{subset} of $\UU=\uu.$ Note that we can express
 \begin{align*}
-f_{\YY\mid \UU}(\yy\mid \uu) &= \frac{f_{\YY,\UU}(\yy,\uu)}{f_{\UU}} \\
+f_{\YY\mid \UU}(\yy\mid \uu) &= \frac{f_{\YY,\UU}(\yy,\uu)}{f_{\UU}(\uu)} \\
 &=\frac{P(\YY=\yy,\UU=\uu)}{P(\UU=\uu)}\\
 &\implies f_{\YY\mid \UU}(\yy\mid \uu)=\begin{cases}
-\frac{f_{\YY}(\yy)}{f_{\UU(\uu)}},\quad &\text{if } \uu=h(\yy) \\
+\frac{f_{\YY}(\yy)}{f_\UU(\uu)},\quad &\text{if } \uu=h(\yy) \\
 0, \quad &\text{otherwise.}
 \end{cases}
 \end{align*}
