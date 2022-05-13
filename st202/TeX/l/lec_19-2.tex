@@ -4,7 +4,7 @@
 \subsection{The Rao-Blackwell Theorem}
 
 \begin{theorem}[Rao-Blackwell Theorem]
-Let $\YY=(Y_1,\ldots, Y_n)^T$ be a random sample with parameter $\boldsymbol \theta$, estimator $\UU$ (of $\btheta$), sufficient statistic $\mathbf S$. Then $\mathbf T=\EE(\UU\mid \bS)$ is an estimator with
+Let $\YY=(Y_1,\ldots, Y_n)^T$ be a random sample with parameter $\boldsymbol \btheta$, estimator $\UU$ (of $\btheta$), and sufficient statistic $\mathbf S$. Then $\mathbf T=\EE(\UU\mid \bS)$ is an estimator with
 $$
 \MSE_{\btheta}(\bT)\leq \MSE_\btheta(\UU).
 $$
@@ -34,18 +34,18 @@ so $\UU$ \text{ is a function of } $\bS.$
 What is the best unbiased estimator? The one with the lowest variance: the minimum-variance unbiased estimator (MVUE).
 
 \begin{theorem}[Cramer-Rao Bound]
-Let $\YY=(Y_1,\ldots,Y_n)^T$ be a random sample with distribution $f_Y(y;\theta)$. If $U=h(\YY)$ is an \textit{unbiased} estimator of $g(\theta),$ then:
+Let $\YY=(Y_1,\ldots,Y_n)^T$ be a random sample with distribution $f_Y(y;\theta)$, where $\theta$ is a scalar. If $\UU=h(\YY)$ is an \textit{unbiased} estimator of $g(\theta),$ then:
 $$
-\Var(U)\geq \frac{(\der{\theta}g(\theta))^2}{\mathcal I_\YY(\theta)}.
+\Var(\UU)\geq \frac{(\der{\theta}g(\theta))^2}{\mathcal I_\YY(\theta)}.
 $$
-Special case: if $g(\theta)=\theta,$ then $\Var(U)\geq \frac{1}{\mathcal I_\YY(\theta)}.$
+Special case: if $g(\theta)=\theta,$ then $\Var(\UU)\geq \frac{1}{\mathcal I_\YY(\theta)}.$
 \end{theorem}
 An unbiased estimator that is fully-efficient attains this lower bound. MLEs are asymptotically unbiased, asymptotically normal, and asymptotically fully-efficient.
 \begin{proof}
-Recall that $\EE(s(\theta;\YY))=0,$ $\Var(s(\theta,\YY))=\mathcal I_\YY(\theta).$ If $U=h(\YY)$ is unbiased for $g(\theta),$ then 
+Recall that $\EE(s(\theta;\YY))=0,$ $\Var(s(\btheta,\YY))=\mathcal I_\YY(\theta).$ If $\UU=h(\YY)$ is unbiased for $g(\btheta),$ then 
 \begin{align*}
-    g(\theta)&=\EE(U) \\
-    &=\int_{\RR^n}h(\yy)f_\YY(\yy;\theta) \ d\yy,
+    g(\btheta)&=\EE(\UU) \\
+    &=\int_{\RR^n}h(\yy)f_\YY(\yy;\btheta) \ d\yy,
 \end{align*}
 which implies that
 \begin{align*}
@@ -57,7 +57,7 @@ which implies that
 which implies that
 \begin{align*}
     \left(\der{\theta}g(\theta)\right)^2&=\left(\Cov(h(\YY),s(\theta;\YY))\right)^2 \\
-    &\leq \Var(h(\YY))\Var(s(\theta;\YY)) \\
+    &\leq \Var(h(\YY))\Var(s(\btheta;\YY)) \\
     &=\Var(h(\YY))\mathcal I_\YY(\theta) \\
     &\implies \Var(h(\YY))\geq \frac{\left(\der{\theta}g(\theta)\right)^2}{\mathcal I_\YY(\theta)}.
 \end{align*}
@@ -89,7 +89,7 @@ where $b(\theta)$ is a function of $\theta$ \textit{only}, the quantity of inter
     \item $U$ attains the Cramer-Rao lower bound (CRLB).
     \item $U$ is the MVUE.
 \end{enumerate}
-If we \textit{can't}, then no unbiased estimator can attain the CRLB.
+If we can't, then \textit{no} unbiased estimator can attain the CRLB.
 
 \begin{eg}[Normal Case]
 Let $Y_1,\ldots,Y_n\sim \Normal(\mu,\sigma^2),$ where $\sigma^2$ is known. Then

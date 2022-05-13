@@ -14,11 +14,11 @@ Our test statistic is
 h(\yy)&=\frac{L(\mu_1;\yy)}{L(\mu_0;\yy)}=\frac{e^{\mu_1n\bar{y}}e^{-n\frac{\mu_1^2}{2}}}{e^{\mu_0n\bar{y}}e^{-n\frac{\mu_0^2}{2}}} \\
 	      &=e^{\frac{n}{2}(\mu_0^2-\mu_1^2)}e^{n(\mu_1-\mu_0)\bar{y}}  
 .\end{align*}
-Then if $\mu_1>\mu_0$, $h(\yy)$ is increasing in $\bar{y}$, and we reject $H_0$ when $\bar{Y}>k_\alpha$. To find $k_\alpha,$ we set: $P_{H_0}(\YY> k_\alpha)=\alpha$. If we change $\mu_1$ to another value larger than $\mu_0$, then the form of the test does not change, and the critical region doesn't change either, because $k_\alpha$ depends on $\mu_0$, not $\mu_1$. Any size calculation is performed under the null hypothesis, assuming that the null hypothesis is true. The power of the test assumes the alternative. Notice that this MPT is the same for any $\mu_1>\mu_0$. This is an important property.
+Then if $\mu_1>\mu_0$, $h(\yy)$ is increasing in $\bar{y}$, and we reject $H_0$ when $\bar{Y}>k_\alpha$. To find $k_\alpha,$ we set: $P_{H_0}(\hat Y> k_\alpha)=\alpha$. If we change $\mu_1$ to another value larger than $\mu_0$, then the form of the test does not change, and the critical region doesn't change either, because $k_\alpha$ depends on $\mu_0$, not $\mu_1$. Any size calculation is performed under the null hypothesis, assuming that the null hypothesis is true. The power of the test assumes the alternative. Notice that this MPT is the same for any $\mu_1>\mu_0$. This is an important property.
 \end{eg}
 
 \begin{definition}
-	Suppose we want to test $H_0: \theta\in\Theta_0$, $H_1:\theta\in \Theta_1$. If we take any $\theta\in \Theta_1$, and obtain the same MPT, then that MPT is the is the \textbf{Uniformly MPT (UMPT).} 
+	Suppose we want to test $H_0: \theta\in\Theta_0$, $H_1:\theta\in \Theta_1$. If we take any $\theta\in \Theta_1$, and obtain the same MPT, then that MPT is the \textbf{Uniformly MPT (UMPT).} 
 \end{definition}
 
 Now, what if the alternative were two-sided? Is the MPT always the same? No, because for values greater than $\mu_0$, we reject for $\bar{y}>k,$ but for $\mu_1<\mu_0$ we reject for $\bar{y}<k$. If you had a two sided alternative, you could not come up with a UMPT because you do not obtain the same MPT for every special case. The form of the test changes for different parameter values. 
@@ -56,7 +56,7 @@ Now, what if we had:
 	&H_1:\mu>\mu_0
 .\end{align*}
 
-Firstly, if we were to test the simple null vs. the alternative, we would get a UMPT of size $\alpha$. For $H_0^*:\mu=\mu_0 \quad \text{vs.} \quad H_1$, we have the UMPT which rejects $H_0^*$ when $\bar{Y}>k_\alpha$, where 
+Firstly, if we were to test the simple null vs. the alternative, we would get a UMPT of size $\alpha$. For $H_0^*:\mu=\mu_0$ \text{vs.} $H_1$, we have the UMPT which rejects $H_0^*$ when $\bar{Y}>k_\alpha$, where 
 \begin{align*}
 	\alpha&=P_{H_0}(\bar{Y}>k_\alpha)\\
 	      &=P_{H_0}\left( \frac{\bar{Y}-\mu_0}{\sqrt{\frac{1}{n}}} > \frac{k_\alpha-\mu_0}{\sqrt{\frac{1}{n}}}  \right)\\
@@ -64,7 +64,7 @@ Firstly, if we were to test the simple null vs. the alternative, we would get a 
 .\end{align*}  
 So $k_\alpha=\mu_0+z_\alpha\sqrt{\frac{1}{n}}$.
 We use $\mu_0$ because this is a size calculation. Note that under $H_0,$ the first term is $\Normal(0,1)$ distributed. 
-Moreover, $Z$ is in the right tail of the standard normal.
+Moreover, $z_{1-\alpha}$ is in the right tail of the standard normal.
 
 \incfig{w20_l2_fig2}{The rejection region of $Z$ in \autoref{eg:NormalUMPT}.}
 
@@ -111,9 +111,9 @@ The test statistic for LRT:
 	h(\YY)&= \frac{\sup_\theta(\theta;\YY)}{\sup_{\theta\in\Theta_0}L(\theta;\YY)} \\
 	&=\frac{L(\hat{\theta};\YY)}{L(\hat{\theta_0};\YY)}  
 .\end{align*}
-If $\theta=\binom{\psi}{\delta}$, then $\hat{\theta}=\binom{\hat{\psi}}{\hat{\lambda}}$and $\hat{\theta}_0=\binom{0}{\hat{\lambda}_0}$. Under both the null and the alternative, you have to estimate the nuisance parameters. For a null hypothesis of $\psi_1=\psi_2=\cdots=\psi_k=0$, however, we only have to estimate the distribution of the parameter that each is equal to, in this case $\lambda$. The unconstrained model therefore requires that we estimate $k-1$ additional parameters. Moreover, the asymptotic distribution for $2\log(h(\YY))$ is $\chi^2_{d}$, where $d$ is the dimension of $\boldsymbol \psi$. 
+If $\theta=\binom{\psi}{\lambda}$, then $\hat{\theta}=\binom{\hat{\psi}}{\hat{\lambda}}$ and $\hat{\theta}_0=\binom{0}{\hat{\lambda}_0}$. Under both the null and the alternative, you have to estimate the nuisance parameters. For a null hypothesis of $\psi_1=\psi_2=\cdots=\psi_k=0$, however, we only have to estimate the distribution of the parameter that each is equal to, in this case $\lambda$. The unconstrained model therefore requires that we estimate $k-1$ additional parameters. Moreover, the asymptotic distribution for $2\log(h(\YY))$ is $\chi^2_{d}$, where $d$ is the dimension of $\boldsymbol \psi$. 
 \end{eg}
 
 \begin{remark}
-	For the LHR test statistic, we assume that we can solve both for the null and the alternative. There are situations where this is not feasible. There exist alternatives to the LHR in the score and Wald test.
+	For the LHR test statistic, we assume that we can solve both for the null and the alternative. There are situations where this is not feasible. There exist alternatives to the LHR in the Score and Wald tests.
 \end{remark}

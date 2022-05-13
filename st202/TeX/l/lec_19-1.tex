@@ -15,18 +15,17 @@ Let $Y_1,\ldots,Y_n\sim \Normal(\mu,\sigma^2)$. Then
 
 There are multi dimensional sufficient statistics. Grouping these differently gives different sufficient statistics. Which one is preferable?
 
-Let $Y_1,\ldots,Y_n\sim F_Y(y;\theta).$ Then $\YY$ is a sufficient statistic! 
+Let $Y_1,\ldots,Y_n\sim F_Y(y;\btheta).$ Then $\YY$ is a sufficient statistic! 
 
-Suppose that $U=\sum^n_{i=1}Y_i$ is sufficient for $\theta.$ Let $\mathbf V=\left(Y_1,\sum^n_{i=2}Y_i\right)$. Then $\mathbf V$ is sufficient since you can figure out $U$ from $\mathbf V.$ But it doesn't make sense to use $V$, since it is two dimensional. Notice that $U=g(\mathbf V).$ What does this tell us?
+Suppose that $\UU=\sum^n_{i=1}Y_i$ is sufficient for $\btheta.$ Let $\mathbf V=\left(Y_1,\sum^n_{i=2}Y_i\right)$. Then $\mathbf V$ is sufficient since you can figure out $U$ from $\mathbf V.$ But it doesn't make sense to use $\mathbf V$, since it is two dimensional. Notice that $\mathbf  U=g(\mathbf V).$ What does this tell us?
 
-
-Suppose that $V$ is a statistic. If $U$ is a function of $V$ alone (i.e., $U=g(V)$), then
 \begin{prop}
+Suppose that $V$ is a statistic. If $U$ is a function of $V$ alone (i.e., $\mathbf U=g(\mathbf V)$), then
 \begin{enumerate}[i.]
-    \item $U$ is a statistic;
-    \item if $U$ is sufficient for $\theta,$ then $V$ is also sufficient;
-    \item if $V$ is not sufficient, then $U$ is not sufficient;
-    \item if $V$ is sufficient and $g$ is injective, then $U$ is also sufficient.
+    \item $\mathbf U$ is a statistic;
+    \item if $\mathbf U$ is sufficient for $\btheta,$ then $\mathbf V$ is also sufficient;
+    \item if $\mathbf V$ is not sufficient, then $\mathbf U$ is not sufficient;
+    \item if $\mathbf V$ is sufficient and $g$ is injective, then $\mathbf U$ is also sufficient.
 \end{enumerate}
 \end{prop}
 
@@ -35,16 +34,16 @@ Exercise 10.1 in the course textbook.
 \end{proof}
 
 \begin{definition}
-A statistic $U$ is a \textbf{minimal sufficient statistic} if, for any other sufficient statistic $V$, $U$ is a function of $V.$
+A statistic $\mathbf U$ is a \textbf{minimal sufficient statistic} if, for any other sufficient statistic $\mathbf V$, $\mathbf U$ is a function of $\mathbf V.$
 \end{definition}
 A minimal sufficient statistic has the lowest number of dimensions among all sufficient statistics.
 
 \begin{prop}
-Let $\YY=(Y_1,\ldots, Y_n)^T$ with mass/density $f_\YY(\yy;\theta).$ If we can find a function $h$ such that:
+Let $\YY=(Y_1,\ldots, Y_n)^T$ with mass/density $f_\YY(\yy;\btheta).$ If we can find a function $h$ such that:
 $$
-h(\yy)=h(\xx) \iff \frac{f_\YY(\yy;\theta)}{f_\YY(\xx;\theta)} = k(\yy,\xx)
+h(\yy)=h(\xx) \iff \frac{f_\YY(\yy;\btheta)}{f_\YY(\xx;\btheta)} = k(\yy,\xx)
 $$
-with $\xx=(x_1,\ldots,x_n)^T$ and where $k$ does not depend on $\theta,$ then $h(\YY)$ is a minimal sufficient statistic for $\theta.$
+with $\xx=(x_1,\ldots,x_n)^T$ and where $k$ does not depend on $\btheta,$ then $h(\YY)$ is a minimal sufficient statistic for $\btheta.$
 \end{prop}
 
 \begin{proof}
@@ -63,14 +62,14 @@ Then $\left(\sum_iY_i,\sum_iY_i^2\right)$ is a minimal sufficient statistic for 
 \end{eg}
 
 \begin{prop}
-If $\YY$ is a random sample, $\UU$ is a statistic, and $\mathbf S$ is a sufficient statistic for $\theta,$ then $\mathbf T=:\EE(\UU \mid \mathbf S)$ is a \textit{statistic,} i.e., its value does not depend on $\theta.$
+If $\YY$ is a random sample, $\UU$ is a statistic, and $\mathbf S$ is a sufficient statistic for $\btheta,$ then $\mathbf T=:\EE(\UU \mid \mathbf S)$ is a statistic, i.e., its value does not depend on $\btheta.$
 \end{prop}
 \begin{proof}
 \begin{align*}
-    \EE(\UU\mid \mathbf S=\mathbf s &= \EE(h(\YY) \mid \mathbf S = \mathbf s) \\
-    &= \int_{\RR^n}h(\yy)\underbrace{f_{\YY\mid \mathbf S}(\yy\mid \mathbf s)}_{\text{dnd on $\theta$}} \ d\yy,
+    \EE(\UU\mid \mathbf S=\mathbf s)&= \EE(h(\YY) \mid \mathbf S = \mathbf s) \\
+    &= \int_{\RR^n}h(\yy)\underbrace{f_{\YY\mid \mathbf S}(\yy\mid \mathbf s)}_{\text{dnd on $\btheta$}} \ d\yy,
 \end{align*}
-i.e., it does not contain $\theta.$
+i.e., it does not contain $\btheta.$
 \end{proof}
 
 The next lecture introduces the Rao-Blackwell Theorem.

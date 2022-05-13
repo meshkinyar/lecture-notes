@@ -27,13 +27,13 @@ Note that both of the populations still have the same variance $\sigma^2.$ The p
 
 What if we have populations $0,1,2, \ldots, k-1$? Observe:
 \begin{align*}
-	Y_i=\beta_0+\beta_1X_{i,1}+\beta_2 X_{i,2} + \cdots + \beta_{i,k-1} + \epsilon_i
+	Y_i=\beta_0+\beta_1X_{i,1}+\beta_2 X_{i,2} + \cdots + \beta_i X_{i,k-1} + \epsilon_i
 .\end{align*}
 and
 \begin{align*}
       X_{i,j}=
       \begin{cases}
-      	0, \quad \text{if $Y_i$ is not from population $j$} \\
+      	0, \quad \text{if $Y_i$ is not from population $j$,} \\
 	1, \quad \text{if $Y_i$ is from population $j$.}
       \end{cases}
 \end{align*}
@@ -71,7 +71,7 @@ p_i=\mu(\xx_i)=\EE(Y_i\mid\XX_i=\xx_i)
 \begin{definition}
 	The standard choice of link function for a logistic regression is the \textbf{logit} function, or the \textbf{log-odds}. The logit function is defined as
 	\[
-		\log\left( \frac{p_i}{1-p_i} \right) =\xx_i^T\beta \iff p_i=\frac{{e}^{\xx_i^T\bbeta }}{1+e^{\xx_i^T\bbeta}}
+		\log\left( \frac{p_i}{1-p_i} \right) =\xx_i^T\bbeta \iff p_i=\frac{{e}^{\xx_i^T\bbeta }}{1+e^{\xx_i^T\bbeta}}
 	.\] 
 \end{definition}
 
@@ -87,13 +87,13 @@ p_i=\mu(\xx_i)=\EE(Y_i\mid\XX_i=\xx_i)
 Two choices of link functions for a logistic regression are
 
 \begin{itemize}
-	\item logit: $\xx_i^T\beta=\log\left( \frac{p_i}{1-p_i} \right)$
+	\item logit: $\xx_i^T\bbeta=\log\left( \frac{p_i}{1-p_i} \right)$
 	\item probit: $\xx_i^T\bbeta = \Phi^{-1}(p_i)$,
 \end{itemize}
 where $\Phi$ is the CDF of the Standard Normal. Note that $p_i=\frac{1}{2}$ implies
 
 \begin{align*}
-\log\left( \frac{p_i}{1-p_i}=0 \right) \\
+\log\left( \frac{p_i}{1-p_i}\right)=0  \\
 \Phi^{-1}(p_i)=0 
 .\end{align*}
 

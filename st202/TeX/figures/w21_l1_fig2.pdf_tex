@@ -58,9 +58,8 @@
     \put(0.95567363,0.28407196){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$x$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{w21_l1_fig2.pdf}}%
     \put(0.89665933,0.69307478){\color[rgb]{0.80392157,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$Y=a+bX$\end{tabular}}}}%
-    \put(0.7048624,0.3430863){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$Y_i=a+\beta X+\epsilon_i$\end{tabular}}}}%
+    \put(0.7048624,0.3430863){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$Y_i=\alpha+\beta X+\epsilon_i$\end{tabular}}}}%
     \put(0.78887588,0.51726098){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$(X_i,Y_i)$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=3]{w21_l1_fig2.pdf}}%
-    \put(0.7048624,0.3430863){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$Y_i=a+\beta X+\epsilon_i$\end{tabular}}}}%
   \end{picture}%
 \endgroup%

@@ -27,12 +27,14 @@ Note that $\HH$ and $\mathbf A$ are symmetric and idempotent.
 \end{definition}
 
 \subsection{Linear Models I}
+\begin{remark}
+We have
 \[
 		\mathbf 1_n=\underset{\substack{\\ (n\times 1)}}{\begin{pmatrix} 1 \\ 1 \\ \vdots \\ 1, \end{pmatrix}}, \quad \mathbf e_1= \underset{\substack{\\ (p+1)\times 1}}{\begin{pmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{pmatrix}} 
 .\]
 Moreover,
 \[\XX=
-		\underset{\substack{\\ \\ n\times(p+1)}}{\begin{pmatrix} 1 & X_{1,1} &\cdots & X_{1,p} \\ \vdots &\vdots &\ddots &\vdots \\ 1 & X_{n,1} &\cdots X_{n,p} \end{pmatrix}}
+		\underset{\substack{\\ \\ n\times(p+1)}}{\begin{pmatrix} 1 & X_{1,1} &\cdots & X_{1,p} \\ \vdots &\vdots &\ddots &\vdots \\ 1 & X_{n,1} &\cdots &X_{n,p} \end{pmatrix}}
 .\] 
 Then
 
@@ -63,8 +65,8 @@ i.e., the residuals sum to zero. Moreover,
 
 Then 
 \begin{align*}
-	\hat{\YY} &=\bar{\XX}\hat{\bbeta} \\
-	&= \frac{1}{n} \mathbf 1^T \bar{\XX} \hat{\bbeta}\\
+	\bar{\XX}^T\hat{\bbeta} \\
+	&= \frac{1}{n} \mathbf 1^T\XX \hat{\bbeta}\\
 	&= \frac{1}{n}\mathbf 1^T\XX (\XX^T\XX)^{-1}\XX^T\YY  \\
 	&= \frac{1}{n} \mathbf 1^T \hat{\YY} \\
 	&= \frac{1}{n}\sum^{n}_{i=1} Y_i \\
@@ -73,11 +75,12 @@ Then
 
 This shows that the hyperplane passes through the vector $\left(\bar{\XX}, \YY \right) $.
 
+\end{remark}
 
-\subsubsection{Properties }
+\subsubsection{Properties of Linear Models}
 Some properties:
 \begin{enumerate}
-	\item $\EE(\hat{\boldsymbol{\beta}}=\boldsymbol \beta$ (unbiased).
+	\item $\EE(\hat{\boldsymbol{\beta}})=\boldsymbol \beta$ (unbiased).
 	\item $\Var(\hat{\boldsymbol\beta})=(\XX^T\XX)^{-1}\sigma^2$.
 	\item $\EE(\hat{\boldsymbol \epsilon})=0.$
 \end{enumerate}
@@ -95,15 +98,15 @@ This has $n-p-1$ degrees of freedom, so
 \begin{eg}
 If $\YY=\XX\boldsymbol \bbeta+\boldsymbol \epsilon,$ $\boldsymbol \epsilon \sim \Normal(0,\sigma^2\mathbf I_n),$ then $\YY\sim\Normal(\XX\bbeta,\sigma^2\mathbf I_n)$. Also:
 \[
-	\hat{\bbeta}=(\XX^T\XX)^{-1}\XX^T\YY \quad \text{is Normal}
-.\] 
-because for a multivariate normal distribution, any linear transformation of the variable is also normal. Moreover,
+	\hat{\bbeta}=(\XX^T\XX)^{-1}\XX^T\YY
+\] 
+is normally distributed, because for a multivariate normal distribution, any linear transformation of the variable is also normal. Moreover,
 \[
 \hat{\YY=\mathbf{H}\YY} \quad \text{is Normal}
 .\] 
 and 
 \[
-\hat{\boldsymbol \epsilon} =(\mathbf I_n-\mathbb{H})\YY) \quad \text{is Normal}
+\hat{\boldsymbol \epsilon} =(\mathbf I_n-\mathbf{H})\YY) \quad \text{is Normal}
 .\] 
 and
 \[
@@ -120,8 +123,7 @@ Now, what if $Y_i$ is Bernoulli distributed?
 \end{definition}
 
 \begin{definition}
-	Let $g(\mu(\mathbf x_i))=\mathbf x_i^T\boldsymbol\beta,$ where $g$ is the \textbf{link function}. Then
-	$\mu(\mathbf x_i)=g^{-1}(\mathbf x_{i}^T\boldsymbol \beta).$
+	For $g(\mu(\mathbf x_i))=\mathbf x_i^T\boldsymbol\beta,$ we call $g$ the \textbf{link function}.
 \end{definition}
 
 \begin{note}
@@ -134,7 +136,7 @@ Now, what if $Y_i$ is Bernoulli distributed?
 	.\] 
 \end{eg}
 
-Note that \[
+We can take\[
 		\underbrace{\log\left( \frac{p_i}{1-p_i}\right)}_{\in \RR}=\mathbf x_i^T\boldsymbol \beta,
 \] 
 

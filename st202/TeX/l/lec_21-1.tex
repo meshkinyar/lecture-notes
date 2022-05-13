@@ -9,7 +9,7 @@
 	.\] 
 	A simple linear model for this can be written as \[
 	Y_i=\alpha+\beta X_i +\epsilon_i
-	.\] for $i=1,2,\ldots n.$  What can we say about the noise/error terms $\epsilon_1,\epsilon_2,\ldots,\epsilon_n$? 
+	\] for $i=1,2,\ldots n.$  What can we say about the noise/error terms $\epsilon_1,\epsilon_2,\ldots,\epsilon_n$? Note that
 
 	\begin{enumerate}[(i)]
 		\item $\EE(\epsilon_i)=0$,
@@ -19,16 +19,16 @@
 
 Every statistical model is going to have a signal (randomness we can quantify), and noise (randomness that is irreducible). We can write
 \[
-Y_i\mid X_i = x_i = \alpha +\beta x_i+\epsilon_i
+Y_i\mid [X_i = x_i] = \alpha +\beta x_i+\epsilon_i
 .\] 
-So $\EE(Y_i\mid X_i=\alpha+\beta\EE(x_i)$, and
+So $\EE(Y_i\mid X_i=\alpha)+\beta\EE(x_i)$, and
  \begin{align*}
 		 \Var(Y_i\mid X_i=x_i)&=\EE[(\alpha+\beta x_i +\epsilon_i-\alpha -\beta x_i)^2]\\
 				     &=\EE[(\epsilon_i-\EE(\epsilon))^2] \\
 					 &=\sigma^2
 .\end{align*} 
 
-The simple linear model has 3 parameters that we need to fully quantify the model: $\alpha;$ $\beta;$ and $ \sigma^2$, the variance of the error terms. 
+A simple linear model has 3 parameters that we need to fully quantify the model: $\alpha;$ $\beta;$ and $ \sigma^2$, the variance of the error terms. 
 
 \begin{remark}
 	In M\&P, we use $Y_i=\alpha+\beta X_i+\sigma\epsilon_i$, where $\EE(\epsilon_i)=0,$ and $\Var(\epsilon_i)=1$.
@@ -97,7 +97,7 @@ and the least-squares estimator of $\bbeta$ is $\hat{\bbeta}=\argmin_{\bee}S(\be
 \begin{remark}
 	If $\mathbf A$ is an $r\times c$ constant matrix and $\mathbf w$ is a $c\times 1$ vector, then:
 	\begin{align*}
-			\pder{\mathbf A \mathbf w}{\mathbf w}=\mathbf A, \quad \pder[\mathbf w^T \mathbf A]{\mathbf w}=\mathbf A^T, \quad \pder[\mathbf w^T \mathbf A\mathbf w]{\mathbf w}=\mathbf w^T(\mathbf A+\mathbf A^T).
+			\pder[\mathbf A \mathbf w]{\mathbf w}=\mathbf A, \quad \pder[\mathbf w^T \mathbf A]{\mathbf w}=\mathbf A^T, \quad \pder[\mathbf w^T \mathbf A\mathbf w]{\mathbf w}=\mathbf w^T(\mathbf A+\mathbf A^T).
 	\end{align*}
 \end{remark}
 

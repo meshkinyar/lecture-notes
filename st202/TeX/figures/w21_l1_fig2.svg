@@ -31,7 +31,7 @@
      inkscape:window-height="983"
      inkscape:window-x="420"
      inkscape:window-y="110"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      width="200mm"
      showguides="false" />
@@ -1692,7 +1692,7 @@
          id="tspan38986"
          style="font-size:2.11667px;stroke-width:0.264583"
          x="128.32292"
-         y="109.80209">$Y_i=a+\beta X+\epsilon_i$</tspan></text>
+         y="109.80209">$Y_i=\alpha+\beta X+\epsilon_i$</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:3.52777px;line-height:1.25;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';stroke-width:0.264583"
@@ -1717,16 +1717,5 @@
          sodipodi:role="line"
          id="tspan50641"
          style="stroke-width:0.264583" /></text>
-    <text
-       xml:space="preserve"
-       style="font-size:2.11667px;line-height:1.25;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';stroke-width:0.264583"
-       x="128.32292"
-       y="109.80209"
-       id="text60212"><tspan
-         sodipodi:role="line"
-         id="tspan60210"
-         style="font-size:2.11667px;stroke-width:0.264583"
-         x="128.32292"
-         y="109.80209">$Y_i=a+\beta X+\epsilon_i$</tspan></text>
   </g>
 </svg>
